@@ -129,7 +129,6 @@
       const [topZ, setTopZ] = useState(20);
       const [startMenuOpen, setStartMenuOpen] = useState(false);
       const [subcarpeta, setSubcarpeta] = useState(null);
-      const [emailCopied, setEmailCopied] = useState(false);
 
       const openWindow = (id) => {
         const nextZ = topZ + 1;
@@ -223,17 +222,14 @@
         window.addEventListener('mouseup', onMouseUp);
       };
 
-      // Manejador seguro de envío de email
+      // Apertura directa con Gmail Web (sin bloqueadores de navegador)
       const handleSendEmail = () => {
-        const mailToUrl = "mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web&body=Hola%20Daniel,%0A%0AMe%20gustar%C3%ADa%20contactar%20contigo%20para%20conocernos%20mejor%20y%20trabajar%20juntos.%0A%0AUn%20saludo,";
-        
-        // Copiar email de respaldo por si el cliente local está bloqueado
-        navigator.clipboard.writeText("estevequesadadaniel@gmail.com");
-        setEmailCopied(true);
-        setTimeout(() => setEmailCopied(false), 3000);
+        const asunto = encodeURIComponent("Contacto desde Portafolio Web");
+        const cuerpo = encodeURIComponent("Hola Daniel,\n\nMe gustaría contactar contigo para conocernos mejor y trabajar juntos.\n\nUn saludo,");
+        const email = "estevequesadadaniel@gmail.com";
 
-        // Abrir cliente de correo
-        window.location.href = mailToUrl;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${asunto}&body=${cuerpo}`;
+        window.open(gmailUrl, '_blank');
       };
 
       const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[700px]") => {
@@ -496,7 +492,7 @@
           )
         ),
 
-        /* VENTANA CONTACTO CON ACCIÓN DIRECTA */
+        /* VENTANA CONTACTO (GMAIL WEB DIRECTO) */
         renderXPWindow('contacto',
           e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs space-y-3' },
             e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
@@ -506,12 +502,11 @@
             e('div', { className: 'pt-2' },
               e('button', {
                 onClick: handleSendEmail,
-                className: 'w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-sans font-bold p-2.5 rounded transition shadow'
+                className: 'w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-sans font-bold p-2.5 rounded transition shadow cursor-pointer'
               },
                 e('span', {}, '✉️'),
                 e('span', {}, 'Enviar Email Directo')
-              ),
-              emailCopied && e('p', { className: 'text-[11px] text-green-700 font-semibold text-center mt-2' }, '✓ Dirección y mensaje predefinido copiados al portapapeles')
+              )
             )
           ),
           "w-[90vw] max-w-[380px]"
