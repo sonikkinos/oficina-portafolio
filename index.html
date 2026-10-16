@@ -94,7 +94,6 @@
       internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png'
     };
 
-    // Componentes SVG para Discos Duros y Lectora CD (garantiza que carguen siempre)
     const HardDriveIcon = () => e('svg', { width: '36', height: '36', viewBox: '0 0 36 36', fill: 'none' },
       e('rect', { x: '4', y: '10', width: '28', height: '16', rx: '2', fill: '#94a3b8', stroke: '#334155', strokeWidth: '1.5' }),
       e('rect', { x: '6', y: '12', width: '24', height: '12', rx: '1', fill: '#cbd5e1' }),
@@ -113,10 +112,10 @@
       // Estado de ventanas
       const [windows, setWindows] = useState({
         myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: 80, y: 40 }, isMax: false, zIndex: 10 },
-        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 60 }, isMax: false, zIndex: 10 },
-        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 160, y: 90 }, isMax: false, zIndex: 10 },
-        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 200, y: 120 }, isMax: false, zIndex: 10 },
-        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 140 }, isMax: false, zIndex: 10 }
+        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 40 }, isMax: false, zIndex: 10 },
+        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 160, y: 70 }, isMax: false, zIndex: 10 },
+        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 200, y: 100 }, isMax: false, zIndex: 10 },
+        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 120 }, isMax: false, zIndex: 10 }
       });
 
       // Posiciones de iconos
@@ -133,7 +132,6 @@
       const [startMenuOpen, setStartMenuOpen] = useState(false);
       const [subcarpeta, setSubcarpeta] = useState(null);
 
-      // Abrir o enfocar ventana
       const openWindow = (id) => {
         const nextZ = topZ + 1;
         setTopZ(nextZ);
@@ -175,7 +173,6 @@
         setActiveWin(id);
       };
 
-      // Mover ventanas
       const handleWindowMouseDown = (id, evt) => {
         focusWindow(id);
         const startX = evt.clientX;
@@ -203,7 +200,6 @@
         window.addEventListener('mouseup', onMouseUp);
       };
 
-      // Mover iconos
       const handleIconMouseDown = (key, evt) => {
         evt.stopPropagation();
         const startX = evt.clientX;
@@ -228,33 +224,31 @@
         window.addEventListener('mouseup', onMouseUp);
       };
 
-      // Render de ventana
-      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[650px]") => {
+      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[700px]") => {
         const win = windows[winKey];
         if (!win.isOpen || win.isMinimized) return null;
 
         const style = win.isMax
-          ? { top: 0, left: 0, width: '100vw', height: 'calc(100vh - 40px)', zIndex: win.zIndex }
+          ? { top: 0, left: 0, width: '100vw', height: 'calc(100vh - 40px)', zIndex: win.zIndex, borderRadius: 0 }
           : { top: `${win.pos.y}px`, left: `${win.pos.x}px`, zIndex: win.zIndex };
 
         return e('div', {
           style,
           onClick: () => focusWindow(winKey),
-          className: `fixed xp-window bg-slate-100 flex flex-col overflow-hidden ${win.isMax ? '' : widthClass}`
+          className: `fixed xp-window bg-slate-100 flex flex-col overflow-hidden ${win.isMax ? 'h-[calc(100vh-40px)] w-full' : widthClass}`
         },
           // Barra de título
           e('div', {
             onMouseDown: (evt) => !win.isMax && handleWindowMouseDown(winKey, evt),
-            className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none'
+            className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none shrink-0'
           },
             e('div', { className: 'flex items-center gap-1.5' },
               win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4' }) : e('span', {}, '📎'),
-              e('span', { className: 'truncate max-w-[260px]' }, win.title)
+              e('span', { className: 'truncate max-w-[280px]' }, win.title)
             ),
             
-            /* Botones de control oficiales XP */
+            // Botones de control XP
             e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
-              // Minimizar
               e('button', {
                 onClick: () => toggleMinimize(winKey),
                 className: 'xp-ctrl-btn xp-btn-min-max',
@@ -265,18 +259,16 @@
                 )
               ),
               
-              // Maximizar
               e('button', {
                 onClick: () => toggleMaximize(winKey),
                 className: 'xp-ctrl-btn xp-btn-min-max',
-                title: 'Maximizar'
+                title: win.isMax ? 'Restaurar' : 'Maximizar'
               },
                 e('svg', { width: '9', height: '9', viewBox: '0 0 9 9', fill: 'none', stroke: 'white', strokeWidth: '1.5' },
                   e('rect', { x: '0.75', y: '0.75', width: '7.5', height: '7.5' })
                 )
               ),
               
-              // Cerrar
               e('button', {
                 onClick: () => closeWindow(winKey),
                 className: 'xp-ctrl-btn xp-btn-close',
@@ -290,8 +282,8 @@
             )
           ),
           
-          // Contenido
-          e('div', { className: 'p-4 overflow-y-auto max-h-[72vh] text-slate-900 font-sans' }, children)
+          // Contenido flexible para adaptarse si se maximiza
+          e('div', { className: `p-3 overflow-y-auto flex-1 text-slate-900 font-sans ${win.isMax ? 'h-full flex flex-col' : 'max-h-[72vh]'}` }, children)
         );
       };
 
@@ -320,8 +312,7 @@
         /* VENTANA: MI PC */
         renderXPWindow('myComputer',
           e('div', { className: 'flex flex-col md:flex-row gap-4' },
-            /* Panel Lateral Izquierdo de Información */
-            e('div', { className: 'w-full md:w-48 bg-gradient-to-b from-blue-100 to-blue-200 border border-blue-300 p-3 rounded text-xs space-y-3' },
+            e('div', { className: 'w-full md:w-48 bg-gradient-to-b from-blue-100 to-blue-200 border border-blue-300 p-3 rounded text-xs space-y-3 shrink-0' },
               e('div', { className: 'bg-white p-2 rounded shadow-xs border border-blue-200' },
                 e('h4', { className: 'font-bold text-blue-900 border-b border-blue-200 pb-1 mb-1' }, 'Información del Sistema'),
                 e('p', { className: 'text-slate-700' }, '💻 Sistema: Windows XP Professional'),
@@ -334,13 +325,10 @@
               )
             ),
 
-            /* Panel Principal de Discos Duros */
             e('div', { className: 'flex-1 space-y-4' },
               e('div', {},
                 e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Archivos almacenados en este equipo'),
                 e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-3' },
-                  
-                  /* Disco C: Proyectos */
                   e('div', {
                     onDoubleClick: () => openWindow('proyectos'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
@@ -352,7 +340,6 @@
                     )
                   ),
 
-                  /* Disco D: Portafolio / Experiencia */
                   e('div', {
                     onDoubleClick: () => openWindow('cv'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
@@ -380,16 +367,27 @@
           )
         ),
 
-        /* VENTANA: MI CV */
+        /* VENTANA: MI CV (CON BOTÓN DE DESCARGA Y ALTURA AUTOPROPONCIONAL) */
         renderXPWindow('cv',
-          e('div', {},
-            e('div', { className: 'bg-white border border-slate-300 p-2 text-xs font-mono mb-3 shadow-inner' },
-              e('p', { className: 'font-bold mb-1' }, '--- CURRÍCULUM VITAE DANIEL ESTEVE QUESADA ---'),
-              e('p', {}, 'Haga clic abajo para visualizar o descargar el documento completo en PDF.')
+          e('div', { className: 'flex flex-col h-full w-full gap-2' },
+            e('div', { className: 'bg-white border border-slate-300 p-2 text-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 shadow-inner shrink-0' },
+              e('div', {},
+                e('p', { className: 'font-bold text-slate-800' }, '📄 CURRÍCULUM VITAE — DANIEL ESTEVE QUESADA'),
+                e('p', { className: 'text-[11px] text-slate-600' }, 'Sugerencia: Puedes usar el botón para descargarlo directamente.')
+              ),
+              e('a', {
+                href: '/CV-Daniel-Esteve-Quesada.pdf',
+                download: 'CV-Daniel-Esteve-Quesada.pdf',
+                target: '_blank',
+                className: 'bg-green-600 hover:bg-green-700 text-white font-bold text-xs px-3 py-1.5 rounded shadow flex items-center gap-1.5 transition'
+              },
+                e('span', {}, '📥'),
+                e('span', {}, 'Descargar CV (PDF)')
+              )
             ),
             e('iframe', {
               src: '/CV-Daniel-Esteve-Quesada.pdf',
-              className: 'w-full h-[380px] border border-slate-400 bg-white shadow-inner',
+              className: `w-full border border-slate-400 bg-white shadow-inner flex-1 ${windows.cv.isMax ? 'min-h-[75vh]' : 'h-[420px]'}`,
               title: 'Vista previa CV'
             })
           )
@@ -440,7 +438,7 @@
             ),
             e('div', { className: 'flex flex-col gap-3' },
               e('a', {
-                href: 'https://www.linkedin.com',
+                href: 'https://www.linkedin.com/in/danielestevequesada',
                 target: '_blank',
                 className: 'flex items-center gap-3 bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition shadow'
               },
@@ -493,10 +491,10 @@
         renderXPWindow('contacto',
           e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs' },
             e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
-            e('p', { className: 'mb-1' }, '📞 Teléfono: +34 600 000 000'),
-            e('p', { className: 'mb-4' }, '✉️ Email: danielesteve@email.com'),
+            e('p', { className: 'mb-1' }, '📞 Teléfono: +34 627 99 48 98'),
+            e('p', { className: 'mb-4' }, '✉️ Email: estevequesadadaniel@gmail.com'),
             e('a', {
-              href: 'mailto:danielesteve@email.com?subject=Contacto%20desde%20Portafolio%20Web',
+              href: 'mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web',
               className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
             },
               e('span', {}, '✉️'),
@@ -546,7 +544,6 @@
               e('span', {}, 'inicio')
             ),
 
-            /* Ventanas en la barra de tareas */
             Object.entries(windows).map(([id, win]) => {
               if (!win.isOpen) return null;
               const isActive = activeWin === id && !win.isMinimized;
