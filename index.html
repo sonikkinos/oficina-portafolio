@@ -4,742 +4,488 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daniel Esteve - Escritorio Windows XP</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- React & ReactDOM -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  
   <style>
-    /* Estilos globales y reseteo */
-    * {
-      box-sizing: border-box;
+    body {
       user-select: none;
-      -webkit-user-select: none;
-    }
-    
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
       font-family: 'Tahoma', 'Segoe UI', Geneva, Verdana, sans-serif;
     }
-
-    /* Estilos auténticos Windows XP */
+    
+    /* Ventana Windows XP */
     .xp-window {
-      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.45);
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.6);
       border: 3px solid #0055ea;
       border-radius: 8px 8px 0 0;
     }
-
-    .xp-window-inactive {
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
-      border: 3px solid #7a96df;
-      border-radius: 8px 8px 0 0;
-    }
-
+    
     .xp-titlebar {
-      background: linear-gradient(to bottom, #0058ee 0%, #388cf8 10%, #0055ea 90%, #0011bb 100%);
+      background: linear-gradient(to bottom, #0058ee 0%, #388cf8 8%, #0055ea 88%, #0011bb 100%);
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
 
-    .xp-titlebar-inactive {
-      background: linear-gradient(to bottom, #7a96df 0%, #a0b5f0 10%, #7a96df 90%, #526ea4 100%);
+    /* Botones auténticos de Windows XP */
+    .xp-btn-ctrl {
+      width: 21px;
+      height: 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      font-family: 'Tahoma', sans-serif;
+      font-weight: bold;
+      font-size: 11px;
+      color: white;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+      cursor: pointer;
+      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.5);
+      border: 1px solid #113399;
+      margin-left: 2px;
     }
 
+    .xp-btn-minimize {
+      background: linear-gradient(to bottom, #3c82f8 0%, #2968db 50%, #1748a8 100%);
+    }
+    .xp-btn-minimize:hover {
+      background: linear-gradient(to bottom, #5093ff 0%, #3a7aff 50%, #2059c4 100%);
+    }
+    .xp-btn-minimize:active {
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .xp-btn-maximize {
+      background: linear-gradient(to bottom, #3c82f8 0%, #2968db 50%, #1748a8 100%);
+    }
+    .xp-btn-maximize:hover {
+      background: linear-gradient(to bottom, #5093ff 0%, #3a7aff 50%, #2059c4 100%);
+    }
+    .xp-btn-maximize:active {
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .xp-btn-close {
+      background: linear-gradient(to bottom, #e25842 0%, #cc331a 50%, #991e0b 100%);
+      border-color: #660e02;
+    }
+    .xp-btn-close:hover {
+      background: linear-gradient(to bottom, #f06a54 0%, #e63e24 50%, #b3240f 100%);
+    }
+    .xp-btn-close:active {
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
+    }
+
+    /* Barra de Tareas */
     .xp-taskbar {
-      background: linear-gradient(to bottom, #1f2f86 0%, #3168d5 8%, #2557c6 90%, #1941a5 100%);
+      background: linear-gradient(to bottom, #1f2f86 0%, #3168d5 10%, #2557c6 90%, #1941a5 100%);
     }
 
     .xp-start-btn {
-      background: linear-gradient(to bottom, #388e3c 0%, #4caf50 30%, #2e7d32 85%, #1b5e20 100%);
-      box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20, 1px 1px 3px rgba(0,0,0,0.5);
+      background: linear-gradient(to bottom, #388e3c 0%, #4caf50 50%, #2e7d32 100%);
+      box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20;
     }
 
-    .xp-start-btn:hover {
-      background: linear-gradient(to bottom, #43a047 0%, #66bb6a 30%, #388e3c 85%, #2e7d32 100%);
+    @keyframes floatClippy {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
     }
-
-    .xp-start-btn:active {
-      background: linear-gradient(to bottom, #1b5e20 0%, #2e7d32 70%, #388e3c 100%);
-    }
-
-    .xp-button-win {
-      background: linear-gradient(to bottom, #ece9d8 0%, #fff 20%, #ece9d8 80%, #d8d3bf 100%);
-      border: 1px solid #003c74;
-      border-radius: 3px;
-      box-shadow: inset 1px 1px 0 #fff;
-    }
-
-    .xp-button-win:hover {
-      background: linear-gradient(to bottom, #f3f0e0 0%, #fff 20%, #eeebe0 80%, #e0dbc7 100%);
-    }
-
-    .xp-button-win:active {
-      background: linear-gradient(to bottom, #d8d3bf 0%, #c4beaa 100%);
-      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.3);
-    }
-
-    .xp-taskbar-item {
-      background: linear-gradient(to bottom, #3c81f3 0%, #2663e0 12%, #194fd1 88%, #103ba6 100%);
-      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), inset -1px -1px 1px rgba(0,0,0,0.3);
-    }
-
-    .xp-taskbar-item-active {
-      background: linear-gradient(to bottom, #16388a 0%, #1a43a2 12%, #2050be 88%, #1946a8 100%);
-      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.6);
-    }
-
-    .xp-window-control {
-      box-shadow: inset 1px 1px 1px rgba(255,255,255,0.6);
-      border: 1px solid #ffffff;
-    }
-
-    @keyframes clippyBounce {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-5px) rotate(2deg); }
-    }
-
-    .clippy-anim {
-      animation: clippyBounce 3s ease-in-out infinite;
-    }
-
-    /* Scrollbar personalizada XP */
-    ::-webkit-scrollbar {
-      width: 16px;
-      height: 16px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #ece9d8;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(to right, #ffffff, #d8d3bf);
-      border: 1px solid #003c74;
-      border-radius: 2px;
-    }
-    ::-webkit-scrollbar-button {
-      background: #ece9d8;
-      border: 1px solid #003c74;
-      height: 16px;
+    .clippy-animate {
+      animation: floatClippy 2.5s ease-in-out infinite;
     }
   </style>
 </head>
-<body class="h-screen w-screen overflow-hidden bg-cover bg-center select-none" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');">
+<body class="h-screen w-screen overflow-hidden bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');">
   <div id="root" class="h-full w-full"></div>
 
   <script>
     const e = React.createElement;
-    const { useState, useEffect, useRef } = React;
+    const { useState, useRef, useEffect } = React;
 
-    // Repositorio de Iconos originales de Windows XP
     const ICONS = {
       myComputer: 'https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png',
       recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
-      hardDrive: 'https://win98icons.alexmeub.com/icons/png/hard_drive-0.png',
-      contact: 'https://win98icons.alexmeub.com/icons/png/address_book_card-0.png',
-      turnOff: 'https://win98icons.alexmeub.com/icons/png/shut_down_normal-2.png',
-      help: 'https://win98icons.alexmeub.com/icons/png/help_book-0.png',
-      user: 'https://win98icons.alexmeub.com/icons/png/user_card-0.png'
+      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png'
     };
 
     function App() {
-      // Estado de iconos con posiciones x, y
-      const [desktopIcons, setDesktopIcons] = useState([
-        { id: 'myComputer', label: 'Mi PC', icon: ICONS.myComputer, x: 20, y: 20 },
-        { id: 'recycleBin', label: 'Papelera', icon: ICONS.recycleBin, x: 20, y: 110 },
-        { id: 'myCV', label: 'Mi CV.txt', icon: ICONS.notepad, x: 20, y: 200 },
-        { id: 'projects', label: 'Proyectos', icon: ICONS.folder, x: 20, y: 290 },
-        { id: 'rrss', label: 'RRSS', icon: ICONS.internetExplorer, x: 20, y: 380 }
-      ]);
-
-      // Icono seleccionado en escritorio
-      const [selectedIcon, setSelectedIcon] = useState(null);
-
-      // Posición de Clippy
-      const [clippyPos, setClippyPos] = useState({ x: window.innerWidth - 180, y: window.innerHeight - 200 });
-
-      // Estado de ventanas abiertas/minimizadas/maximizadas
+      // Estado de ventanas (abierta, minimizada, posición, zIndex)
       const [windows, setWindows] = useState({
-        myComputer: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Mi PC', icon: ICONS.myComputer, x: 120, y: 60, w: 600, h: 420 },
-        recycleBin: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Papelera de reciclaje', icon: ICONS.recycleBin, x: 150, y: 80, w: 550, h: 380 },
-        myCV: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Mi CV.txt - Bloc de notas', icon: ICONS.notepad, x: 180, y: 50, w: 700, h: 500 },
-        projects: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Explorador - C:\\Proyectos', icon: ICONS.folder, x: 210, y: 70, w: 650, h: 450 },
-        rrss: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Internet Explorer - Redes Sociales', icon: ICONS.internetExplorer, x: 240, y: 90, w: 600, h: 460 },
-        contact: { isOpen: false, isMinimized: false, isMaximized: false, title: 'Asistente - Datos de Contacto', icon: ICONS.contact, x: 270, y: 110, w: 420, h: 320 }
+        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 60 }, size: { w: 600, h: 480 }, isMax: false },
+        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 180, y: 90 }, size: { w: 650, h: 450 }, isMax: false },
+        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 240, y: 120 }, size: { w: 420, h: 320 }, isMax: false },
+        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 300, y: 140 }, size: { w: 380, h: 280 }, isMax: false }
       });
 
-      // Pila de orden de profundidad (Z-Index)
-      const [activeWindowOrder, setActiveWindowOrder] = useState([]);
-      const [activeWindowId, setActiveWindowId] = useState(null);
+      // Posiciones arrastrables para los iconos del escritorio
+      const [iconPositions, setIconPositions] = useState({
+        myComputer: { x: 20, y: 20 },
+        recycleBin: { x: 20, y: 110 },
+        cv: { x: 20, y: 200 },
+        proyectos: { x: 20, y: 290 },
+        rrss: { x: 20, y: 380 }
+      });
 
-      // Estado Menú Inicio
-      const [isStartOpen, setIsStartOpen] = useState(false);
+      const [activeWin, setActiveWin] = useState(null);
+      const [topZ, setTopZ] = useState(10);
+      const [startMenuOpen, setStartMenuOpen] = useState(false);
+      const [subcarpeta, setSubcarpeta] = useState(null);
 
-      // Reloj en vivo
-      const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-
-      // Estado para navegación dentro de Proyectos
-      const [subfolder, setSubfolder] = useState(null);
-
-      // Arrastre activo (Drag and drop genérico)
-      const draggingRef = useRef(null);
-
-      useEffect(() => {
-        const timer = setInterval(() => {
-          setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-        }, 1000);
-        return () => clearInterval(timer);
-      }, []);
-
-      // Traer ventana al frente
-      const focusWindow = (id) => {
-        setActiveWindowId(id);
-        setActiveWindowOrder(prev => [...prev.filter(item => item !== id), id]);
-        setWindows(prev => ({
-          ...prev,
-          [id]: { ...prev[id], isMinimized: false }
-        }));
-      };
-
-      // Abrir Ventana
+      // Abrir o enfocar ventana
       const openWindow = (id) => {
+        const nextZ = topZ + 1;
+        setTopZ(nextZ);
         setWindows(prev => ({
           ...prev,
-          [id]: { ...prev[id], isOpen: true, isMinimized: false }
+          [id]: { ...prev[id], isOpen: true, isMinimized: false, zIndex: nextZ }
         }));
-        focusWindow(id);
-        setIsStartOpen(false);
+        setActiveWin(id);
       };
 
-      // Cerrar Ventana
       const closeWindow = (id) => {
+        setWindows(prev => ({ ...prev, [id]: { ...prev[id], isOpen: false } }));
+      };
+
+      const toggleMinimize = (id) => {
         setWindows(prev => ({
           ...prev,
-          [id]: { ...prev[id], isOpen: false }
+          [id]: { ...prev[id], isMinimized: !prev[id].isMinimized }
         }));
-        setActiveWindowOrder(prev => prev.filter(item => item !== id));
-        if (activeWindowId === id) {
-          const remaining = activeWindowOrder.filter(item => item !== id);
-          setActiveWindowId(remaining.length > 0 ? remaining[remaining.length - 1] : null);
-        }
       };
 
-      // Alternar Minimizar
-      const toggleMinimize = (id) => {
-        if (windows[id].isMinimized || activeWindowId !== id) {
-          focusWindow(id);
-        } else {
-          setWindows(prev => ({
-            ...prev,
-            [id]: { ...prev[id], isMinimized: true }
-          }));
-          const remaining = activeWindowOrder.filter(item => item !== id);
-          setActiveWindowId(remaining.length > 0 ? remaining[remaining.length - 1] : null);
-        }
-      };
-
-      // Alternar Maximizar
       const toggleMaximize = (id) => {
         setWindows(prev => ({
           ...prev,
-          [id]: { ...prev[id], isMaximized: !prev[id].isMaximized }
+          [id]: { ...prev[id], isMax: !prev[id].isMax }
         }));
+      };
+
+      const focusWindow = (id) => {
+        const nextZ = topZ + 1;
+        setTopZ(nextZ);
+        setWindows(prev => ({
+          ...prev,
+          [id]: { ...prev[id], isMinimized: false, zIndex: nextZ }
+        }));
+        setActiveWin(id);
+      };
+
+      // Arrastrar ventanas
+      const handleWindowMouseDown = (id, e) => {
         focusWindow(id);
-      };
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const initialPos = { ...windows[id].pos };
 
-      // Manejadores de Arrastre Global (Mouse & Touch)
-      const handleMouseDown = (e, type, id) => {
-        // Ignorar clics en botones de control
-        if (e.target.closest('.no-drag')) return;
-
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-
-        if (type === 'icon') {
-          setSelectedIcon(id);
-          const icon = desktopIcons.find(i => i.id === id);
-          draggingRef.current = { type: 'icon', id, startX: clientX, startY: clientY, initialX: icon.x, initialY: icon.y };
-        } else if (type === 'window') {
-          focusWindow(id);
-          const win = windows[id];
-          if (win.isMaximized) return; // No mover si está maximizada
-          draggingRef.current = { type: 'window', id, startX: clientX, startY: clientY, initialX: win.x, initialY: win.y };
-        } else if (type === 'clippy') {
-          draggingRef.current = { type: 'clippy', startX: clientX, startY: clientY, initialX: clippyPos.x, initialY: clippyPos.y };
-        }
-      };
-
-      const handleMouseMove = (e) => {
-        if (!draggingRef.current) return;
-
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-
-        const deltaX = clientX - draggingRef.current.startX;
-        const deltaY = clientY - draggingRef.current.startY;
-
-        const { type, id, initialX, initialY } = draggingRef.current;
-
-        if (type === 'icon') {
-          setDesktopIcons(prev => prev.map(icon => {
-            if (icon.id === id) {
-              return {
-                ...icon,
-                x: Math.max(0, Math.min(window.innerWidth - 80, initialX + deltaX)),
-                y: Math.max(0, Math.min(window.innerHeight - 100, initialY + deltaY))
-              };
-            }
-            return icon;
-          }));
-        } else if (type === 'window') {
+        const onMouseMove = (moveEvt) => {
+          const dx = moveEvt.clientX - startX;
+          const dy = moveEvt.clientY - startY;
           setWindows(prev => ({
             ...prev,
             [id]: {
               ...prev[id],
-              x: Math.max(0, Math.min(window.innerWidth - 200, initialX + deltaX)),
-              y: Math.max(0, Math.min(window.innerHeight - 100, initialY + deltaY))
+              pos: { x: Math.max(0, initialPos.x + dx), y: Math.max(0, initialPos.y + dy) }
             }
           }));
-        } else if (type === 'clippy') {
-          setClippyPos({
-            x: Math.max(0, Math.min(window.innerWidth - 120, initialX + deltaX)),
-            y: Math.max(0, Math.min(window.innerHeight - 120, initialY + deltaY))
-          });
-        }
-      };
-
-      const handleMouseUp = () => {
-        draggingRef.current = null;
-      };
-
-      useEffect(() => {
-        const onMove = (e) => handleMouseMove(e);
-        const onEnd = () => handleMouseUp();
-
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseup', onEnd);
-        window.addEventListener('touchmove', onMove);
-        window.addEventListener('touchend', onEnd);
-
-        return () => {
-          window.removeEventListener('mousemove', onMove);
-          window.removeEventListener('mouseup', onEnd);
-          window.removeEventListener('touchmove', onMove);
-          window.removeEventListener('touchend', onEnd);
         };
-      }, [desktopIcons, windows, clippyPos]);
 
-      return e('div', {
-        className: 'h-full w-full relative overflow-hidden select-none',
-        onClick: (e) => {
-          if (e.target === e.currentTarget) {
-            setSelectedIcon(null);
-            setIsStartOpen(false);
-          }
-        }
-      },
-        /* --- 1. ICONOS EN EL ESCRITORIO --- */
-        desktopIcons.map(icon =>
+        const onMouseUp = () => {
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      };
+
+      // Arrastrar iconos del escritorio
+      const handleIconMouseDown = (key, e) => {
+        e.stopPropagation();
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const initialPos = { ...iconPositions[key] };
+
+        const onMouseMove = (moveEvt) => {
+          const dx = moveEvt.clientX - startX;
+          const dy = moveEvt.clientY - startY;
+          setIconPositions(prev => ({
+            ...prev,
+            [key]: { x: Math.max(0, initialPos.x + dx), y: Math.max(0, initialPos.y + dy) }
+          }));
+        };
+
+        const onMouseUp = () => {
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      };
+
+      // Componente Ventana
+      const XPWindowComponent = ({ winKey, children }) => {
+        const win = windows[winKey];
+        if (!win.isOpen || win.isMinimized) return null;
+
+        const style = win.isMax
+          ? { top: 0, left: 0, width: '100vw', height: 'calc(100vh - 40px)', zIndex: win.zIndex || 10 }
+          : { top: `${win.pos.y}px`, left: `${win.pos.x}px`, width: `${win.size.w}px`, zIndex: win.zIndex || 10 };
+
+        return e('div', {
+          style,
+          onClick: () => focusWindow(winKey),
+          className: 'fixed xp-window bg-slate-100 flex flex-col overflow-hidden select-none'
+        },
+          // Barra de Título
           e('div', {
-            key: icon.id,
-            style: { left: `${icon.x}px`, top: `${icon.y}px`, position: 'absolute' },
-            className: `w-20 p-2 rounded flex flex-col items-center justify-center cursor-pointer text-center text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] font-medium ${selectedIcon === icon.id ? 'bg-blue-600/40 border border-blue-300/50' : 'hover:bg-white/10'}`,
-            onMouseDown: (ev) => handleMouseDown(ev, 'icon', icon.id),
-            onTouchStart: (ev) => handleMouseDown(ev, 'icon', icon.id),
-            onDoubleClick: () => openWindow(icon.id)
+            onMouseDown: (evt) => !win.isMax && handleWindowMouseDown(winKey, evt),
+            className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move'
           },
-            e('img', { src: icon.icon, className: 'w-10 h-10 mb-1 pointer-events-none' }),
-            e('span', { className: 'leading-tight text-[11px] break-words w-full' }, icon.label)
+            e('div', { className: 'flex items-center gap-1.5' },
+              win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4' }) : e('span', {}, '📎'),
+              e('span', { className: 'truncate max-w-[280px]' }, win.title)
+            ),
+            
+            // Botones de control oficiales de Windows XP
+            e('div', { className: 'flex items-center gap-0.5' },
+              /* Botón Minimizar (_) */
+              e('button', {
+                onClick: (evt) => { evt.stopPropagation(); toggleMinimize(winKey); },
+                className: 'xp-btn-ctrl xp-btn-minimize',
+                title: 'Minimizar'
+              }, '0'), // Usamos caracteres estándar adaptados
+              
+              /* Botón Maximizar (□) */
+              e('button', {
+                onClick: (evt) => { evt.stopPropagation(); toggleMaximize(winKey); },
+                className: 'xp-btn-ctrl xp-btn-maximize',
+                title: 'Maximizar'
+              }, '1'),
+              
+              /* Botón Cerrar (X) */
+              e('button', {
+                onClick: (evt) => { evt.stopPropagation(); closeWindow(winKey); },
+                className: 'xp-btn-ctrl xp-btn-close',
+                title: 'Cerrar'
+              }, 'r') // La tipografía Marlett o estilo tradicional
+            )
+          ),
+          
+          // Contenido de la ventana
+          e('div', { className: 'p-4 overflow-y-auto flex-1 text-slate-900 font-sans' }, children)
+        );
+      };
+
+      return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
+        
+        /* ICONOS DEL ESCRITORIO (ARRASTRABLES) */
+        Object.entries({
+          myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => {} },
+          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
+          cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
+          proyectos: { label: 'Proyectos', icon: ICONS.folder, action: () => openWindow('proyectos') },
+          rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') }
+        }).map(([key, item]) => 
+          e('div', {
+            key,
+            onMouseDown: (evt) => handleIconMouseDown(key, evt),
+            onDoubleClick: item.action,
+            style: { top: `${iconPositions[key].y}px`, left: `${iconPositions[key].x}px` },
+            className: 'absolute w-20 flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] text-center select-none'
+          },
+            e('img', { src: item.icon, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+            e('span', { className: 'leading-tight' }, item.label)
           )
         ),
 
-        /* --- 2. VENTANAS DE APLICACIONES --- */
-        Object.keys(windows).map(id => {
-          const win = windows[id];
-          if (!win.isOpen || win.isMinimized) return null;
+        /* --- VENTANA: MI CV --- */
+        e(XPWindowComponent, { winKey: 'cv' },
+          e('div', { className: 'bg-white border border-slate-300 p-2 text-xs font-mono mb-3 shadow-inner' },
+            e('p', { className: 'font-bold mb-1' }, '--- CURRÍCULUM VITAE DANIEL ESTEVE QUESADA ---'),
+            e('p', {}, 'Haga clic abajo para visualizar o descargar el documento completo en PDF.')
+          ),
+          e('iframe', {
+            src: '/CV-Daniel-Esteve-Quesada.pdf',
+            className: 'w-full h-[360px] border border-slate-400 bg-white shadow-inner',
+            title: 'Vista previa CV'
+          })
+        ),
 
-          const zIndex = (activeWindowOrder.indexOf(id) + 1) * 10;
-          const isActive = activeWindowId === id;
-
-          const isMax = win.isMaximized;
-          const winStyle = isMax ? {
-            left: 0,
-            top: 0,
-            width: '100%',
-            height: 'calc(100% - 40px)',
-            position: 'absolute',
-            zIndex
-          } : {
-            left: `${win.x}px`,
-            top: `${win.y}px`,
-            width: `${win.w}px`,
-            height: `${win.h}px`,
-            position: 'absolute',
-            zIndex
-          };
-
-          return e('div', {
-            key: id,
-            style: winStyle,
-            className: `${isActive ? 'xp-window' : 'xp-window-inactive'} bg-[#ece9d8] flex flex-col overflow-hidden`,
-            onClick: () => focusWindow(id)
-          },
-            /* Barra de Título */
-            e('div', {
-              className: `${isActive ? 'xp-titlebar' : 'xp-titlebar-inactive'} text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none`,
-              onMouseDown: (ev) => handleMouseDown(ev, 'window', id),
-              onTouchStart: (ev) => handleMouseDown(ev, 'window', id)
-            },
-              e('div', { className: 'flex items-center gap-1.5 overflow-hidden pr-2' },
-                e('img', { src: win.icon, className: 'w-4 h-4 pointer-events-none' }),
-                e('span', { className: 'truncate text-[12px] shadow-sm' }, win.title)
-              ),
-              /* Botones de control (Minimizar, Maximizar, Cerrar) */
-              e('div', { className: 'flex items-center gap-1 no-drag' },
-                // Minimizar
-                e('button', {
-                  onClick: (ev) => { ev.stopPropagation(); toggleMinimize(id); },
-                  className: 'xp-window-control w-5 h-5 bg-[#0055ea] hover:bg-[#388cf8] active:bg-[#0011bb] text-white font-bold text-xs flex items-center justify-center rounded-sm'
-                }, '0'),
-                // Maximizar
-                e('button', {
-                  onClick: (ev) => { ev.stopPropagation(); toggleMaximize(id); },
-                  className: 'xp-window-control w-5 h-5 bg-[#0055ea] hover:bg-[#388cf8] active:bg-[#0011bb] text-white font-bold text-xs flex items-center justify-center rounded-sm'
-                }, isMax ? '2' : '1'),
-                // Cerrar
-                e('button', {
-                  onClick: (ev) => { ev.stopPropagation(); closeWindow(id); },
-                  className: 'xp-window-control w-5 h-5 bg-[#e81123] hover:bg-[#f45a5a] active:bg-[#990000] text-white font-bold text-xs flex items-center justify-center rounded-sm ml-1'
-                }, 'r')
-              )
-            ),
-
-            /* Menú Superior de la Ventana */
-            e('div', { className: 'bg-[#ece9d8] border-b border-[#a09a8a] text-[11px] px-2 py-0.5 flex gap-3 text-slate-800' },
-              e('span', { className: 'hover:bg-[#3168d5] hover:text-white px-1 rounded cursor-pointer' }, 'Archivo'),
-              e('span', { className: 'hover:bg-[#3168d5] hover:text-white px-1 rounded cursor-pointer' }, 'Edición'),
-              e('span', { className: 'hover:bg-[#3168d5] hover:text-white px-1 rounded cursor-pointer' }, 'Ver'),
-              e('span', { className: 'hover:bg-[#3168d5] hover:text-white px-1 rounded cursor-pointer' }, 'Ayuda')
-            ),
-
-            /* Cuerpo de la Ventana */
-            e('div', { className: 'flex-1 overflow-auto p-3 text-xs bg-white border-t border-[#808080]' },
-              /* Ventana: Mi CV */
-              id === 'myCV' && e('div', { className: 'h-full flex flex-col gap-2' },
-                e('div', { className: 'bg-yellow-50 border border-yellow-300 p-2 text-slate-700 font-mono text-[11px]' },
-                  e('p', { className: 'font-bold' }, '📄 Curriculum Vitae - Daniel Esteve Quesada'),
-                  e('p', {}, 'Especialista en Marketing 360, Comunicación y Gestión de Proyectos.')
-                ),
-                e('iframe', {
-                  src: '/CV-Daniel-Esteve-Quesada.pdf',
-                  className: 'w-full flex-1 border border-slate-300 bg-slate-100 rounded',
-                  title: 'Vista previa CV'
-                })
-              ),
-
-              /* Ventana: Proyectos */
-              id === 'projects' && e('div', { className: 'h-full flex flex-col' },
-                !subfolder ? e('div', {},
-                  e('p', { className: 'mb-3 font-semibold text-slate-600' }, 'Selecciona una categoría de proyectos:'),
-                  e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-3' },
-                    [
-                      { id: 'audiovisual', name: '🎬 Audiovisual', desc: 'Vídeos y MaQasa' },
-                      { id: 'ventas', name: '📱 Ventas & Retail', desc: 'Xiaomi & TCL' },
-                      { id: 'eventos', name: '🎪 Eventos en Vivo', desc: 'GrupoIDEX' },
-                      { id: 'marketing', name: '📊 Marketing 360', desc: 'V3RTICE' }
-                    ].map(folder =>
-                      e('div', {
-                        key: folder.id,
-                        onDoubleClick: () => setSubfolder(folder.name),
-                        className: 'p-3 bg-amber-50/50 border border-amber-200/80 rounded hover:bg-blue-50 hover:border-blue-300 cursor-pointer flex flex-col items-center text-center transition'
-                      },
-                        e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1' }),
-                        e('span', { className: 'font-bold text-slate-800' }, folder.name),
-                        e('span', { className: 'text-[10px] text-slate-500 mt-1' }, folder.desc)
-                      )
-                    )
-                  )
-                ) : e('div', { className: 'flex flex-col h-full' },
-                  e('div', { className: 'flex items-center gap-2 mb-3 pb-2 border-b' },
-                    e('button', {
-                      onClick: () => setSubfolder(null),
-                      className: 'xp-button-win px-3 py-1 font-semibold flex items-center gap-1 text-slate-800'
-                    }, '⬅ Atrás'),
-                    e('span', { className: 'font-bold text-slate-700' }, `C:\\Proyectos\\${subfolder}`)
-                  ),
-                  e('div', { className: 'p-4 bg-slate-50 border rounded flex-1 flex flex-col items-center justify-center text-center' },
-                    e('img', { src: ICONS.folder, className: 'w-12 h-12 mb-2 opacity-60' }),
-                    e('p', { className: 'font-bold text-slate-700 text-sm mb-1' }, `Carpeta: ${subfolder}`),
-                    e('p', { className: 'text-slate-500 max-w-xs' }, 'Contenido multimedia, imágenes de campañas y documentos detallados del proyecto.')
-                  )
-                )
-              ),
-
-              /* Ventana: RRSS */
-              id === 'rrss' && e('div', { className: 'h-full flex flex-col gap-3' },
-                e('div', { className: 'bg-[#ece9d8] p-1.5 border border-slate-300 rounded flex items-center gap-2' },
-                  e('span', { className: 'font-bold text-slate-600' }, 'Dirección:'),
-                  e('input', {
-                    type: 'text',
-                    readOnly: true,
-                    value: 'https://www.danielesteve.com/redes-sociales',
-                    className: 'w-full bg-white border border-slate-400 px-2 py-0.5 rounded text-slate-800 font-mono'
-                  })
-                ),
-                e('div', { className: 'flex-1 bg-slate-50 p-6 border rounded flex flex-col gap-4 justify-center items-center' },
-                  e('a', {
-                    href: 'https://www.linkedin.com',
-                    target: '_blank',
-                    rel: 'noreferrer',
-                    className: 'w-64 flex items-center justify-center gap-3 bg-[#0a66c2] text-white py-3 px-4 rounded font-bold hover:bg-[#084e96] transition shadow'
-                  },
-                    e('span', { className: 'text-lg' }, '💼'),
-                    e('span', {}, 'Perfil de LinkedIn')
-                  ),
-                  e('a', {
-                    href: 'https://www.instagram.com',
-                    target: '_blank',
-                    rel: 'noreferrer',
-                    className: 'w-64 flex items-center justify-center gap-3 bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-500 text-white py-3 px-4 rounded font-bold hover:opacity-90 transition shadow'
-                  },
-                    e('span', { className: 'text-lg' }, '📷'),
-                    e('span', {}, 'Sígueme en Instagram')
-                  )
-                )
-              ),
-
-              /* Ventana: Mi PC */
-              id === 'myComputer' && e('div', { className: 'space-y-4' },
-                e('div', { className: 'border-b pb-2' },
-                  e('h4', { className: 'font-bold text-slate-700 mb-2' }, 'Archivos almacenados en este equipo'),
-                  e('div', { className: 'grid grid-cols-2 gap-4' },
-                    e('div', { className: 'flex items-center gap-3 p-2 border bg-slate-50 rounded' },
-                      e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
-                      e('div', {},
-                        e('p', { className: 'font-bold text-slate-800' }, 'Disco local (C:)'),
-                        e('p', { className: 'text-[10px] text-slate-500' }, '120 GB libres de 250 GB')
-                      )
-                    ),
-                    e('div', { className: 'flex items-center gap-3 p-2 border bg-slate-50 rounded' },
-                      e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
-                      e('div', {},
-                        e('p', { className: 'font-bold text-slate-800' }, 'Datos (D:)'),
-                        e('p', { className: 'text-[10px] text-slate-500' }, '450 GB libres de 500 GB')
-                      )
-                    )
-                  )
-                ),
-                e('div', { className: 'bg-blue-50 border border-blue-200 p-3 rounded text-slate-700' },
-                  e('p', { className: 'font-bold text-blue-900 mb-1' }, 'Información del Sistema:'),
-                  e('p', {}, '• Propietario: Daniel Esteve Quesada'),
-                  e('p', {}, '• Sistema: Windows XP Professional - Edición Portafolio Web'),
-                  e('p', {}, '• Estado: Operativo y listo para nuevos retos profesionales')
-                )
-              ),
-
-              /* Ventana: Papelera */
-              id === 'recycleBin' && e('div', { className: 'h-full flex flex-col items-center justify-center text-slate-500' },
-                e('img', { src: ICONS.recycleBin, className: 'w-16 h-16 mb-2 opacity-50' }),
-                e('p', { className: 'font-semibold' }, 'La Papelera de reciclaje está vacía.'),
-                e('p', { className: 'text-[11px]' }, 'No hay elementos eliminados recientemente.')
-              ),
-
-              /* Ventana: Contacto */
-              id === 'contact' && e('div', { className: 'h-full flex flex-col justify-between bg-amber-50/60 p-2 rounded border border-amber-200' },
-                e('div', { className: 'space-y-2' },
-                  e('div', { className: 'flex items-center gap-2 border-b border-amber-300 pb-2' },
-                    e('img', { src: ICONS.contact, className: 'w-8 h-8' }),
-                    e('div', {},
-                      e('h3', { className: 'font-bold text-slate-800 text-sm' }, 'Daniel Esteve Quesada'),
-                      e('p', { className: 'text-[11px] text-slate-600' }, 'Marketing 360 & Comunicación')
-                    )
-                  ),
-                  e('div', { className: 'space-y-1.5 font-mono text-xs pt-1' },
-                    e('p', { className: 'flex items-center gap-2 text-slate-800' },
-                      e('span', { className: 'font-bold' }, '📞 Teléfono:'),
-                      e('a', { href: 'tel:+34600000000', className: 'text-blue-700 hover:underline' }, '+34 600 000 000')
-                    ),
-                    e('p', { className: 'flex items-center gap-2 text-slate-800' },
-                      e('span', { className: 'font-bold' }, '✉️ Email:'),
-                      e('a', { href: 'mailto:danielesteve@email.com', className: 'text-blue-700 hover:underline' }, 'danielesteve@email.com')
-                    )
-                  )
-                ),
-                e('a', {
-                  href: 'mailto:danielesteve@email.com?subject=Contacto%20desde%20Portafolio%20Web',
-                  className: 'xp-button-win w-full py-2 font-bold text-center text-slate-800 flex items-center justify-center gap-2 mt-4'
-                },
-                  e('span', {}, '✉️'),
-                  e('span', {}, 'Enviar Correo Electrónico')
-                )
+        /* --- VENTANA: PROYECTOS --- */
+        e(XPWindowComponent, { winKey: 'proyectos' },
+          !subcarpeta ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-4 text-center' },
+            [
+              { id: 'audiovisual', nombre: '🎬 Audiovisual', desc: 'Vídeos y MaQasa' },
+              { id: 'ventas', nombre: '📱 Ventas & Retail', desc: 'Xiaomi & TCL' },
+              { id: 'eventos', nombre: '🎪 Eventos en Vivo', desc: 'GrupoIDEX' },
+              { id: 'marketing', nombre: '📊 Marketing 360', desc: 'V3RTICE' }
+            ].map(folder =>
+              e('div', {
+                key: folder.id,
+                onDoubleClick: () => setSubcarpeta(folder.nombre),
+                className: 'p-3 bg-white border border-slate-300 rounded shadow hover:bg-blue-50 cursor-pointer flex flex-col items-center'
+              },
+                e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+                e('span', { className: 'font-bold text-xs' }, folder.nombre),
+                e('span', { className: 'text-[10px] text-slate-500' }, folder.desc)
               )
             )
-          );
-        }),
+          ) : e('div', {},
+            e('button', {
+              onClick: () => setSubcarpeta(null),
+              className: 'mb-4 text-xs bg-slate-200 border border-slate-400 px-3 py-1 rounded hover:bg-slate-300 font-semibold'
+            }, '⬅ Volver a Proyectos'),
+            e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[200px]' },
+              e('h3', { className: 'font-bold text-sm border-b pb-1 mb-3' }, `Contenido de: ${subcarpeta}`),
+              e('p', { className: 'text-xs text-slate-600 italic' }, 'Aquí subiremos tus fotos, vídeos y archivos multimedia.')
+            )
+          )
+        ),
 
-        /* --- 3. CLIPPY ASISTENTE ARRASTRABLE --- */
-        e('div', {
-          style: { left: `${clippyPos.x}px`, top: `${clippyPos.y}px`, position: 'absolute' },
-          className: 'z-50 cursor-move flex flex-col items-center select-none',
-          onMouseDown: (ev) => handleMouseDown(ev, 'clippy'),
-          onTouchStart: (ev) => handleMouseDown(ev, 'clippy')
-        },
-          /* Bocadillo de Texto */
+        /* --- VENTANA: INTERNET EXPLORER (RRSS) --- */
+        e(XPWindowComponent, { winKey: 'rrss' },
+          e('div', { className: 'bg-slate-200 p-2 border-b border-slate-300 text-xs mb-4 flex items-center gap-2' },
+            e('span', { className: 'font-bold' }, 'Dirección:'),
+            e('input', {
+              type: 'text',
+              readOnly: true,
+              value: 'http://www.danielesteve.com/rrss',
+              className: 'w-full bg-white border border-slate-400 px-2 py-0.5 rounded'
+            })
+          ),
+          e('div', { className: 'flex flex-col gap-3' },
+            e('a', {
+              href: 'https://www.linkedin.com',
+              target: '_blank',
+              className: 'flex items-center gap-3 bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition shadow'
+            },
+              e('span', { className: 'text-xl' }, '💼'),
+              e('span', {}, 'Perfil de LinkedIn')
+            ),
+            e('a', {
+              href: 'https://www.instagram.com',
+              target: '_blank',
+              className: 'flex items-center gap-3 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white p-3 rounded font-bold hover:opacity-90 transition shadow'
+            },
+              e('span', { className: 'text-xl' }, '📷'),
+              e('span', {}, 'Instagram')
+            )
+          )
+        ),
+
+        /* --- CLIPPY ASISTENTE --- */
+        e('div', { className: 'fixed bottom-12 right-6 flex flex-col items-end z-30' },
           e('div', {
-            onClick: () => openWindow('contact'),
-            className: 'bg-amber-100 border-2 border-slate-800 px-3 py-1.5 rounded-xl text-slate-900 text-[11px] font-bold shadow-lg mb-1 relative max-w-[150px] text-center cursor-pointer hover:bg-amber-200 transition'
+            className: 'bg-amber-100 border-2 border-slate-800 p-2 rounded-xl text-slate-900 text-xs font-bold shadow-lg mb-2 relative max-w-[160px] text-center'
           },
             'Contáctame haciendo click',
-            e('div', { className: 'absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-slate-800' })
+            e('div', { className: 'absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-slate-800' })
           ),
-          /* Clippy Vectorial */
           e('div', {
-            onClick: () => openWindow('contact'),
-            onDoubleClick: () => openWindow('contact'),
-            className: 'clippy-anim p-1 rounded-full hover:scale-105 transition-transform'
+            onClick: () => openWindow('contacto'),
+            className: 'cursor-pointer clippy-animate hover:scale-110 transition-transform bg-amber-200/20 p-2 rounded-full backdrop-blur-xs'
           },
             e('svg', {
-              width: '54',
-              height: '62',
+              width: '60',
+              height: '70',
               viewBox: '0 0 60 70',
               fill: 'none',
-              className: 'drop-shadow-md'
+              className: 'drop-shadow-lg'
             },
-              e('path', {
-                d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45',
-                stroke: '#788a9c',
-                strokeWidth: '6',
-                strokeLinecap: 'round',
-                fill: 'none'
-              }),
-              e('path', {
-                d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45',
-                stroke: '#e2ebf0',
-                strokeWidth: '3',
-                strokeLinecap: 'round',
-                fill: 'none'
-              }),
-              /* Ojos */
+              e('path', { d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45', stroke: '#8a9ba8', strokeWidth: '6', strokeLinecap: 'round', fill: 'none' }),
+              e('path', { d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45', stroke: '#dbe5ec', strokeWidth: '3', strokeLinecap: 'round', fill: 'none' }),
               e('circle', { cx: '32', cy: '16', r: '5', fill: 'white', stroke: 'black', strokeWidth: '1' }),
               e('circle', { cx: '44', cy: '16', r: '5', fill: 'white', stroke: 'black', strokeWidth: '1' }),
               e('circle', { cx: '33', cy: '16', r: '2', fill: 'black' }),
-              e('circle', { cx: '45', cy: '16', r: '2', fill: 'black' }),
-              /* Cejas */
-              e('path', { d: 'M 28 8 Q 32 6 36 10', stroke: 'black', strokeWidth: '1.5', fill: 'none' }),
-              e('path', { d: 'M 40 10 Q 44 6 48 8', stroke: 'black', strokeWidth: '1.5', fill: 'none' })
+              e('circle', { cx: '45', cy: '16', r: '2', fill: 'black' })
             )
           )
         ),
 
-        /* --- 4. MENÚ DE INICIO --- */
-        isStartOpen && e('div', {
-          className: 'fixed bottom-10 left-0 w-80 bg-[#1c5fcc] border-2 border-[#0055ea] rounded-tr-lg shadow-2xl z-50 flex flex-col overflow-hidden text-white font-sans'
-        },
-          /* Encabezado Usuario */
-          e('div', { className: 'bg-gradient-to-r from-[#0058ee] to-[#388cf8] p-3 flex items-center gap-3 border-b border-[#0038a8]' },
-            e('div', { className: 'w-10 h-10 rounded border-2 border-white overflow-hidden bg-slate-200 flex items-center justify-center' },
-              e('img', { src: ICONS.user, className: 'w-8 h-8' })
-            ),
-            e('span', { className: 'font-bold text-sm shadow-sm' }, 'Daniel Esteve')
-          ),
-
-          /* Cuerpo del Menú de Inicio (Dos Columnas) */
-          e('div', { className: 'flex bg-white text-slate-800 text-xs' },
-            /* Columna Izquierda (Accesos Directos) */
-            e('div', { className: 'w-1/2 p-2 space-y-1 bg-white border-r border-slate-200' },
-              [
-                { id: 'myCV', label: 'Mi CV.txt', icon: ICONS.notepad },
-                { id: 'projects', label: 'Proyectos', icon: ICONS.folder },
-                { id: 'rrss', label: 'Internet Explorer', icon: ICONS.internetExplorer },
-                { id: 'contact', label: 'Contacto', icon: ICONS.contact }
-              ].map(item =>
-                e('div', {
-                  key: item.id,
-                  onClick: () => openWindow(item.id),
-                  className: 'flex items-center gap-2 p-1.5 hover:bg-[#3168d5] hover:text-white rounded cursor-pointer transition'
-                },
-                  e('img', { src: item.icon, className: 'w-5 h-5' }),
-                  e('span', { className: 'font-medium truncate' }, item.label)
-                )
-              )
-            ),
-
-            /* Columna Derecha (Sistema y Carpetas) */
-            e('div', { className: 'w-1/2 p-2 space-y-1 bg-[#d3e5fa]' },
-              [
-                { id: 'myComputer', label: 'Mi PC', icon: ICONS.myComputer },
-                { id: 'recycleBin', label: 'Papelera', icon: ICONS.recycleBin }
-              ].map(item =>
-                e('div', {
-                  key: item.id,
-                  onClick: () => openWindow(item.id),
-                  className: 'flex items-center gap-2 p-1.5 hover:bg-[#3168d5] hover:text-white rounded cursor-pointer transition'
-                },
-                  e('img', { src: item.icon, className: 'w-4 h-4' }),
-                  e('span', { className: 'font-semibold text-slate-700 hover:text-white truncate' }, item.label)
-                )
-              )
-            )
-          ),
-
-          /* Pie del Menú de Inicio (Apagar) */
-          e('div', { className: 'bg-gradient-to-r from-[#0058ee] to-[#2068e0] p-2 flex justify-end items-center border-t border-[#0038a8]' },
-            e('button', {
-              onClick: () => alert('Apagando Windows XP... ¡Gracias por visitar el sitio de Daniel Esteve!'),
-              className: 'flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1 rounded text-xs border border-white/40 shadow'
+        /* --- VENTANA CONTACTO --- */
+        e(XPWindowComponent, { winKey: 'contacto' },
+          e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs' },
+            e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
+            e('p', { className: 'mb-1' }, '📞 Teléfono: +34 600 000 000'),
+            e('p', { className: 'mb-4' }, '✉️ Email: danielesteve@email.com'),
+            e('a', {
+              href: 'mailto:danielesteve@email.com?subject=Contacto%20desde%20Portafolio%20Web',
+              className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
             },
-              e('img', { src: ICONS.turnOff, className: 'w-4 h-4' }),
-              e('span', {}, 'Apagar equipo')
+              e('span', {}, '✉️'),
+              e('span', {}, 'Enviar Email Directo')
             )
           )
         ),
 
-        /* --- 5. BARRA DE TAREAS --- */
-        e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-1 z-50 border-t border-blue-400 select-none' },
-          /* Sección Izquierda: Botón Inicio + Botones de Ventanas Abiertas */
-          e('div', { className: 'flex items-center gap-1.5 h-full overflow-hidden flex-1' },
+        /* --- MENÚ DE INICIO --- */
+        startMenuOpen && e('div', {
+          onClick: (evt) => evt.stopPropagation(),
+          className: 'fixed bottom-10 left-0 w-64 bg-white border-2 border-blue-600 rounded-tr-lg shadow-2xl z-50 overflow-hidden font-sans text-xs'
+        },
+          e('div', { className: 'bg-blue-600 p-3 text-white font-bold flex items-center gap-2' },
+            e('span', { className: 'text-base' }, '👤'),
+            e('span', {}, 'Daniel Esteve Quesada')
+          ),
+          e('div', { className: 'p-2 flex flex-col gap-1 bg-slate-50' },
+            e('div', { onClick: () => { openWindow('cv'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.notepad, className: 'w-5 h-5' }),
+              e('span', {}, 'Mi CV.txt')
+            ),
+            e('div', { onClick: () => { openWindow('proyectos'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.folder, className: 'w-5 h-5' }),
+              e('span', {}, 'Proyectos')
+            ),
+            e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }),
+              e('span', {}, 'Redes Sociales')
+            )
+          )
+        ),
+
+        /* --- BARRA DE TAREAS XP --- */
+        e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-1 z-50 border-t border-blue-400' },
+          e('div', { className: 'flex items-center gap-2 h-full overflow-x-auto' },
             /* Botón Inicio */
             e('button', {
-              onClick: () => setIsStartOpen(!isStartOpen),
-              className: 'xp-start-btn text-white font-extrabold italic text-sm px-3 h-8 rounded-r-lg flex items-center gap-1.5 shadow-md border-r border-green-300'
+              onClick: (evt) => { evt.stopPropagation(); setStartMenuOpen(!startMenuOpen); },
+              className: 'xp-start-btn text-white font-extrabold italic text-sm px-4 h-8 rounded-r-lg flex items-center gap-1 shadow-md border-r border-green-300 hover:brightness-110 active:brightness-90'
             },
-              e('span', { className: 'text-base leading-none drop-shadow' }, '❖'),
-              e('span', { className: 'drop-shadow-sm font-sans tracking-wide text-xs uppercase' }, 'inicio')
+              e('span', { className: 'text-lg' }, '❖'),
+              e('span', {}, 'inicio')
             ),
 
-            /* Separador */
-            e('div', { className: 'w-[2px] h-6 bg-blue-300/40 mx-0.5' }),
-
-            /* Botones de Ventanas Activas en la Barra de Tareas */
-            e('div', { className: 'flex items-center gap-1 overflow-x-auto h-full py-1 flex-1' },
-              Object.keys(windows).map(id => {
-                const win = windows[id];
-                if (!win.isOpen) return null;
-
-                const isActive = activeWindowId === id && !win.isMinimized;
-
-                return e('button', {
-                  key: id,
-                  onClick: () => toggleMinimize(id),
-                  className: `${isActive ? 'xp-taskbar-item-active text-white font-bold' : 'xp-taskbar-item text-slate-100 hover:text-white'} h-7 px-2.5 rounded text-xs flex items-center gap-1.5 max-w-[150px] min-w-[100px] border border-blue-900/60 truncate`
+            /* Elementos activos en la barra de tareas */
+            Object.entries(windows).map(([id, win]) => {
+              if (!win.isOpen) return null;
+              const isActive = activeWin === id && !win.isMinimized;
+              return e('button', {
+                key: id,
+                onClick: () => {
+                  if (win.isMinimized || activeWin !== id) focusWindow(id);
+                  else toggleMinimize(id);
                 },
-                  e('img', { src: win.icon, className: 'w-3.5 h-3.5 pointer-events-none' }),
-                  e('span', { className: 'truncate text-[11px]' }, win.title)
-                );
-              })
-            )
+                className: `h-7 px-3 rounded text-xs font-semibold flex items-center gap-1.5 border max-w-[150px] truncate ${
+                  isActive
+                    ? 'bg-blue-800 text-white border-blue-900 inset-shadow'
+                    : 'bg-blue-500/40 text-blue-100 border-blue-400/40 hover:bg-blue-500/60'
+                }`
+              },
+                win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-3.5 h-3.5' }) : e('span', {}, '📎'),
+                e('span', { className: 'truncate' }, win.title)
+              );
+            })
           ),
 
-          /* Sección Derecha: Área de Notificación y Reloj */
-          e('div', { className: 'bg-[#092e8c]/80 border-l border-blue-400/50 text-white text-[11px] px-3 h-full flex items-center gap-2 ml-1 shadow-inner' },
-            e('span', { title: 'Equipo protegido' }, '🛡️'),
-            e('span', { className: 'font-sans font-medium' }, time)
+          /* Reloj del sistema */
+          e('div', { className: 'bg-cyan-500/40 border border-cyan-300/30 text-white text-xs px-3 h-8 flex items-center rounded' },
+            new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           )
         )
+
       );
     }
 
