@@ -112,23 +112,37 @@
       const [windows, setWindows] = useState({
         myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: 80, y: 40 }, isMax: false, zIndex: 10 },
         cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 40 }, isMax: false, zIndex: 10 },
-        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 160, y: 70 }, isMax: false, zIndex: 10 },
-        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 200, y: 100 }, isMax: false, zIndex: 10 },
-        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 120 }, isMax: false, zIndex: 10 }
+        proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 150, y: 60 }, isMax: false, zIndex: 10 },
+        proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 180, y: 90 }, isMax: false, zIndex: 10 },
+        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 210, y: 120 }, isMax: false, zIndex: 10 },
+        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 140 }, isMax: false, zIndex: 10 }
       });
 
+      // Posiciones "desordenadas" estilo uso cotidiano
       const [iconPositions, setIconPositions] = useState({
-        myComputer: { x: 20, y: 20 },
-        recycleBin: { x: 20, y: 110 },
-        cv: { x: 20, y: 200 },
-        proyectos: { x: 20, y: 290 },
-        rrss: { x: 20, y: 380 }
+        myComputer: { x: 25, y: 18 },
+        cv: { x: 35, y: 125 },
+        proyectosLaborales: { x: 15, y: 240 },
+        proyectosPersonales: { x: 130, y: 45 },
+        rrss: { x: 120, y: 165 },
+        recycleBin: { x: 30, y: 375 }
+      });
+
+      // Estructura de carpetas y navegación
+      const [navPersonales, setNavPersonales] = useState([]);
+      const [navLaborales, setNavLaborales] = useState([]);
+
+      // Subcarpetas dinámicas creadas por el usuario
+      const [customFoldersPersonales, setCustomFoldersPersonales] = useState({});
+      const [customFoldersLaborales, setCustomFoldersLaborales] = useState({
+        'V3RTICE': [],
+        'MaQasa': [],
+        'Concursos': []
       });
 
       const [activeWin, setActiveWin] = useState(null);
       const [topZ, setTopZ] = useState(20);
       const [startMenuOpen, setStartMenuOpen] = useState(false);
-      const [subcarpeta, setSubcarpeta] = useState(null);
 
       const openWindow = (id) => {
         const nextZ = topZ + 1;
@@ -222,7 +236,6 @@
         window.addEventListener('mouseup', onMouseUp);
       };
 
-      // Apertura directa con Gmail Web (sin bloqueadores de navegador)
       const handleSendEmail = () => {
         const asunto = encodeURIComponent("Contacto desde Portafolio Web");
         const cuerpo = encodeURIComponent("Hola Daniel,\n\nMe gustaría contactar contigo para conocernos mejor y trabajar juntos.\n\nUn saludo,");
@@ -232,7 +245,27 @@
         window.open(gmailUrl, '_blank');
       };
 
-      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[700px]") => {
+      const handleCreateFolder = (type) => {
+        const folderName = prompt("Introduce el nombre de la nueva subcarpeta:");
+        if (!folderName || !folderName.trim()) return;
+
+        const name = folderName.trim();
+        if (type === 'personales') {
+          const currentPathKey = navPersonales.join('/');
+          setCustomFoldersPersonales(prev => ({
+            ...prev,
+            [currentPathKey]: [...(prev[currentPathKey] || []), name]
+          }));
+        } else {
+          const currentPathKey = navLaborales.join('/');
+          setCustomFoldersLaborales(prev => ({
+            ...prev,
+            [currentPathKey]: [...(prev[currentPathKey] || []), name]
+          }));
+        }
+      };
+
+      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[720px]") => {
         const win = windows[winKey];
         if (!win.isOpen || win.isMinimized) return null;
 
@@ -251,7 +284,7 @@
           },
             e('div', { className: 'flex items-center gap-1.5' },
               win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4' }) : e('span', {}, '📎'),
-              e('span', { className: 'truncate max-w-[280px]' }, win.title)
+              e('span', { className: 'truncate max-w-[320px]' }, win.title)
             ),
             
             e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
@@ -292,22 +325,34 @@
         );
       };
 
+      const currentPathPersonales = navPersonales.join('/');
+      const subFoldersPersonales = customFoldersPersonales[currentPathPersonales] || [];
+
+      const currentPathLaborales = navLaborales.join('/');
+      let currentItemsLaborales = [];
+      if (navLaborales.length === 0) {
+        currentItemsLaborales = ['V3RTICE', 'MaQasa', 'Concursos'];
+      } else {
+        currentItemsLaborales = customFoldersLaborales[currentPathLaborales] || [];
+      }
+
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
-        /* ICONOS DEL ESCRITORIO */
+        /* ICONOS DEL ESCRITORIO (POSICIONES DESORDENADAS REALISTAS) */
         Object.entries({
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
-          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
-          proyectos: { label: 'Proyectos', icon: ICONS.folder, action: () => openWindow('proyectos') },
-          rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') }
+          proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
+          proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') },
+          rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
+          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} }
         }).map(([key, item]) => 
           e('div', {
             key,
             onMouseDown: (evt) => handleIconMouseDown(key, evt),
             onDoubleClick: item.action,
             style: { top: `${iconPositions[key].y}px`, left: `${iconPositions[key].x}px` },
-            className: 'absolute w-20 flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] text-center select-none'
+            className: 'absolute w-22 flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] text-center select-none'
           },
             e('img', { src: item.icon, className: 'w-10 h-10 mb-1 pointer-events-none' }),
             e('span', { className: 'leading-tight' }, item.label)
@@ -335,7 +380,7 @@
                 e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Archivos almacenados en este equipo'),
                 e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-3' },
                   e('div', {
-                    onDoubleClick: () => openWindow('proyectos'),
+                    onDoubleClick: () => openWindow('proyectosLaborales'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
                   },
                     e(HardDriveIcon),
@@ -346,7 +391,7 @@
                   ),
 
                   e('div', {
-                    onDoubleClick: () => openWindow('cv'),
+                    onDoubleClick: () => openWindow('proyectosPersonales'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
                   },
                     e(HardDriveIcon),
@@ -398,33 +443,79 @@
           )
         ),
 
-        /* VENTANA: PROYECTOS */
-        renderXPWindow('proyectos',
-          !subcarpeta ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-4 text-center' },
-            [
-              { id: 'audiovisual', nombre: '🎬 Audiovisual', desc: 'Vídeos y MaQasa' },
-              { id: 'ventas', nombre: '📱 Ventas & Retail', desc: 'Xiaomi & TCL' },
-              { id: 'eventos', nombre: '🎪 Eventos en Vivo', desc: 'GrupoIDEX' },
-              { id: 'marketing', nombre: '📊 Marketing 360', desc: 'V3RTICE' }
-            ].map(folder =>
-              e('div', {
-                key: folder.id,
-                onDoubleClick: () => setSubcarpeta(folder.nombre),
-                className: 'p-3 bg-white border border-slate-300 rounded shadow hover:bg-blue-50 cursor-pointer flex flex-col items-center'
-              },
-                e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
-                e('span', { className: 'font-bold text-xs' }, folder.nombre),
-                e('span', { className: 'text-[10px] text-slate-500' }, folder.desc)
+        /* VENTANA 1: PROYECTOS PERSONALES */
+        renderXPWindow('proyectosPersonales',
+          e('div', { className: 'space-y-3' },
+            e('div', { className: 'bg-slate-200 p-2 border border-slate-300 rounded text-xs flex items-center justify-between gap-2' },
+              e('div', { className: 'flex items-center gap-2 truncate' },
+                navPersonales.length > 0 && e('button', {
+                  onClick: () => setNavPersonales(prev => prev.slice(0, -1)),
+                  className: 'bg-white border border-slate-400 px-2 py-0.5 rounded font-bold hover:bg-slate-100'
+                }, '⬅ Atrás'),
+                e('span', { className: 'font-mono text-slate-700 truncate' }, `C:\\Proyectos Personales${navPersonales.length ? '\\' + navPersonales.join('\\') : ''}`)
+              ),
+              e('button', {
+                onClick: () => handleCreateFolder('personales'),
+                className: 'bg-blue-600 hover:bg-blue-700 text-white font-bold px-2.5 py-1 rounded shadow text-xs shrink-0'
+              }, '+ Nueva Subcarpeta')
+            ),
+
+            e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[260px]' },
+              subFoldersPersonales.length === 0 ? e('div', { className: 'text-center py-10 text-slate-500 text-xs' },
+                e('p', { className: 'text-base mb-1' }, '📁'),
+                e('p', {}, 'Esta carpeta está vacía.'),
+                e('p', { className: 'text-[11px] text-slate-400 mt-1' }, 'Haz clic en "+ Nueva Subcarpeta" arriba para añadir organizadores o fotos/vídeos.')
+              ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-4' },
+                subFoldersPersonales.map((folder, idx) =>
+                  e('div', {
+                    key: idx,
+                    onDoubleClick: () => setNavPersonales(prev => [...prev, folder]),
+                    className: 'p-3 border border-slate-200 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center'
+                  },
+                    e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+                    e('span', { className: 'font-bold text-xs truncate w-full' }, folder)
+                  )
+                )
               )
             )
-          ) : e('div', {},
-            e('button', {
-              onClick: () => setSubcarpeta(null),
-              className: 'mb-4 text-xs bg-slate-200 border border-slate-400 px-3 py-1 rounded hover:bg-slate-300 font-semibold'
-            }, '⬅ Volver a Proyectos'),
-            e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[200px]' },
-              e('h3', { className: 'font-bold text-sm border-b pb-1 mb-3' }, `Contenido de: ${subcarpeta}`),
-              e('p', { className: 'text-xs text-slate-600 italic' }, 'Aquí subiremos tus fotos, vídeos y archivos multimedia.')
+          )
+        ),
+
+        /* VENTANA 2: PROYECTOS LABORALES */
+        renderXPWindow('proyectosLaborales',
+          e('div', { className: 'space-y-3' },
+            e('div', { className: 'bg-slate-200 p-2 border border-slate-300 rounded text-xs flex items-center justify-between gap-2' },
+              e('div', { className: 'flex items-center gap-2 truncate' },
+                navLaborales.length > 0 && e('button', {
+                  onClick: () => setNavLaborales(prev => prev.slice(0, -1)),
+                  className: 'bg-white border border-slate-400 px-2 py-0.5 rounded font-bold hover:bg-slate-100'
+                }, '⬅ Atrás'),
+                e('span', { className: 'font-mono text-slate-700 truncate' }, `C:\\Proyectos Laborales${navLaborales.length ? '\\' + navLaborales.join('\\') : ''}`)
+              ),
+              navLaborales.length > 0 && e('button', {
+                onClick: () => handleCreateFolder('laborales'),
+                className: 'bg-blue-600 hover:bg-blue-700 text-white font-bold px-2.5 py-1 rounded shadow text-xs shrink-0'
+              }, '+ Nueva Subcarpeta')
+            ),
+
+            e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[260px]' },
+              currentItemsLaborales.length === 0 ? e('div', { className: 'text-center py-10 text-slate-500 text-xs' },
+                e('p', { className: 'text-base mb-1' }, '📁'),
+                e('p', {}, 'Esta carpeta no tiene subcarpetas.'),
+                e('p', { className: 'text-[11px] text-slate-400 mt-1' }, 'Puedes pulsar "+ Nueva Subcarpeta" para organizar el contenido.')
+              ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-4' },
+                currentItemsLaborales.map((folder, idx) =>
+                  e('div', {
+                    key: idx,
+                    onDoubleClick: () => setNavLaborales(prev => [...prev, folder]),
+                    className: 'p-3 border border-slate-200 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center'
+                  },
+                    e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+                    e('span', { className: 'font-bold text-xs truncate w-full' }, folder),
+                    navLaborales.length === 0 && e('span', { className: 'text-[10px] text-slate-500 mt-0.5' }, 'Carpeta de proyectos')
+                  )
+                )
+              )
             )
           )
         ),
@@ -492,7 +583,7 @@
           )
         ),
 
-        /* VENTANA CONTACTO (GMAIL WEB DIRECTO) */
+        /* VENTANA CONTACTO */
         renderXPWindow('contacto',
           e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs space-y-3' },
             e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
@@ -530,9 +621,13 @@
               e('img', { src: ICONS.notepad, className: 'w-5 h-5' }),
               e('span', {}, 'Mi CV.txt')
             ),
-            e('div', { onClick: () => { openWindow('proyectos'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+            e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.folder, className: 'w-5 h-5' }),
-              e('span', {}, 'Proyectos')
+              e('span', {}, 'Proyectos Personales')
+            ),
+            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.folder, className: 'w-5 h-5' }),
+              e('span', {}, 'Proyectos Laborales')
             ),
             e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }),
