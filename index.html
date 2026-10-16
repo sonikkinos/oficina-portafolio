@@ -91,10 +91,23 @@
       recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
-      hardDrive: 'https://win98icons.alexmeub.com/icons/png/hard_drive-3.png',
-      cdDrive: 'https://win98icons.alexmeub.com/icons/png/cd_drive-3.png'
+      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png'
     };
+
+    // Componentes SVG para Discos Duros y Lectora CD (garantiza que carguen siempre)
+    const HardDriveIcon = () => e('svg', { width: '36', height: '36', viewBox: '0 0 36 36', fill: 'none' },
+      e('rect', { x: '4', y: '10', width: '28', height: '16', rx: '2', fill: '#94a3b8', stroke: '#334155', strokeWidth: '1.5' }),
+      e('rect', { x: '6', y: '12', width: '24', height: '12', rx: '1', fill: '#cbd5e1' }),
+      e('circle', { cx: '9', cy: '18', r: '1.5', fill: '#22c55e' }),
+      e('rect', { x: '13', y: '16', width: '14', height: '4', fill: '#64748b', rx: '0.5' })
+    );
+
+    const CdDriveIcon = () => e('svg', { width: '36', height: '36', viewBox: '0 0 36 36', fill: 'none' },
+      e('rect', { x: '3', y: '11', width: '30', height: '14', rx: '2', fill: '#cbd5e1', stroke: '#475569', strokeWidth: '1.5' }),
+      e('rect', { x: '6', y: '15', width: '24', height: '3', fill: '#94a3b8' }),
+      e('circle', { cx: '27', cy: '21', r: '1', fill: '#3b82f6' }),
+      e('rect', { x: '7', y: '20', width: '4', height: '2', fill: '#64748b' })
+    );
 
     function App() {
       // Estado de ventanas
@@ -332,7 +345,7 @@
                     onDoubleClick: () => openWindow('proyectos'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
                   },
-                    e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
+                    e(HardDriveIcon),
                     e('div', {},
                       e('p', { className: 'font-bold text-xs' }, 'Disco local (C:)'),
                       e('p', { className: 'text-[10px] text-slate-500' }, '45 GB libres de 120 GB')
@@ -344,7 +357,7 @@
                     onDoubleClick: () => openWindow('cv'),
                     className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
                   },
-                    e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
+                    e(HardDriveIcon),
                     e('div', {},
                       e('p', { className: 'font-bold text-xs' }, 'Disco local (D:)'),
                       e('p', { className: 'text-[10px] text-slate-500' }, '90 GB libres de 250 GB')
@@ -356,7 +369,7 @@
               e('div', {},
                 e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Dispositivos con almacenamiento extraíble'),
                 e('div', { className: 'p-2 bg-white border border-slate-300 rounded shadow-xs flex items-center gap-3 w-full sm:w-1/2' },
-                  e('img', { src: ICONS.cdDrive, className: 'w-8 h-8' }),
+                  e(CdDriveIcon),
                   e('div', {},
                     e('p', { className: 'font-bold text-xs' }, 'Unidad de CD-RW (E:)'),
                     e('p', { className: 'text-[10px] text-slate-500' }, 'Sin disco insertado')
