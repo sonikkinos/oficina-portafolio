@@ -88,7 +88,8 @@
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
       internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
-      paint: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png'
+      paint: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
+      minesweeper: 'https://win98icons.alexmeub.com/icons/png/game_mine_1-0.png'
     };
 
     const HardDriveIcon = () => e('svg', { width: '32', height: '32', viewBox: '0 0 36 36', fill: 'none' },
@@ -110,7 +111,7 @@
       const canvasRef = useRef(null);
       const [isDrawing, setIsDrawing] = useState(false);
       const [color, setColor] = useState('#000000');
-      const [tool, setTool] = useState('pencil'); // pencil | eraser
+      const [tool, setTool] = useState('pencil');
       const [lineWidth, setLineWidth] = useState(3);
 
       useEffect(() => {
@@ -173,7 +174,6 @@
       ];
 
       return e('div', { className: 'flex flex-col h-full bg-slate-200 p-1.5 gap-2 select-none' },
-        /* Barra de herramientas */
         e('div', { className: 'flex flex-wrap items-center justify-between gap-2 bg-slate-100 p-1.5 border border-slate-300 rounded text-xs' },
           e('div', { className: 'flex items-center gap-1' },
             e('button', {
@@ -190,7 +190,6 @@
             }, '🗑️ Limpiar')
           ),
 
-          /* Paleta de colores */
           e('div', { className: 'flex items-center gap-1 overflow-x-auto' },
             palette.map((c, i) => e('div', {
               key: i,
@@ -200,7 +199,6 @@
             }))
           ),
 
-          /* Grosor y Descarga */
           e('div', { className: 'flex items-center gap-2' },
             e('select', {
               value: lineWidth,
@@ -218,7 +216,6 @@
           )
         ),
 
-        /* Lienzo Canvas */
         e('div', { className: 'flex-1 bg-slate-300 p-1 border border-slate-400 flex items-center justify-center overflow-hidden rounded' },
           e('canvas', {
             ref: canvasRef,
@@ -237,6 +234,225 @@
       );
     }
 
+    // COMPONENTE BUSCAMINAS FUNCIONAL
+    function MinesweeperApp() {
+      const ROWS = 8;
+      const COLS = 8;
+      const MINES = 10;
+
+      const [grid, setGrid] = useState([]);
+      const [gameOver, setGameOver] = useState(false);
+      const [win, setWin] = useState(false);
+      const [flags, setFlags] = useState(0);
+      const [timer, setTimer] = useState(0);
+      const [mode, setMode] = useState('reveal'); // 'reveal' | 'flag' para móviles
+      const timerRef = useRef(null);
+
+      const initGame = () => {
+        clearInterval(timerRef.current);
+        setTimer(0);
+        setGameOver(false);
+        setWin(false);
+        setFlags(0);
+
+        // Crear cuadrícula vacía
+        let newGrid = Array(ROWS).fill(null).map(() =>
+          Array(COLS).fill(null).map(() => ({
+            isMine: false,
+            revealed: false,
+            flagged: false,
+            neighborMines: 0
+          }))
+        );
+
+        // Colocar minas aleatorias
+        let placedMines = 0;
+        while (placedMines < MINES) {
+          let r = Math.floor(Math.random() * ROWS);
+          let c = Math.floor(Math.random() * COLS);
+          if (!newGrid[r][c].isMine) {
+            newGrid[r][c].isMine = true;
+            placedMines++;
+          }
+        }
+
+        // Calcular minas vecinas
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            if (!newGrid[r][c].isMine) {
+              let count = 0;
+              for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                  let nr = r + dr;
+                  let nc = c + dc;
+                  if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && newGrid[nr][nc].isMine) {
+                    count++;
+                  }
+                }
+              }
+              newGrid[r][c].neighborMines = count;
+            }
+          }
+        }
+
+        setGrid(newGrid);
+      };
+
+      useEffect(() => {
+        initGame();
+        return () => clearInterval(timerRef.current);
+      }, []);
+
+      useEffect(() => {
+        if (!gameOver && !win && grid.length > 0) {
+          const hasRevealed = grid.some(row => row.some(cell => cell.revealed));
+          if (hasRevealed) {
+            timerRef.current = setInterval(() => {
+              setTimer(t => t + 1);
+            }, 1000);
+            return () => clearInterval(timerRef.current);
+          }
+        }
+      }, [grid, gameOver, win]);
+
+      const revealCell = (r, c) => {
+        if (gameOver || win || grid[r][c].revealed || grid[r][c].flagged) return;
+
+        let newGrid = grid.map(row => row.map(cell => ({ ...cell })));
+
+        if (newGrid[r][c].isMine) {
+          // Mostrar todas las minas al perder
+          for (let i = 0; i < ROWS; i++) {
+            for (let j = 0; j < COLS; j++) {
+              if (newGrid[i][j].isMine) newGrid[i][j].revealed = true;
+            }
+          }
+          setGrid(newGrid);
+          setGameOver(true);
+          clearInterval(timerRef.current);
+          return;
+        }
+
+        // Algoritmo de revelado en cascada
+        const floodFill = (row, col) => {
+          if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
+          if (newGrid[row][col].revealed || newGrid[row][col].flagged) return;
+
+          newGrid[row][col].revealed = true;
+
+          if (newGrid[row][col].neighborMines === 0) {
+            for (let dr = -1; dr <= 1; dr++) {
+              for (let dc = -1; dc <= 1; dc++) {
+                if (dr !== 0 || dc !== 0) floodFill(row + dr, col + dc);
+              }
+            }
+          }
+        };
+
+        floodFill(r, c);
+        setGrid(newGrid);
+
+        // Comprobar victoria
+        let unrevealedSafeCells = 0;
+        for (let i = 0; i < ROWS; i++) {
+          for (let j = 0; j < COLS; j++) {
+            if (!newGrid[i][j].isMine && !newGrid[i][j].revealed) unrevealedSafeCells++;
+          }
+        }
+
+        if (unrevealedSafeCells === 0) {
+          setWin(true);
+          clearInterval(timerRef.current);
+        }
+      };
+
+      const toggleFlag = (r, c, evt) => {
+        if (evt) evt.preventDefault();
+        if (gameOver || win || grid[r][c].revealed) return;
+
+        let newGrid = grid.map(row => row.map(cell => ({ ...cell })));
+        const currentFlagged = newGrid[r][c].flagged;
+
+        newGrid[r][c].flagged = !currentFlagged;
+        setFlags(prev => currentFlagged ? prev - 1 : prev + 1);
+        setGrid(newGrid);
+      };
+
+      const handleCellClick = (r, c) => {
+        if (mode === 'flag') {
+          toggleFlag(r, c);
+        } else {
+          revealCell(r, c);
+        }
+      };
+
+      const numberColors = ['', 'text-blue-600', 'text-green-700', 'text-red-600', 'text-blue-900', 'text-red-800', 'text-teal-600', 'text-black', 'text-gray-600'];
+
+      return e('div', { className: 'flex flex-col items-center bg-slate-300 p-3 border-2 border-slate-100 shadow-inner select-none h-full justify-center' },
+        
+        /* Marcadores y Carita */
+        e('div', { className: 'bg-slate-300 border-2 border-slate-500 border-b-white border-r-white p-2 w-full max-w-[260px] flex justify-between items-center mb-3' },
+          e('div', { className: 'bg-black text-red-600 font-mono text-lg font-bold px-2 py-0.5 border border-slate-600 rounded' },
+            String(Math.max(0, MINES - flags)).padStart(3, '0')
+          ),
+
+          e('button', {
+            onClick: initGame,
+            className: 'w-9 h-9 text-xl bg-slate-200 border-2 border-white border-b-slate-600 border-r-slate-600 active:border-slate-600 active:border-b-white active:border-r-white flex items-center justify-center rounded shadow-xs'
+          },
+            gameOver ? '😵' : win ? '😎' : '😀'
+          ),
+
+          e('div', { className: 'bg-black text-red-600 font-mono text-lg font-bold px-2 py-0.5 border border-slate-600 rounded' },
+            String(Math.min(999, timer)).padStart(3, '0')
+          )
+        ),
+
+        /* Selector de modo para pantallas táctiles */
+        e('div', { className: 'flex gap-2 mb-2 text-xs font-bold' },
+          e('button', {
+            onClick: () => setMode('reveal'),
+            className: `px-3 py-1 rounded border ${mode === 'reveal' ? 'bg-blue-600 text-white' : 'bg-white text-slate-800'}`
+          }, '💣 Descubrir'),
+          e('button', {
+            onClick: () => setMode('flag'),
+            className: `px-3 py-1 rounded border ${mode === 'flag' ? 'bg-red-600 text-white' : 'bg-white text-slate-800'}`
+          }, '🚩 Poner Banderas')
+        ),
+
+        /* Tablero de Juego */
+        e('div', { className: 'border-3 border-slate-500 border-b-white border-r-white p-1 bg-slate-400 rounded-sm' },
+          e('div', { className: 'grid grid-cols-8 gap-0.5 bg-slate-500' },
+            grid.map((row, r) =>
+              row.map((cell, c) => {
+                let content = '';
+                let cellStyle = 'bg-slate-200 border-2 border-white border-b-slate-600 border-r-slate-600 active:border-slate-500';
+
+                if (cell.revealed) {
+                  cellStyle = 'bg-slate-300 border border-slate-400';
+                  if (cell.isMine) {
+                    content = '💣';
+                    cellStyle += ' bg-red-500';
+                  } else if (cell.neighborMines > 0) {
+                    content = e('span', { className: `font-extrabold ${numberColors[cell.neighborMines]}` }, cell.neighborMines);
+                  }
+                } else if (cell.flagged) {
+                  content = '🚩';
+                }
+
+                return e('button', {
+                  key: `${r}-${c}`,
+                  onClick: () => handleCellClick(r, c),
+                  onContextMenu: (evt) => toggleFlag(r, c, evt),
+                  className: `w-8 h-8 flex items-center justify-center font-bold text-sm leading-none ${cellStyle}`
+                }, content);
+              })
+            )
+          )
+        )
+      );
+    }
+
     function App() {
       const isMobile = window.innerWidth <= 640;
 
@@ -246,6 +462,7 @@
         proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 150, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
         proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
         paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
+        minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 100 }, isMax: false, zIndex: 10 },
         rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 210, y: isMobile ? 20 : 120 }, isMax: isMobile, zIndex: 10 },
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: false, zIndex: 10 }
       });
@@ -258,8 +475,9 @@
             myComputer: { x: 15, y: 15 },
             cv: { x: 15, y: 100 },
             paint: { x: 15, y: 185 },
-            rrss: { x: 15, y: 270 },
-            recycleBin: { x: 15, y: 355 },
+            minesweeper: { x: 15, y: 270 },
+            rrss: { x: 15, y: 355 },
+            recycleBin: { x: 15, y: 440 },
             proyectosLaborales: { x: width - 95, y: 15 },
             proyectosPersonales: { x: width - 95, y: 100 }
           };
@@ -268,8 +486,9 @@
           myComputer: { x: 25, y: 20 },
           cv: { x: 30, y: 130 },
           paint: { x: 28, y: 240 },
-          rrss: { x: 22, y: 350 },
-          recycleBin: { x: 35, y: 460 },
+          minesweeper: { x: 32, y: 350 },
+          rrss: { x: 22, y: 460 },
+          recycleBin: { x: 120, y: 270 },
           proyectosLaborales: { x: width - 125, y: 30 },
           proyectosPersonales: { x: width - 120, y: 150 }
         };
@@ -494,11 +713,12 @@
 
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
-        /* ICONOS DEL ESCRITORIO CON PAINT */
+        /* ICONOS DEL ESCRITORIO */
         Object.entries({
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
           paint: { label: 'Paint', icon: ICONS.paint, action: () => openWindow('paint') },
+          minesweeper: { label: 'Buscaminas', icon: ICONS.minesweeper, action: () => openWindow('minesweeper') },
           rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
           recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
           proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
@@ -518,8 +738,11 @@
           )
         ),
 
-        /* VENTANA: PAINT FUNCIONAL */
+        /* VENTANA: PAINT */
         renderXPWindow('paint', e(PaintApp)),
+
+        /* VENTANA: BUSCAMINAS */
+        renderXPWindow('minesweeper', e(MinesweeperApp), "w-[90vw] max-w-[340px]"),
 
         /* VENTANA: MI PC */
         renderXPWindow('myComputer',
@@ -786,6 +1009,10 @@
             e('div', { onClick: () => { openWindow('paint'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.paint, className: 'w-5 h-5' }),
               e('span', {}, 'Paint')
+            ),
+            e('div', { onClick: () => { openWindow('minesweeper'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.minesweeper, className: 'w-5 h-5' }),
+              e('span', {}, 'Buscaminas')
             ),
             e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.folder, className: 'w-5 h-5' }),
