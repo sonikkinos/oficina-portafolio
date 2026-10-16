@@ -493,13 +493,14 @@
             e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
             e('p', { className: 'mb-1' }, '📞 Teléfono: +34 627 99 48 98'),
             e('p', { className: 'mb-4' }, '✉️ Email: estevequesadadaniel@gmail.com'),
-            e('a', {
-              href: 'mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web',
-              className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
-            },
-              e('span', {}, '✉️'),
-              e('span', {}, 'Enviar Email Directo')
-            )
+            /* CÓDIGO NUEVO */
+e('a', {
+  href: 'mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web&body=Hola%20Daniel,%0A%0AMe%20gustar%C3%ADa%20contactar%20contigo%20para%20conocernos%20mejor%20y%20trabajar%20juntos.%0A%0AUn%20saludo,',
+  className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
+},
+  e('span', {}, '✉️'),
+  e('span', {}, 'Enviar Email Directo')
+)
           ),
           "w-[90vw] max-w-[380px]"
         ),
