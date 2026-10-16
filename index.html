@@ -118,14 +118,14 @@
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 140 }, isMax: false, zIndex: 10 }
       });
 
-      // Posiciones "desordenadas" estilo uso cotidiano
+      // Posiciones de los iconos distribuidos (Carpetas a la derecha)
       const [iconPositions, setIconPositions] = useState({
-        myComputer: { x: 25, y: 18 },
-        cv: { x: 35, y: 125 },
-        proyectosLaborales: { x: 15, y: 240 },
-        proyectosPersonales: { x: 130, y: 45 },
-        rrss: { x: 120, y: 165 },
-        recycleBin: { x: 30, y: 375 }
+        myComputer: { x: 25, y: 20 },
+        cv: { x: 30, y: 130 },
+        rrss: { x: 22, y: 240 },
+        recycleBin: { x: 35, y: 350 },
+        proyectosLaborales: { x: window.innerWidth ? window.innerWidth - 120 : 800, y: 30 },
+        proyectosPersonales: { x: window.innerWidth ? window.innerWidth - 115 : 805, y: 150 }
       });
 
       // Estructura de carpetas y navegación
@@ -338,14 +338,14 @@
 
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
-        /* ICONOS DEL ESCRITORIO (POSICIONES DESORDENADAS REALISTAS) */
+        /* ICONOS DEL ESCRITORIO CON LAS CARPETAS A LA DERECHA */
         Object.entries({
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
-          proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
-          proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') },
           rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
-          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} }
+          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
+          proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
+          proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') }
         }).map(([key, item]) => 
           e('div', {
             key,
