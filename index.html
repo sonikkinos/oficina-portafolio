@@ -91,16 +91,19 @@
       recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png'
+      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
+      hardDrive: 'https://win98icons.alexmeub.com/icons/png/hard_drive-3.png',
+      cdDrive: 'https://win98icons.alexmeub.com/icons/png/cd_drive-3.png'
     };
 
     function App() {
       // Estado de ventanas
       const [windows, setWindows] = useState({
-        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 100, y: 50 }, isMax: false, zIndex: 10 },
-        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 150, y: 80 }, isMax: false, zIndex: 10 },
-        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 200, y: 110 }, isMax: false, zIndex: 10 },
-        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 250, y: 130 }, isMax: false, zIndex: 10 }
+        myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: 80, y: 40 }, isMax: false, zIndex: 10 },
+        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 60 }, isMax: false, zIndex: 10 },
+        proyectos: { id: 'proyectos', title: 'Explorador - C:\\Proyectos', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 160, y: 90 }, isMax: false, zIndex: 10 },
+        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 200, y: 120 }, isMax: false, zIndex: 10 },
+        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 140 }, isMax: false, zIndex: 10 }
       });
 
       // Posiciones de iconos
@@ -213,7 +216,7 @@
       };
 
       // Render de ventana
-      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[620px]") => {
+      const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[650px]") => {
         const win = windows[winKey];
         if (!win.isOpen || win.isMinimized) return null;
 
@@ -236,9 +239,9 @@
               e('span', { className: 'truncate max-w-[260px]' }, win.title)
             ),
             
-            /* Botones de control oficiales XP (SVG) */
+            /* Botones de control oficiales XP */
             e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
-              // Minimizar (-)
+              // Minimizar
               e('button', {
                 onClick: () => toggleMinimize(winKey),
                 className: 'xp-ctrl-btn xp-btn-min-max',
@@ -249,7 +252,7 @@
                 )
               ),
               
-              // Maximizar (□)
+              // Maximizar
               e('button', {
                 onClick: () => toggleMaximize(winKey),
                 className: 'xp-ctrl-btn xp-btn-min-max',
@@ -260,7 +263,7 @@
                 )
               ),
               
-              // Cerrar (X)
+              // Cerrar
               e('button', {
                 onClick: () => closeWindow(winKey),
                 className: 'xp-ctrl-btn xp-btn-close',
@@ -275,7 +278,7 @@
           ),
           
           // Contenido
-          e('div', { className: 'p-4 overflow-y-auto max-h-[70vh] text-slate-900 font-sans' }, children)
+          e('div', { className: 'p-4 overflow-y-auto max-h-[72vh] text-slate-900 font-sans' }, children)
         );
       };
 
@@ -283,7 +286,7 @@
         
         /* ICONOS DEL ESCRITORIO */
         Object.entries({
-          myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => {} },
+          myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
           proyectos: { label: 'Proyectos', icon: ICONS.folder, action: () => openWindow('proyectos') },
@@ -298,6 +301,69 @@
           },
             e('img', { src: item.icon, className: 'w-10 h-10 mb-1 pointer-events-none' }),
             e('span', { className: 'leading-tight' }, item.label)
+          )
+        ),
+
+        /* VENTANA: MI PC */
+        renderXPWindow('myComputer',
+          e('div', { className: 'flex flex-col md:flex-row gap-4' },
+            /* Panel Lateral Izquierdo de Información */
+            e('div', { className: 'w-full md:w-48 bg-gradient-to-b from-blue-100 to-blue-200 border border-blue-300 p-3 rounded text-xs space-y-3' },
+              e('div', { className: 'bg-white p-2 rounded shadow-xs border border-blue-200' },
+                e('h4', { className: 'font-bold text-blue-900 border-b border-blue-200 pb-1 mb-1' }, 'Información del Sistema'),
+                e('p', { className: 'text-slate-700' }, '💻 Sistema: Windows XP Professional'),
+                e('p', { className: 'text-slate-700' }, '🧠 Procesador: Intel Core i7'),
+                e('p', { className: 'text-slate-700' }, '⚡ Memoria RAM: 32 GB DDR4')
+              ),
+              e('div', { className: 'bg-white p-2 rounded shadow-xs border border-blue-200' },
+                e('h4', { className: 'font-bold text-blue-900 border-b border-blue-200 pb-1 mb-1' }, 'Ubicación'),
+                e('p', { className: 'text-slate-600' }, '📍 Alicante, España')
+              )
+            ),
+
+            /* Panel Principal de Discos Duros */
+            e('div', { className: 'flex-1 space-y-4' },
+              e('div', {},
+                e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Archivos almacenados en este equipo'),
+                e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-3' },
+                  
+                  /* Disco C: Proyectos */
+                  e('div', {
+                    onDoubleClick: () => openWindow('proyectos'),
+                    className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
+                  },
+                    e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
+                    e('div', {},
+                      e('p', { className: 'font-bold text-xs' }, 'Disco local (C:)'),
+                      e('p', { className: 'text-[10px] text-slate-500' }, '45 GB libres de 120 GB')
+                    )
+                  ),
+
+                  /* Disco D: Portafolio / Experiencia */
+                  e('div', {
+                    onDoubleClick: () => openWindow('cv'),
+                    className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3'
+                  },
+                    e('img', { src: ICONS.hardDrive, className: 'w-8 h-8' }),
+                    e('div', {},
+                      e('p', { className: 'font-bold text-xs' }, 'Disco local (D:)'),
+                      e('p', { className: 'text-[10px] text-slate-500' }, '90 GB libres de 250 GB')
+                    )
+                  )
+                )
+              ),
+
+              e('div', {},
+                e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Dispositivos con almacenamiento extraíble'),
+                e('div', { className: 'p-2 bg-white border border-slate-300 rounded shadow-xs flex items-center gap-3 w-full sm:w-1/2' },
+                  e('img', { src: ICONS.cdDrive, className: 'w-8 h-8' }),
+                  e('div', {},
+                    e('p', { className: 'font-bold text-xs' }, 'Unidad de CD-RW (E:)'),
+                    e('p', { className: 'text-[10px] text-slate-500' }, 'Sin disco insertado')
+                  )
+                )
+              )
+            )
           )
         ),
 
@@ -437,6 +503,10 @@
             e('span', {}, 'Daniel Esteve Quesada')
           ),
           e('div', { className: 'p-2 flex flex-col gap-1 bg-slate-50' },
+            e('div', { onClick: () => { openWindow('myComputer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.myComputer, className: 'w-5 h-5' }),
+              e('span', {}, 'Mi PC')
+            ),
             e('div', { onClick: () => { openWindow('cv'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.notepad, className: 'w-5 h-5' }),
               e('span', {}, 'Mi CV.txt')
