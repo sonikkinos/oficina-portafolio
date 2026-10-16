@@ -109,7 +109,6 @@
     );
 
     function App() {
-      // Estado de ventanas
       const [windows, setWindows] = useState({
         myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: 80, y: 40 }, isMax: false, zIndex: 10 },
         cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 120, y: 40 }, isMax: false, zIndex: 10 },
@@ -118,7 +117,6 @@
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 240, y: 120 }, isMax: false, zIndex: 10 }
       });
 
-      // Posiciones de iconos
       const [iconPositions, setIconPositions] = useState({
         myComputer: { x: 20, y: 20 },
         recycleBin: { x: 20, y: 110 },
@@ -131,6 +129,7 @@
       const [topZ, setTopZ] = useState(20);
       const [startMenuOpen, setStartMenuOpen] = useState(false);
       const [subcarpeta, setSubcarpeta] = useState(null);
+      const [emailCopied, setEmailCopied] = useState(false);
 
       const openWindow = (id) => {
         const nextZ = topZ + 1;
@@ -224,6 +223,19 @@
         window.addEventListener('mouseup', onMouseUp);
       };
 
+      // Manejador seguro de envío de email
+      const handleSendEmail = () => {
+        const mailToUrl = "mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web&body=Hola%20Daniel,%0A%0AMe%20gustar%C3%ADa%20contactar%20contigo%20para%20conocernos%20mejor%20y%20trabajar%20juntos.%0A%0AUn%20saludo,";
+        
+        // Copiar email de respaldo por si el cliente local está bloqueado
+        navigator.clipboard.writeText("estevequesadadaniel@gmail.com");
+        setEmailCopied(true);
+        setTimeout(() => setEmailCopied(false), 3000);
+
+        // Abrir cliente de correo
+        window.location.href = mailToUrl;
+      };
+
       const renderXPWindow = (winKey, children, widthClass = "w-[90vw] max-w-[700px]") => {
         const win = windows[winKey];
         if (!win.isOpen || win.isMinimized) return null;
@@ -237,7 +249,6 @@
           onClick: () => focusWindow(winKey),
           className: `fixed xp-window bg-slate-100 flex flex-col overflow-hidden ${win.isMax ? 'h-[calc(100vh-40px)] w-full' : widthClass}`
         },
-          // Barra de título
           e('div', {
             onMouseDown: (evt) => !win.isMax && handleWindowMouseDown(winKey, evt),
             className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none shrink-0'
@@ -247,7 +258,6 @@
               e('span', { className: 'truncate max-w-[280px]' }, win.title)
             ),
             
-            // Botones de control XP
             e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
               e('button', {
                 onClick: () => toggleMinimize(winKey),
@@ -282,7 +292,6 @@
             )
           ),
           
-          // Contenido
           e('div', { className: `p-3 overflow-y-auto flex-1 text-slate-900 font-sans ${win.isMax ? 'h-full flex flex-col' : 'max-h-[72vh]'}` }, children)
         );
       };
@@ -487,18 +496,22 @@
           )
         ),
 
-        /* VENTANA CONTACTO (ENLACE A EMAIL AUTOMÁTICO) */
+        /* VENTANA CONTACTO CON ACCIÓN DIRECTA */
         renderXPWindow('contacto',
-          e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs' },
+          e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs space-y-3' },
             e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
-            e('p', { className: 'mb-1' }, '📞 Teléfono: +34 627 99 48 98'),
-            e('p', { className: 'mb-4' }, '✉️ Email: estevequesadadaniel@gmail.com'),
-            e('a', {
-              href: 'mailto:estevequesadadaniel@gmail.com?subject=Contacto%20desde%20Portafolio%20Web&body=Hola%20Daniel,%0A%0AMe%20gustar%C3%ADa%20contactar%20contigo%20para%20conocernos%20mejor%20y%20trabajar%20juntos.%0A%0AUn%20saludo,',
-              className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
-            },
-              e('span', {}, '✉️'),
-              e('span', {}, 'Enviar Email Directo')
+            e('p', {}, '📞 Teléfono: +34 627 99 48 98'),
+            e('p', {}, '✉️ Email: estevequesadadaniel@gmail.com'),
+            
+            e('div', { className: 'pt-2' },
+              e('button', {
+                onClick: handleSendEmail,
+                className: 'w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-sans font-bold p-2.5 rounded transition shadow'
+              },
+                e('span', {}, '✉️'),
+                e('span', {}, 'Enviar Email Directo')
+              ),
+              emailCopied && e('p', { className: 'text-[11px] text-green-700 font-semibold text-center mt-2' }, '✓ Dirección y mensaje predefinido copiados al portapapeles')
             )
           ),
           "w-[90vw] max-w-[380px]"
