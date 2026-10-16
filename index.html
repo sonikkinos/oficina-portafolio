@@ -80,14 +80,15 @@
 
   <script>
     const e = React.createElement;
-    const { useState, useEffect } = React;
+    const { useState, useRef, useEffect } = React;
 
     const ICONS = {
       myComputer: 'https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png',
       recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png'
+      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
+      paint: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png'
     };
 
     const HardDriveIcon = () => e('svg', { width: '32', height: '32', viewBox: '0 0 36 36', fill: 'none' },
@@ -104,6 +105,138 @@
       e('rect', { x: '7', y: '20', width: '4', height: '2', fill: '#64748b' })
     );
 
+    // COMPONENTE PAINT FUNCIONAL
+    function PaintApp() {
+      const canvasRef = useRef(null);
+      const [isDrawing, setIsDrawing] = useState(false);
+      const [color, setColor] = useState('#000000');
+      const [tool, setTool] = useState('pencil'); // pencil | eraser
+      const [lineWidth, setLineWidth] = useState(3);
+
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }, []);
+
+      const startDrawing = (evt) => {
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+
+        const ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(clientX - rect.left, clientY - rect.top);
+        setIsDrawing(true);
+      };
+
+      const draw = (evt) => {
+        if (!isDrawing) return;
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+
+        const ctx = canvas.getContext('2d');
+        ctx.lineTo(clientX - rect.left, clientY - rect.top);
+        ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
+        ctx.lineWidth = tool === 'eraser' ? lineWidth * 4 : lineWidth;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+      };
+
+      const stopDrawing = () => {
+        setIsDrawing(false);
+      };
+
+      const clearCanvas = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      };
+
+      const downloadImage = () => {
+        const canvas = canvasRef.current;
+        const link = document.createElement('a');
+        link.download = 'Mi-Dibujo-Paint.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      };
+
+      const palette = [
+        '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080',
+        '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'
+      ];
+
+      return e('div', { className: 'flex flex-col h-full bg-slate-200 p-1.5 gap-2 select-none' },
+        /* Barra de herramientas */
+        e('div', { className: 'flex flex-wrap items-center justify-between gap-2 bg-slate-100 p-1.5 border border-slate-300 rounded text-xs' },
+          e('div', { className: 'flex items-center gap-1' },
+            e('button', {
+              onClick: () => setTool('pencil'),
+              className: `px-2 py-1 rounded font-bold border ${tool === 'pencil' ? 'bg-blue-600 text-white border-blue-800' : 'bg-white text-slate-800 border-slate-300'}`
+            }, '✏️ Lápiz'),
+            e('button', {
+              onClick: () => setTool('eraser'),
+              className: `px-2 py-1 rounded font-bold border ${tool === 'eraser' ? 'bg-blue-600 text-white border-blue-800' : 'bg-white text-slate-800 border-slate-300'}`
+            }, '🧹 Goma'),
+            e('button', {
+              onClick: clearCanvas,
+              className: 'px-2 py-1 bg-white hover:bg-red-50 border border-slate-300 rounded font-bold text-red-600'
+            }, '🗑️ Limpiar')
+          ),
+
+          /* Paleta de colores */
+          e('div', { className: 'flex items-center gap-1 overflow-x-auto' },
+            palette.map((c, i) => e('div', {
+              key: i,
+              onClick: () => { setColor(c); setTool('pencil'); },
+              style: { backgroundColor: c },
+              className: `w-5 h-5 rounded cursor-pointer border border-slate-400 ${color === c && tool === 'pencil' ? 'ring-2 ring-blue-500 scale-110' : ''}`
+            }))
+          ),
+
+          /* Grosor y Descarga */
+          e('div', { className: 'flex items-center gap-2' },
+            e('select', {
+              value: lineWidth,
+              onChange: (evt) => setLineWidth(Number(evt.target.value)),
+              className: 'bg-white border border-slate-300 rounded px-1 py-0.5 text-xs'
+            },
+              e('option', { value: 1 }, 'Fino'),
+              e('option', { value: 3 }, 'Normal'),
+              e('option', { value: 6 }, 'Grueso')
+            ),
+            e('button', {
+              onClick: downloadImage,
+              className: 'bg-green-600 hover:bg-green-700 text-white font-bold px-2 py-1 rounded text-xs shadow'
+            }, '💾 Guardar')
+          )
+        ),
+
+        /* Lienzo Canvas */
+        e('div', { className: 'flex-1 bg-slate-300 p-1 border border-slate-400 flex items-center justify-center overflow-hidden rounded' },
+          e('canvas', {
+            ref: canvasRef,
+            width: 600,
+            height: 380,
+            onMouseDown: startDrawing,
+            onMouseMove: draw,
+            onMouseUp: stopDrawing,
+            onMouseLeave: stopDrawing,
+            onTouchStart: startDrawing,
+            onTouchMove: draw,
+            onTouchEnd: stopDrawing,
+            className: 'bg-white cursor-crosshair border border-slate-400 shadow-md max-w-full max-h-full touch-none'
+          })
+        )
+      );
+    }
+
     function App() {
       const isMobile = window.innerWidth <= 640;
 
@@ -112,29 +245,31 @@
         cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 120, y: isMobile ? 20 : 40 }, isMax: isMobile, zIndex: 10 },
         proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 150, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
         proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
+        paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
         rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 210, y: isMobile ? 20 : 120 }, isMax: isMobile, zIndex: 10 },
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: false, zIndex: 10 }
       });
 
-      // Cálculo de posiciones responsive
       const getInitialPositions = () => {
         const mobile = window.innerWidth <= 640;
         const width = window.innerWidth;
         if (mobile) {
           return {
             myComputer: { x: 15, y: 15 },
-            cv: { x: 15, y: 105 },
-            rrss: { x: 15, y: 195 },
-            recycleBin: { x: 15, y: 285 },
+            cv: { x: 15, y: 100 },
+            paint: { x: 15, y: 185 },
+            rrss: { x: 15, y: 270 },
+            recycleBin: { x: 15, y: 355 },
             proyectosLaborales: { x: width - 95, y: 15 },
-            proyectosPersonales: { x: width - 95, y: 105 }
+            proyectosPersonales: { x: width - 95, y: 100 }
           };
         }
         return {
           myComputer: { x: 25, y: 20 },
           cv: { x: 30, y: 130 },
-          rrss: { x: 22, y: 240 },
-          recycleBin: { x: 35, y: 350 },
+          paint: { x: 28, y: 240 },
+          rrss: { x: 22, y: 350 },
+          recycleBin: { x: 35, y: 460 },
           proyectosLaborales: { x: width - 125, y: 30 },
           proyectosPersonales: { x: width - 120, y: 150 }
         };
@@ -197,7 +332,6 @@
         setActiveWin(id);
       };
 
-      // Arrastre con ratón o toque táctil para Ventanas
       const handleWindowStart = (id, clientX, clientY) => {
         focusWindow(id);
         const initialPos = { ...windows[id].pos };
@@ -229,7 +363,6 @@
         window.addEventListener('touchend', onEnd);
       };
 
-      // Arrastre con ratón o toque táctil para Iconos
       const handleIconStart = (key, evt, clientX, clientY) => {
         evt.stopPropagation();
         const initialPos = { ...iconPositions[key] };
@@ -361,10 +494,11 @@
 
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
-        /* ICONOS DEL ESCRITORIO CON ACCESO POR CLIC O TOQUE */
+        /* ICONOS DEL ESCRITORIO CON PAINT */
         Object.entries({
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
+          paint: { label: 'Paint', icon: ICONS.paint, action: () => openWindow('paint') },
           rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
           recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
           proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
@@ -383,6 +517,9 @@
             e('span', { className: 'leading-tight' }, item.label)
           )
         ),
+
+        /* VENTANA: PAINT FUNCIONAL */
+        renderXPWindow('paint', e(PaintApp)),
 
         /* VENTANA: MI PC */
         renderXPWindow('myComputer',
@@ -646,6 +783,10 @@
               e('img', { src: ICONS.notepad, className: 'w-5 h-5' }),
               e('span', {}, 'Mi CV.txt')
             ),
+            e('div', { onClick: () => { openWindow('paint'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
+              e('img', { src: ICONS.paint, className: 'w-5 h-5' }),
+              e('span', {}, 'Paint')
+            ),
             e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' },
               e('img', { src: ICONS.folder, className: 'w-5 h-5' }),
               e('span', {}, 'Proyectos Personales')
@@ -661,7 +802,7 @@
           )
         ),
 
-        /* BARRA DE TAREAS RESPONSIVE */
+        /* BARRA DE TAREAS */
         e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-1 z-50 border-t border-blue-400' },
           e('div', { className: 'flex items-center gap-1.5 h-full overflow-x-auto' },
             e('button', {
