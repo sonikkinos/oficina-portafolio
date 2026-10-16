@@ -66,23 +66,46 @@
       box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20;
     }
 
-    /* Estilos Clásicos de Windows Media Player XP */
-    .wmp-body {
-      background: linear-gradient(to bottom, #1a2a40 0%, #0d1622 100%);
-      border: 2px solid #3b577d;
+    /* DISEÑO AUTÉNTICO WINDOWS MEDIA PLAYER 8 */
+    .wmp8-bg {
+      background: #091322;
+      color: #c0d8f0;
     }
-    .wmp-screen {
-      background: #000000;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.9), inset 0 0 2px #000;
-      border: 2px solid #283e5a;
+
+    .wmp8-sidebar-item {
+      background: linear-gradient(to right, #1b3558 0%, #0d1e36 100%);
+      border-bottom: 1px solid #091322;
+      border-right: 2px solid #2d588c;
     }
-    .wmp-btn-main {
-      background: radial-gradient(circle, #00d2ff 0%, #0066cc 60%, #003366 100%);
-      box-shadow: 0 0 8px #00aaff, inset 1px 1px 2px #ffffff;
+
+    .wmp8-sidebar-item.active {
+      background: linear-gradient(to right, #2b568f 0%, #173763 100%);
+      color: #ffffff;
+      font-weight: bold;
+      border-right: 3px solid #00aaff;
     }
-    .wmp-btn-main:hover {
-      background: radial-gradient(circle, #33ddff 0%, #0088ff 60%, #004488 100%);
-      box-shadow: 0 0 12px #00ccff;
+
+    .wmp8-controls-panel {
+      background: linear-gradient(to bottom, #1e395e 0%, #0c182b 100%);
+      border-top: 2px solid #2e5587;
+    }
+
+    .wmp8-play-btn {
+      background: radial-gradient(circle at 35% 35%, #52c7ff 0%, #0066cc 60%, #002b5e 100%);
+      border: 1px solid #73d2ff;
+      box-shadow: 0 0 10px rgba(0, 170, 255, 0.6), inset 1px 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    .wmp8-play-btn:hover {
+      background: radial-gradient(circle at 35% 35%, #7ee0ff 0%, #0088ff 60%, #003a80 100%);
+    }
+
+    .wmp8-btn-metal {
+      background: linear-gradient(to bottom, #4a6c99 0%, #213c61 50%, #132742 100%);
+      border: 1px solid #5d85b8;
+      box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4);
+    }
+    .wmp8-btn-metal:hover {
+      background: linear-gradient(to bottom, #5c84ba 0%, #2a4c7a 50%, #183254 100%);
     }
 
     @keyframes floatClippy {
@@ -120,11 +143,11 @@
       { id: 3, title: 'MaQasa - Proyecto 3.mp4', youtubeId: '2heu2DE75Ts' }
     ];
 
-    // PLAYLIST DE MÚSICA PROPIA (Sustituiremos estas fuentes por tus archivos descomprimidos del .ZIP)
+    // PLAYLIST DE MÚSICA PROPIA (Sustituiremos las URLs por los archivos .mp3 descomprimidos de tu ZIP)
     const playlist = [
-      { id: 1, title: 'Pista 1 - Música de Fondo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-      { id: 2, title: 'Pista 2 - Sintonía Trabajo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-      { id: 3, title: 'Pista 3 - Ambient Chill', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' }
+      { id: 1, title: 'Track 01 - Música de Fondo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', duration: '06:12' },
+      { id: 2, title: 'Track 02 - Sintonía de Trabajo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', duration: '07:05' },
+      { id: 3, title: 'Track 03 - Ambient Relax', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', duration: '05:44' }
     ];
 
     const HardDriveIcon = () => e('svg', { width: '32', height: '32', viewBox: '0 0 36 36', fill: 'none' },
@@ -141,12 +164,14 @@
       e('rect', { x: '7', y: '20', width: '4', height: '2', fill: '#64748b' })
     );
 
-    // COMPONENTE WINDOWS MEDIA PLAYER XP (DISEÑO FIEL XP)
-    function MediaPlayerApp() {
+    // COMPONENTE WINDOWS MEDIA PLAYER 8 (EXACTO A LA IMAGEN)
+    function MediaPlayer8App() {
       const [currentIndex, setCurrentIndex] = useState(0);
       const [isPlaying, setIsPlaying] = useState(false);
       const [progress, setProgress] = useState(0);
       const [volume, setVolume] = useState(0.8);
+      const [activeTab, setActiveTab] = useState('nowPlaying');
+      const [showPlaylist, setShowPlaylist] = useState(true);
       const audioRef = useRef(null);
 
       const currentTrack = playlist[currentIndex];
@@ -167,6 +192,14 @@
             setIsPlaying(true);
           }).catch(err => console.log("Error al reproducir audio:", err));
         }
+      };
+
+      const stopPlay = () => {
+        if (!audioRef.current) return;
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        setIsPlaying(false);
+        setProgress(0);
       };
 
       const handleTimeUpdate = () => {
@@ -193,12 +226,6 @@
         setProgress(0);
       };
 
-      const selectTrack = (index) => {
-        setCurrentIndex(index);
-        setIsPlaying(false);
-        setProgress(0);
-      };
-
       const handleSeek = (evt) => {
         if (audioRef.current) {
           const rect = evt.currentTarget.getBoundingClientRect();
@@ -209,7 +236,7 @@
         }
       };
 
-      return e('div', { className: 'wmp-body flex flex-col h-full text-white p-2.5 rounded select-none gap-2.5 font-sans' },
+      return e('div', { className: 'wmp8-bg flex flex-col h-full w-full select-none text-xs font-sans overflow-hidden border border-slate-800' },
         
         /* Audio HTML5 */
         e('audio', {
@@ -219,79 +246,132 @@
           onEnded: handleEnded
         }),
 
-        /* Encabezado del Media Player */
-        e('div', { className: 'bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 px-3 py-1.5 rounded border border-blue-900/60 flex items-center justify-between text-xs' },
-          e('div', { className: 'flex items-center gap-2' },
-            e('img', { src: ICONS.mediaPlayer, className: 'w-4 h-4' }),
-            e('span', { className: 'font-bold text-cyan-300 tracking-wide' }, 'Windows Media Player')
-          ),
-          e('span', { className: 'text-[10px] text-blue-400 font-mono' }, 'v8.00.00')
-        ),
-
-        /* Pantalla Pantalla de Reproducción con Visualizador Retro */
-        e('div', { className: 'wmp-screen p-3 flex flex-col justify-between h-36 relative overflow-hidden rounded' },
-          e('div', { className: 'flex justify-between items-center z-10 text-[11px] text-cyan-400 font-mono' },
-            e('span', { className: 'flex items-center gap-1' },
-              e('span', { className: `w-2 h-2 rounded-full ${isPlaying ? 'bg-green-400 animate-ping' : 'bg-amber-400'}` }),
-              isPlaying ? 'REPRODUCIENDO' : 'PAUSADO'
-            ),
-            e('span', { className: 'text-slate-400' }, `[ Track 0${currentIndex + 1} ]`)
-          ),
-
-          /* Visualizador Gráfico de Onda / Ecualizador */
-          e('div', { className: 'z-10 text-center my-auto relative' },
-            e('p', { className: 'font-bold text-sm sm:text-base text-cyan-200 truncate drop-shadow' }, currentTrack.title),
-            e('p', { className: 'text-xs text-blue-300/80 mt-0.5' }, currentTrack.artist),
-            
-            /* Barras del Ecualizador */
-            e('div', { className: 'flex justify-center items-end gap-1 h-8 mt-2' },
-              [40, 70, 30, 90, 60, 100, 50, 80, 40, 65, 85, 35].map((height, i) =>
-                e('div', {
-                  key: i,
-                  style: { height: isPlaying ? `${Math.max(15, (height * (i % 3 + 1)) % 100)}%` : '15%' },
-                  className: 'w-1.5 bg-gradient-to-t from-cyan-600 via-teal-400 to-green-300 rounded-t transition-all duration-300'
-                })
+        /* Cuerpo principal de WMP8 (Barra lateral + Pantalla/Playlist) */
+        e('div', { className: 'flex flex-1 overflow-hidden' },
+          
+          /* Barra Lateral Izquierda Oficial WMP8 */
+          e('div', { className: 'w-32 sm:w-36 flex flex-col shrink-0 text-[11px]' },
+            [
+              { id: 'nowPlaying', label: 'Now Playing', icon: '▶' },
+              { id: 'mediaGuide', label: 'Media Guide', icon: '🌐' },
+              { id: 'copyCD', label: 'Copy from CD', icon: '💿' },
+              { id: 'library', label: 'Media Library', icon: '📚' },
+              { id: 'radio', label: 'Radio Tuner', icon: '📻' },
+              { id: 'copyDevice', label: 'Copy to CD or Device', icon: '💾' },
+              { id: 'skin', label: 'Skin Chooser', icon: '🎨' }
+            ].map(tab =>
+              e('div', {
+                key: tab.id,
+                onClick: () => setActiveTab(tab.id),
+                className: `wmp8-sidebar-item p-2 cursor-pointer flex items-center gap-2 transition ${activeTab === tab.id ? 'active' : 'hover:bg-blue-900/40 text-slate-300'}`
+              },
+                e('span', { className: 'text-xs' }, tab.icon),
+                e('span', { className: 'truncate' }, tab.label)
               )
             )
           ),
 
-          /* Barra de Tiempo */
-          e('div', {
-            onClick: handleSeek,
-            className: 'w-full bg-slate-900 h-2.5 rounded cursor-pointer z-10 border border-slate-700 relative overflow-hidden'
-          },
-            e('div', { className: 'bg-gradient-to-r from-blue-600 via-cyan-400 to-teal-300 h-full transition-all duration-100', style: { width: `${progress}%` } })
+          /* Área Central de Visualización y Playlist */
+          e('div', { className: 'flex-1 flex flex-col sm:flex-row bg-black overflow-hidden relative' },
+            
+            /* Pantalla del Visualizador Principal */
+            e('div', { className: 'flex-1 bg-gradient-to-b from-blue-950/40 via-black to-slate-950 p-3 flex flex-col justify-between items-center relative overflow-hidden' },
+              
+              /* Info Superior */
+              e('div', { className: 'w-full flex justify-between items-center text-[10px] text-cyan-400 font-mono z-10' },
+                e('span', {}, 'Windows Media Player'),
+                e('button', {
+                  onClick: () => setShowPlaylist(!showPlaylist),
+                  className: 'bg-blue-900/60 hover:bg-blue-800 text-cyan-200 px-2 py-0.5 rounded border border-blue-700 text-[10px]'
+                }, showPlaylist ? 'Ocultar Lista ➔' : '📂 Mostrar Lista')
+              ),
+
+              /* Visualizador de Onda Estilo "Ambience / Line" WMP8 */
+              e('div', { className: 'my-auto flex flex-col items-center justify-center text-center z-10 w-full' },
+                
+                /* Carátula Visualizer WMP8 */
+                e('div', { className: 'w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-cyan-500/50 bg-radial from-cyan-900 via-blue-950 to-black flex items-center justify-center shadow-[0_0_20px_rgba(0,170,255,0.4)] mb-3 relative' },
+                  e('div', { className: `w-16 h-16 rounded-full border border-cyan-300/40 flex items-center justify-center ${isPlaying ? 'animate-spin' : ''}`, style: { animationDuration: '8s' } },
+                    e('span', { className: 'text-2xl' }, '🎵')
+                  )
+                ),
+
+                e('p', { className: 'font-bold text-sm sm:text-base text-cyan-200 truncate max-w-[200px]' }, currentTrack.title),
+                e('p', { className: 'text-xs text-blue-300/80 mt-0.5' }, currentTrack.artist),
+                e('p', { className: 'text-[10px] text-slate-400 font-mono mt-1' }, isPlaying ? 'Reproduciendo audio...' : 'Pausado')
+              )
+            ),
+
+            /* Lista de Reproducción Lateral Integrada (Desplegable) */
+            showPlaylist && e('div', { className: 'w-full sm:w-48 bg-slate-950 border-t sm:border-t-0 sm:border-l border-blue-900/60 p-2 overflow-y-auto flex flex-col text-xs shrink-0' },
+              e('p', { className: 'font-bold text-cyan-400 mb-1 border-b border-blue-900 pb-1 text-[11px] flex justify-between' },
+                e('span', {}, 'Playlist'),
+                e('span', { className: 'text-slate-400 font-mono text-[10px]' }, `${playlist.length} items`)
+              ),
+              playlist.map((track, idx) =>
+                e('div', {
+                  key: track.id,
+                  onClick: () => { setCurrentIndex(idx); setIsPlaying(false); setProgress(0); },
+                  className: `p-1.5 rounded cursor-pointer flex items-center justify-between text-[11px] mb-1 ${idx === currentIndex ? 'bg-blue-900/80 text-cyan-200 font-bold border border-blue-600' : 'hover:bg-slate-900 text-slate-300'}`
+                },
+                  e('span', { className: 'truncate pr-1' }, `${idx + 1}. ${track.title}`),
+                  e('span', { className: 'text-[10px] font-mono text-slate-500' }, track.duration)
+                )
+              )
+            )
           )
         ),
 
-        /* Panel de Controles Metálicos de Windows XP */
-        e('div', { className: 'bg-gradient-to-b from-slate-800 to-slate-950 p-2.5 border border-slate-700 rounded-lg flex flex-col gap-2 shadow-inner' },
-          e('div', { className: 'flex items-center justify-between' },
-            
-            /* Controles Izquierda */
-            e('div', { className: 'flex items-center gap-2' },
-              e('button', {
-                onClick: prevTrack,
-                title: 'Anterior',
-                className: 'w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 active:scale-95 text-white border border-slate-500 flex items-center justify-center font-bold text-xs shadow'
-              }, '⏮'),
+        /* Panel Inferior de Controles Oficial WMP8 */
+        e('div', { className: 'wmp8-controls-panel p-2 flex flex-col gap-1.5 shrink-0' },
+          
+          /* Barra de Avance de Posición (Seekbar) */
+          e('div', {
+            onClick: handleSeek,
+            className: 'w-full bg-slate-900 h-2 rounded cursor-pointer border border-blue-900 relative overflow-hidden'
+          },
+            e('div', { className: 'bg-gradient-to-r from-blue-500 to-cyan-300 h-full transition-all duration-100', style: { width: `${progress}%` } })
+          ),
 
+          /* Fila de Botones de Reproducción WMP8 */
+          e('div', { className: 'flex items-center justify-between pt-1' },
+            
+            /* Botones de Control */
+            e('div', { className: 'flex items-center gap-1.5' },
               e('button', {
                 onClick: togglePlay,
-                title: isPlaying ? 'Pausar' : 'Reproducir',
-                className: 'w-10 h-10 rounded-full wmp-btn-main active:scale-95 text-white flex items-center justify-center font-bold text-sm text-shadow cursor-pointer'
+                title: isPlaying ? 'Pause' : 'Play',
+                className: 'w-9 h-9 rounded-full wmp8-play-btn flex items-center justify-center text-white font-bold text-sm shadow cursor-pointer active:scale-95'
               }, isPlaying ? '❚❚' : '►'),
 
               e('button', {
+                onClick: stopPlay,
+                title: 'Stop',
+                className: 'w-7 h-7 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer'
+              }, '◼'),
+
+              e('button', {
+                onClick: prevTrack,
+                title: 'Previous Track',
+                className: 'w-7 h-7 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer'
+              }, '⏮'),
+
+              e('button', {
                 onClick: nextTrack,
-                title: 'Siguiente',
-                className: 'w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 active:scale-95 text-white border border-slate-500 flex items-center justify-center font-bold text-xs shadow'
+                title: 'Next Track',
+                className: 'w-7 h-7 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer'
               }, '⏭')
             ),
 
-            /* Control de Volumen */
-            e('div', { className: 'flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900/80 px-2.5 py-1 rounded-full border border-slate-800' },
-              e('span', {}, '🔊'),
+            /* Título y Duración */
+            e('div', { className: 'hidden sm:flex flex-col text-right font-mono text-[10px] text-cyan-300' },
+              e('span', { className: 'truncate max-w-[120px] font-bold' }, currentTrack.title),
+              e('span', { className: 'text-slate-400' }, isPlaying ? '00:00 / ' + currentTrack.duration : '00:00')
+            ),
+
+            /* Control de Volumen WMP8 */
+            e('div', { className: 'flex items-center gap-1 text-xs text-slate-300 bg-black/40 px-2 py-1 rounded-full border border-blue-900' },
+              e('span', { className: 'text-[11px]' }, '🔊'),
               e('input', {
                 type: 'range',
                 min: '0',
@@ -299,29 +379,8 @@
                 step: '0.05',
                 value: volume,
                 onChange: (evt) => setVolume(parseFloat(evt.target.value)),
-                className: 'w-20 accent-cyan-400 cursor-pointer'
+                className: 'w-16 accent-cyan-400 cursor-pointer'
               })
-            )
-          )
-        ),
-
-        /* Lista de Reproducción Estilo XP */
-        e('div', { className: 'flex-1 bg-slate-950 border border-slate-800 rounded p-2 overflow-y-auto max-h-[130px]' },
-          e('div', { className: 'flex justify-between items-center text-[11px] font-bold text-cyan-400 mb-1.5 border-b border-slate-800 pb-1' },
-            e('span', {}, '📋 Lista de Reproducción'),
-            e('span', { className: 'text-slate-500 font-mono text-[10px]' }, `${playlist.length} canciones`)
-          ),
-          playlist.map((track, idx) =>
-            e('div', {
-              key: track.id,
-              onClick: () => selectTrack(idx),
-              className: `p-1.5 rounded text-xs cursor-pointer flex items-center justify-between transition ${idx === currentIndex ? 'bg-blue-900/70 text-cyan-200 font-bold border border-blue-600' : 'hover:bg-slate-900 text-slate-300'}`
-            },
-              e('div', { className: 'flex items-center gap-2 truncate' },
-                e('span', { className: 'text-[10px] text-slate-500 font-mono' }, `0${idx + 1}.`),
-                e('span', { className: 'truncate' }, track.title)
-              ),
-              idx === currentIndex && isPlaying && e('span', { className: 'text-[10px] text-cyan-400 animate-pulse shrink-0' }, '♫ sonando')
             )
           )
         )
@@ -675,7 +734,7 @@
         proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
         paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
         minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 100 }, isMax: false, zIndex: 10 },
-        mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 220, y: isMobile ? 20 : 120 }, isMax: false, zIndex: 10 },
+        mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
         rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: isMobile, zIndex: 10 },
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 260, y: isMobile ? 20 : 160 }, isMax: false, zIndex: 10 }
       });
@@ -964,8 +1023,8 @@
         /* VENTANA: BUSCAMINAS */
         renderXPWindow('minesweeper', e(MinesweeperApp), "w-[90vw] max-w-[340px]"),
 
-        /* VENTANA: WINDOWS MEDIA PLAYER XP */
-        renderXPWindow('mediaPlayer', e(MediaPlayerApp), "w-[90vw] max-w-[400px]"),
+        /* VENTANA: WINDOWS MEDIA PLAYER 8 */
+        renderXPWindow('mediaPlayer', e(MediaPlayer8App), "w-[95vw] sm:w-[90vw] max-w-[620px]"),
 
         /* VENTANA: MI PC */
         renderXPWindow('myComputer',
