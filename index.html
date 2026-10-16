@@ -29,11 +29,11 @@
       box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20;
     }
     @keyframes floatClippy {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
     }
     .clippy-animate {
-      animation: floatClippy 3s ease-in-out infinite;
+      animation: floatClippy 2.5s ease-in-out infinite;
     }
   </style>
 </head>
@@ -43,6 +43,16 @@
   <script>
     const e = React.createElement;
     const { useState } = React;
+
+    // Rutas de iconos originales de Windows XP
+    const ICONS = {
+      myComputer: 'https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png',
+      recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
+      notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
+      folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
+      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
+      clippy: 'https://raw.githubusercontent.com/pi0/clippyjs/master/assets/agents/Clippy/show.gif'
+    };
 
     function App() {
       // Estados para abrir/cerrar ventanas
@@ -55,12 +65,12 @@
       const [subcarpeta, setSubcarpeta] = useState(null);
 
       // Componente reutilizable de Ventana XP
-      const XPWindow = ({ title, icon, onClose, children, width = "w-11/12 max-w-2xl" }) => {
-        return e('div', { className: `fixed inset-x-0 top-12 mx-auto ${width} xp-window bg-slate-100 z-40 overflow-hidden` },
+      const XPWindow = ({ title, iconSrc, onClose, children, width = "w-11/12 max-w-2xl" }) => {
+        return e('div', { className: `fixed inset-x-0 top-10 mx-auto ${width} xp-window bg-slate-100 z-40 overflow-hidden` },
           // Barra de título
-          e('div', { className: 'xp-titlebar text-white px-3 py-1 flex justify-between items-center font-bold text-sm select-none' },
+          e('div', { className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-sm select-none' },
             e('div', { className: 'flex items-center gap-2' },
-              e('span', { className: 'text-base' }, icon),
+              e('img', { src: iconSrc, className: 'w-4 h-4' }),
               e('span', {}, title)
             ),
             e('button', {
@@ -76,44 +86,44 @@
       return e('div', { className: 'h-full w-full flex flex-col justify-between relative p-4' },
         
         /* Grid de Iconos del Escritorio */
-        e('div', { className: 'grid grid-cols-1 gap-6 w-28 text-center text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-semibold' },
+        e('div', { className: 'grid grid-cols-1 gap-4 w-24 text-center text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] font-medium' },
           
           /* 1. Mi PC */
-          e('div', { className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30' },
-            e('div', { className: 'text-4xl mb-1' }, '🖥️'),
+          e('div', { className: 'flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30' },
+            e('img', { src: ICONS.myComputer, className: 'w-10 h-10 mb-1' }),
             e('span', {}, 'Mi PC')
           ),
 
           /* 2. Papelera de reciclaje */
-          e('div', { className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30' },
-            e('div', { className: 'text-4xl mb-1' }, '🗑️'),
+          e('div', { className: 'flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30' },
+            e('img', { src: ICONS.recycleBin, className: 'w-10 h-10 mb-1' }),
             e('span', {}, 'Papelera')
           ),
 
           /* 3. Bloc de notas (Mi CV) - Doble click */
           e('div', {
             onDoubleClick: () => setWinCV(true),
-            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+            className: 'flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50'
           },
-            e('div', { className: 'text-4xl mb-1' }, '📝'),
+            e('img', { src: ICONS.notepad, className: 'w-10 h-10 mb-1' }),
             e('span', {}, 'Mi CV.txt')
           ),
 
           /* 4. Carpeta Proyectos - Doble click */
           e('div', {
             onDoubleClick: () => setWinProyectos(true),
-            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+            className: 'flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50'
           },
-            e('div', { className: 'text-4xl mb-1' }, '📁'),
+            e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1' }),
             e('span', {}, 'Proyectos')
           ),
 
           /* 5. Internet Explorer (RRSS) - Doble click */
           e('div', {
             onDoubleClick: () => setWinRRSS(true),
-            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+            className: 'flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50'
           },
-            e('div', { className: 'text-4xl mb-1' }, '🌐'),
+            e('img', { src: ICONS.internetExplorer, className: 'w-10 h-10 mb-1' }),
             e('span', {}, 'RRSS')
           )
         ),
@@ -121,7 +131,7 @@
         /* --- VENTANA: MI CV --- */
         winCV && e(XPWindow, {
           title: 'Mi CV.txt - Bloc de notas',
-          icon: '📝',
+          iconSrc: ICONS.notepad,
           onClose: () => setWinCV(false)
         },
           e('div', { className: 'bg-white border border-slate-300 p-2 text-xs font-mono mb-3 shadow-inner' },
@@ -138,7 +148,7 @@
         /* --- VENTANA: PROYECTOS --- */
         winProyectos && e(XPWindow, {
           title: 'Explorador - C:\\Proyectos',
-          icon: '📁',
+          iconSrc: ICONS.folder,
           onClose: () => { setWinProyectos(false); setSubcarpeta(null); }
         },
           !subcarpeta ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-4 text-center' },
@@ -153,7 +163,7 @@
                 onDoubleClick: () => setSubcarpeta(folder.nombre),
                 className: 'p-3 bg-white border border-slate-300 rounded shadow hover:bg-blue-50 cursor-pointer flex flex-col items-center'
               },
-                e('div', { className: 'text-3xl mb-1' }, '📁'),
+                e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1' }),
                 e('span', { className: 'font-bold text-xs' }, folder.nombre),
                 e('span', { className: 'text-[10px] text-slate-500' }, folder.desc)
               )
@@ -161,7 +171,7 @@
           ) : e('div', {},
             e('button', {
               onClick: () => setSubcarpeta(null),
-              className: 'mb-4 text-xs bg-slate-200 border border-slate-400 px-3 py-1 rounded hover:bg-slate-300 font-semibold'
+              className: 'mb-4 text-xs bg-slate-200 border border-slate-400 px-3 py-1 rounded hover:bg-slate-300 font-semibold flex items-center gap-1'
             }, '⬅ Volver a Proyectos'),
             e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[200px]' },
               e('h3', { className: 'font-bold text-sm border-b pb-1 mb-3' }, `Contenido de: ${subcarpeta}`),
@@ -173,7 +183,7 @@
         /* --- VENTANA: INTERNET EXPLORER (RRSS) --- */
         winRRSS && e(XPWindow, {
           title: 'Internet Explorer - Redes Sociales',
-          icon: '🌐',
+          iconSrc: ICONS.internetExplorer,
           onClose: () => setWinRRSS(false),
           width: 'w-11/12 max-w-md'
         },
@@ -221,14 +231,16 @@
           e('div', {
             onDoubleClick: () => setWinContacto(true),
             title: 'Haz doble clic para ver datos de contacto',
-            className: 'text-5xl cursor-pointer clippy-animate hover:scale-110 transition-transform'
-          }, '📎')
+            className: 'cursor-pointer clippy-animate hover:scale-110 transition-transform'
+          },
+            e('img', { src: ICONS.clippy, className: 'w-16 h-16 drop-shadow' })
+          )
         ),
 
         /* Ventana Emergente Contacto (activada por Clippy) */
         winContacto && e(XPWindow, {
           title: 'Asistente de Contacto - Nota rápida',
-          icon: '📎',
+          iconSrc: ICONS.clippy,
           onClose: () => setWinContacto(false),
           width: 'w-11/12 max-w-sm'
         },
