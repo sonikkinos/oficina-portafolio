@@ -143,11 +143,13 @@
       { id: 3, title: 'MaQasa - Proyecto 3.mp4', youtubeId: '2heu2DE75Ts' }
     ];
 
-    // PLAYLIST DE MÚSICA PROPIA (Sustituiremos las URLs por los archivos .mp3 descomprimidos de tu ZIP)
+    // PLAYLIST CONFIGURADA CON TU RUTA doble (canciones/canciones/...)
     const playlist = [
-      { id: 1, title: 'Track 01 - Música de Fondo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', duration: '06:12' },
-      { id: 2, title: 'Track 02 - Sintonía de Trabajo', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', duration: '07:05' },
-      { id: 3, title: 'Track 03 - Ambient Relax', artist: 'Daniel Esteve', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', duration: '05:44' }
+      { id: 1, title: 'Son De Amores', artist: 'Andy & Lucas', src: './canciones/canciones/Andy & Lucas - Son De Amores.mp3', duration: '03:40' },
+      { id: 2, title: 'La Flaca', artist: 'Jarabe De Palo', src: './canciones/canciones/Jarabe De Palo - La Flaca.mp3', duration: '04:20' },
+      { id: 3, title: 'Ven Bailalo', artist: 'Khriz y Angel', src: './canciones/canciones/Khriz y Angel - Ven Bailalo.mp3', duration: '03:15' },
+      { id: 4, title: 'Princesas', artist: 'Pereza', src: './canciones/canciones/Pereza - Princesas.mp3', duration: '03:55' },
+      { id: 5, title: 'Pa Que Retozen', artist: 'Tego Caldeon', src: './canciones/canciones/Tego Caldeon - Pa Que Retozen.mp3', duration: '03:30' }
     ];
 
     const HardDriveIcon = () => e('svg', { width: '32', height: '32', viewBox: '0 0 36 36', fill: 'none' },
@@ -164,7 +166,7 @@
       e('rect', { x: '7', y: '20', width: '4', height: '2', fill: '#64748b' })
     );
 
-    // COMPONENTE WINDOWS MEDIA PLAYER 8 (EXACTO A LA IMAGEN)
+    // COMPONENTE WINDOWS MEDIA PLAYER 8
     function MediaPlayer8App() {
       const [currentIndex, setCurrentIndex] = useState(0);
       const [isPlaying, setIsPlaying] = useState(false);
@@ -246,10 +248,10 @@
           onEnded: handleEnded
         }),
 
-        /* Cuerpo principal de WMP8 (Barra lateral + Pantalla/Playlist) */
+        /* Cuerpo principal WMP8 */
         e('div', { className: 'flex flex-1 overflow-hidden' },
           
-          /* Barra Lateral Izquierda Oficial WMP8 */
+          /* Barra Lateral Izquierda */
           e('div', { className: 'w-32 sm:w-36 flex flex-col shrink-0 text-[11px]' },
             [
               { id: 'nowPlaying', label: 'Now Playing', icon: '▶' },
@@ -274,10 +276,9 @@
           /* Área Central de Visualización y Playlist */
           e('div', { className: 'flex-1 flex flex-col sm:flex-row bg-black overflow-hidden relative' },
             
-            /* Pantalla del Visualizador Principal */
+            /* Pantalla de Visualización */
             e('div', { className: 'flex-1 bg-gradient-to-b from-blue-950/40 via-black to-slate-950 p-3 flex flex-col justify-between items-center relative overflow-hidden' },
               
-              /* Info Superior */
               e('div', { className: 'w-full flex justify-between items-center text-[10px] text-cyan-400 font-mono z-10' },
                 e('span', {}, 'Windows Media Player'),
                 e('button', {
@@ -286,10 +287,7 @@
                 }, showPlaylist ? 'Ocultar Lista ➔' : '📂 Mostrar Lista')
               ),
 
-              /* Visualizador de Onda Estilo "Ambience / Line" WMP8 */
               e('div', { className: 'my-auto flex flex-col items-center justify-center text-center z-10 w-full' },
-                
-                /* Carátula Visualizer WMP8 */
                 e('div', { className: 'w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-cyan-500/50 bg-radial from-cyan-900 via-blue-950 to-black flex items-center justify-center shadow-[0_0_20px_rgba(0,170,255,0.4)] mb-3 relative' },
                   e('div', { className: `w-16 h-16 rounded-full border border-cyan-300/40 flex items-center justify-center ${isPlaying ? 'animate-spin' : ''}`, style: { animationDuration: '8s' } },
                     e('span', { className: 'text-2xl' }, '🎵')
@@ -302,8 +300,8 @@
               )
             ),
 
-            /* Lista de Reproducción Lateral Integrada (Desplegable) */
-            showPlaylist && e('div', { className: 'w-full sm:w-48 bg-slate-950 border-t sm:border-t-0 sm:border-l border-blue-900/60 p-2 overflow-y-auto flex flex-col text-xs shrink-0' },
+            /* Lista de Reproducción Lateral */
+            showPlaylist && e('div', { className: 'w-full sm:w-52 bg-slate-950 border-t sm:border-t-0 sm:border-l border-blue-900/60 p-2 overflow-y-auto flex flex-col text-xs shrink-0' },
               e('p', { className: 'font-bold text-cyan-400 mb-1 border-b border-blue-900 pb-1 text-[11px] flex justify-between' },
                 e('span', {}, 'Playlist'),
                 e('span', { className: 'text-slate-400 font-mono text-[10px]' }, `${playlist.length} items`)
@@ -314,18 +312,19 @@
                   onClick: () => { setCurrentIndex(idx); setIsPlaying(false); setProgress(0); },
                   className: `p-1.5 rounded cursor-pointer flex items-center justify-between text-[11px] mb-1 ${idx === currentIndex ? 'bg-blue-900/80 text-cyan-200 font-bold border border-blue-600' : 'hover:bg-slate-900 text-slate-300'}`
                 },
-                  e('span', { className: 'truncate pr-1' }, `${idx + 1}. ${track.title}`),
-                  e('span', { className: 'text-[10px] font-mono text-slate-500' }, track.duration)
+                  e('div', { className: 'truncate pr-1' },
+                    e('p', { className: 'truncate font-bold' }, `${idx + 1}. ${track.title}`),
+                    e('p', { className: 'text-[10px] text-slate-400 truncate' }, track.artist)
+                  ),
+                  e('span', { className: 'text-[10px] font-mono text-slate-500 shrink-0' }, track.duration)
                 )
               )
             )
           )
         ),
 
-        /* Panel Inferior de Controles Oficial WMP8 */
+        /* Panel Inferior de Controles */
         e('div', { className: 'wmp8-controls-panel p-2 flex flex-col gap-1.5 shrink-0' },
-          
-          /* Barra de Avance de Posición (Seekbar) */
           e('div', {
             onClick: handleSeek,
             className: 'w-full bg-slate-900 h-2 rounded cursor-pointer border border-blue-900 relative overflow-hidden'
@@ -333,10 +332,7 @@
             e('div', { className: 'bg-gradient-to-r from-blue-500 to-cyan-300 h-full transition-all duration-100', style: { width: `${progress}%` } })
           ),
 
-          /* Fila de Botones de Reproducción WMP8 */
           e('div', { className: 'flex items-center justify-between pt-1' },
-            
-            /* Botones de Control */
             e('div', { className: 'flex items-center gap-1.5' },
               e('button', {
                 onClick: togglePlay,
@@ -363,13 +359,11 @@
               }, '⏭')
             ),
 
-            /* Título y Duración */
             e('div', { className: 'hidden sm:flex flex-col text-right font-mono text-[10px] text-cyan-300' },
-              e('span', { className: 'truncate max-w-[120px] font-bold' }, currentTrack.title),
-              e('span', { className: 'text-slate-400' }, isPlaying ? '00:00 / ' + currentTrack.duration : '00:00')
+              e('span', { className: 'truncate max-w-[140px] font-bold' }, currentTrack.title),
+              e('span', { className: 'text-slate-400' }, currentTrack.artist)
             ),
 
-            /* Control de Volumen WMP8 */
             e('div', { className: 'flex items-center gap-1 text-xs text-slate-300 bg-black/40 px-2 py-1 rounded-full border border-blue-900' },
               e('span', { className: 'text-[11px]' }, '🔊'),
               e('input', {
