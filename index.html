@@ -3,90 +3,263 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daniel Esteve - Portafolio Creativo</title>
+  <title>Daniel Esteve - Escritorio Windows XP</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <style>
+    /* Estilos personalizados Windows XP */
+    body {
+      user-select: none;
+      font-family: 'Tahoma', 'Segoe UI', sans-serif;
+    }
+    .xp-window {
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+      border: 3px solid #0055ea;
+      border-radius: 8px 8px 0 0;
+    }
+    .xp-titlebar {
+      background: linear-gradient(to bottom, #0058ee 0%, #388cf8 10%, #0055ea 90%, #0011bb 100%);
+    }
+    .xp-taskbar {
+      background: linear-gradient(to bottom, #1f2f86 0%, #3168d5 10%, #2557c6 90%, #1941a5 100%);
+    }
+    .xp-start-btn {
+      background: linear-gradient(to bottom, #388e3c 0%, #4caf50 50%, #2e7d32 100%);
+      box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20;
+    }
+    @keyframes floatClippy {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    .clippy-animate {
+      animation: floatClippy 3s ease-in-out infinite;
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen">
-  <div id="root"></div>
+<body class="h-screen w-screen overflow-hidden bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');">
+  <div id="root" class="h-full w-full"></div>
 
   <script>
     const e = React.createElement;
     const { useState } = React;
 
     function App() {
-      const [dossierAbierto, setDossierAbierto] = useState(null);
+      // Estados para abrir/cerrar ventanas
+      const [winCV, setWinCV] = useState(false);
+      const [winProyectos, setWinProyectos] = useState(false);
+      const [winRRSS, setWinRRSS] = useState(false);
+      const [winContacto, setWinContacto] = useState(false);
+      
+      // Estado para la carpeta seleccionada dentro de Proyectos
+      const [subcarpeta, setSubcarpeta] = useState(null);
 
-      return e('div', { className: 'min-h-screen bg-amber-950/30 p-6 flex flex-col items-center justify-center font-sans' },
-        // Encabezado
-        e('header', { className: 'text-center mb-8' },
-          e('h1', { className: 'text-3xl md:text-4xl font-extrabold text-amber-100 mb-2' }, 'Mesa de Trabajo — Daniel Esteve'),
-          e('p', { className: 'text-amber-200/80 text-sm' }, 'Especialista en Marketing 360, Audiovisual y Ventas')
+      // Componente reutilizable de Ventana XP
+      const XPWindow = ({ title, icon, onClose, children, width = "w-11/12 max-w-2xl" }) => {
+        return e('div', { className: `fixed inset-x-0 top-12 mx-auto ${width} xp-window bg-slate-100 z-40 overflow-hidden` },
+          // Barra de título
+          e('div', { className: 'xp-titlebar text-white px-3 py-1 flex justify-between items-center font-bold text-sm select-none' },
+            e('div', { className: 'flex items-center gap-2' },
+              e('span', { className: 'text-base' }, icon),
+              e('span', {}, title)
+            ),
+            e('button', {
+              onClick: onClose,
+              className: 'bg-red-600 hover:bg-red-700 text-white font-extrabold px-2 py-0.5 rounded text-xs border border-white/50 shadow'
+            }, '✕')
+          ),
+          // Contenido
+          e('div', { className: 'p-4 max-h-[75vh] overflow-y-auto text-slate-900 font-sans' }, children)
+        );
+      };
+
+      return e('div', { className: 'h-full w-full flex flex-col justify-between relative p-4' },
+        
+        /* Grid de Iconos del Escritorio */
+        e('div', { className: 'grid grid-cols-1 gap-6 w-28 text-center text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] font-semibold' },
+          
+          /* 1. Mi PC */
+          e('div', { className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30' },
+            e('div', { className: 'text-4xl mb-1' }, '🖥️'),
+            e('span', {}, 'Mi PC')
+          ),
+
+          /* 2. Papelera de reciclaje */
+          e('div', { className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30' },
+            e('div', { className: 'text-4xl mb-1' }, '🗑️'),
+            e('span', {}, 'Papelera')
+          ),
+
+          /* 3. Bloc de notas (Mi CV) - Doble click */
+          e('div', {
+            onDoubleClick: () => setWinCV(true),
+            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+          },
+            e('div', { className: 'text-4xl mb-1' }, '📝'),
+            e('span', {}, 'Mi CV.txt')
+          ),
+
+          /* 4. Carpeta Proyectos - Doble click */
+          e('div', {
+            onDoubleClick: () => setWinProyectos(true),
+            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+          },
+            e('div', { className: 'text-4xl mb-1' }, '📁'),
+            e('span', {}, 'Proyectos')
+          ),
+
+          /* 5. Internet Explorer (RRSS) - Doble click */
+          e('div', {
+            onDoubleClick: () => setWinRRSS(true),
+            className: 'flex flex-col items-center cursor-pointer p-2 rounded hover:bg-blue-500/30 active:bg-blue-600/50'
+          },
+            e('div', { className: 'text-4xl mb-1' }, '🌐'),
+            e('span', {}, 'RRSS')
+          )
         ),
 
-        // Contenedor principal / Escritorio
-        e('main', { className: 'grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full bg-amber-900/20 p-6 rounded-2xl border border-amber-800/40 shadow-2xl backdrop-blur-sm' },
-          
-          // Post-it Sobre Mí
-          e('div', { className: 'bg-yellow-200 text-slate-900 p-5 rounded-lg shadow-lg transform -rotate-2 hover:rotate-0 transition' },
-            e('h2', { className: 'font-bold text-base border-b border-yellow-400 pb-1 mb-2' }, '📌 Sobre Mí'),
-            e('p', { className: 'text-xs leading-relaxed' }, 'Especialista en producción audiovisual, estrategia digital y experiencia comercial (Xiaomi / MediaMarkt, GrupoIDEX, V3RTICE).')
+        /* --- VENTANA: MI CV --- */
+        winCV && e(XPWindow, {
+          title: 'Mi CV.txt - Bloc de notas',
+          icon: '📝',
+          onClose: () => setWinCV(false)
+        },
+          e('div', { className: 'bg-white border border-slate-300 p-2 text-xs font-mono mb-3 shadow-inner' },
+            e('p', { className: 'font-bold mb-1' }, '--- CURRÍCULUM VITAE DANIEL ESTEVE QUESADA ---'),
+            e('p', {}, 'Haga clic abajo para visualizar o descargar el documento completo en PDF.')
           ),
+          e('iframe', {
+            src: '/CV-Daniel-Esteve-Quesada.pdf',
+            className: 'w-full h-[400px] border border-slate-400 bg-white shadow-inner',
+            title: 'Vista previa CV'
+          })
+        ),
 
-          // Hoja CV
-          e('div', { className: 'bg-slate-100 text-slate-900 p-5 rounded-lg shadow-lg transform rotate-1 hover:rotate-0 transition relative' },
-            e('div', { className: 'absolute -top-3 right-3 text-xl' }, '📎'),
-            e('h2', { className: 'font-bold text-base mb-2' }, '📄 Currículum Vitae'),
-            e('p', { className: 'text-xs text-slate-600 mb-4' }, 'Experiencia en retail, campañas 360 y gestión de eventos.'),
-            e('a', {
-              href: '/CV-Daniel-Esteve-Quesada.pdf',
-              target: '_blank',
-              className: 'inline-block bg-slate-800 text-white text-xs px-3 py-2 rounded hover:bg-slate-700 transition font-medium'
-            }, 'Ver / Descargar PDF')
-          ),
-
-          // Mancha de Café
-          e('div', {
-            onClick: () => alert("¡Café virtual tomado! Contacta conmigo por LinkedIn o Email para agendar una reunión."),
-            className: 'bg-amber-800/30 border border-amber-600/40 p-5 rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:bg-amber-800/50 transition'
-          },
-            e('span', { className: 'text-3xl mb-1' }, '☕'),
-            e('span', { className: 'text-xs font-semibold text-amber-200' }, 'Tomar un Café')
-          ),
-
-          // Carpetas
-          e('div', { className: 'md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3 mt-2' },
+        /* --- VENTANA: PROYECTOS --- */
+        winProyectos && e(XPWindow, {
+          title: 'Explorador - C:\\Proyectos',
+          icon: '📁',
+          onClose: () => { setWinProyectos(false); setSubcarpeta(null); }
+        },
+          !subcarpeta ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-4 text-center' },
             [
-              { id: 'audiovisual', titulo: '🎬 Audiovisual', desc: 'MaQasa & Producción' },
-              { id: 'ventas', titulo: '📱 Comercial', desc: 'Xiaomi & TCL' },
-              { id: 'eventos', titulo: '🎪 Eventos', desc: 'GrupoIDEX' },
-              { id: 'marketing', titulo: '📊 Marketing', desc: 'V3RTICE' }
-            ].map(folder => 
+              { id: 'audiovisual', nombre: '🎬 Audiovisual', desc: 'Vídeos y MaQasa' },
+              { id: 'ventas', nombre: '📱 Ventas & Retail', desc: 'Xiaomi & TCL' },
+              { id: 'eventos', nombre: '🎪 Eventos en Vivo', desc: 'GrupoIDEX' },
+              { id: 'marketing', nombre: '📊 Marketing 360', desc: 'V3RTICE' }
+            ].map(folder =>
               e('div', {
                 key: folder.id,
-                onClick: () => setDossierAbierto(folder.titulo),
-                className: 'bg-amber-700/30 border border-amber-500/30 p-3 rounded-xl cursor-pointer hover:bg-amber-600/40 transition'
+                onDoubleClick: () => setSubcarpeta(folder.nombre),
+                className: 'p-3 bg-white border border-slate-300 rounded shadow hover:bg-blue-50 cursor-pointer flex flex-col items-center'
               },
-                e('div', { className: 'text-xl mb-1' }, '📁'),
-                e('h3', { className: 'font-bold text-xs text-amber-100' }, folder.titulo),
-                e('p', { className: 'text-[10px] text-amber-200/60' }, folder.desc)
+                e('div', { className: 'text-3xl mb-1' }, '📁'),
+                e('span', { className: 'font-bold text-xs' }, folder.nombre),
+                e('span', { className: 'text-[10px] text-slate-500' }, folder.desc)
               )
+            )
+          ) : e('div', {},
+            e('button', {
+              onClick: () => setSubcarpeta(null),
+              className: 'mb-4 text-xs bg-slate-200 border border-slate-400 px-3 py-1 rounded hover:bg-slate-300 font-semibold'
+            }, '⬅ Volver a Proyectos'),
+            e('div', { className: 'bg-white p-4 border border-slate-300 rounded min-h-[200px]' },
+              e('h3', { className: 'font-bold text-sm border-b pb-1 mb-3' }, `Contenido de: ${subcarpeta}`),
+              e('p', { className: 'text-xs text-slate-600 italic' }, 'Aquí subiremos tus fotos, vídeos y archivos multimedia.')
             )
           )
         ),
 
-        // Modal Dossier
-        dossierAbierto ? e('div', { className: 'fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50' },
-          e('div', { className: 'bg-slate-800 border border-slate-700 p-6 rounded-xl max-w-sm w-full shadow-2xl' },
-            e('h3', { className: 'text-lg font-bold mb-2 text-white' }, dossierAbierto),
-            e('p', { className: 'text-xs text-slate-300 mb-6' }, 'Detalles del proyecto, métricas e hitos clave seleccionados.'),
-            e('button', {
-              onClick: () => setDossierAbierto(null),
-              className: 'bg-amber-600 text-white text-xs px-4 py-2 rounded hover:bg-amber-500 transition'
-            }, 'Cerrar Expediente')
+        /* --- VENTANA: INTERNET EXPLORER (RRSS) --- */
+        winRRSS && e(XPWindow, {
+          title: 'Internet Explorer - Redes Sociales',
+          icon: '🌐',
+          onClose: () => setWinRRSS(false),
+          width: 'w-11/12 max-w-md'
+        },
+          e('div', { className: 'bg-slate-200 p-2 border-b border-slate-300 text-xs mb-4 flex items-center gap-2' },
+            e('span', { className: 'font-bold' }, 'Dirección:'),
+            e('input', {
+              type: 'text',
+              readOnly: true,
+              value: 'http://www.danielesteve.com/rrss',
+              className: 'w-full bg-white border border-slate-400 px-2 py-0.5 rounded'
+            })
+          ),
+          e('div', { className: 'flex flex-col gap-3' },
+            e('a', {
+              href: 'https://www.linkedin.com',
+              target: '_blank',
+              className: 'flex items-center gap-3 bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition shadow'
+            },
+              e('span', { className: 'text-xl' }, '💼'),
+              e('span', {}, 'Perfil de LinkedIn')
+            ),
+            e('a', {
+              href: 'https://www.instagram.com',
+              target: '_blank',
+              className: 'flex items-center gap-3 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white p-3 rounded font-bold hover:opacity-90 transition shadow'
+            },
+              e('span', { className: 'text-xl' }, '📷'),
+              e('span', {}, 'Instagram')
+            )
           )
-        ) : null
+        ),
+
+        /* --- CLIPPY ASISTENTE + VENTANA DE CONTACTO --- */
+        e('div', { className: 'fixed bottom-12 right-6 flex flex-col items-end z-30' },
+          
+          /* Bocadillo de texto */
+          e('div', {
+            className: 'bg-amber-100 border-2 border-slate-800 p-2 rounded-xl text-slate-900 text-xs font-bold shadow-lg mb-2 relative max-w-[160px] text-center'
+          },
+            'Contáctame haciendo click',
+            e('div', { className: 'absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-slate-800' })
+          ),
+
+          /* Clippy Icono con Doble Click */
+          e('div', {
+            onDoubleClick: () => setWinContacto(true),
+            title: 'Haz doble clic para ver datos de contacto',
+            className: 'text-5xl cursor-pointer clippy-animate hover:scale-110 transition-transform'
+          }, '📎')
+        ),
+
+        /* Ventana Emergente Contacto (activada por Clippy) */
+        winContacto && e(XPWindow, {
+          title: 'Asistente de Contacto - Nota rápida',
+          icon: '📎',
+          onClose: () => setWinContacto(false),
+          width: 'w-11/12 max-w-sm'
+        },
+          e('div', { className: 'bg-yellow-100 border border-yellow-300 p-4 rounded shadow-inner text-slate-900 font-mono text-xs' },
+            e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
+            e('p', { className: 'mb-1' }, '📞 Teléfono: +34 600 000 000'),
+            e('p', { className: 'mb-4' }, '✉️ Email: danielesteve@email.com'),
+            
+            e('a', {
+              href: 'mailto:danielesteve@email.com?subject=Contacto%20desde%20Portafolio%20Web',
+              className: 'flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2 rounded hover:bg-blue-700 transition shadow'
+            },
+              e('span', {}, '✉️'),
+              e('span', {}, 'Enviar Email Directo')
+            )
+          )
+        ),
+
+        /* Barra de tareas XP */
+        e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-1 z-50 border-t border-blue-400' },
+          e('div', { className: 'flex items-center gap-2 h-full' },
+            e('button', { className: 'xp-start-btn text-white font-extrabold italic text-sm px-4 h-8 rounded-r-lg flex items-center gap-1 shadow-md border-r border-green-300' },
+              e('span', { className: 'text-lg' }, '❖'),
+              e('span', {}, 'inicio')
+            )
+          ),
+          e('div', { className: 'bg-cyan-500/40 border border-cyan-300/30 text-white text-xs px-3 h-8 flex items-center rounded' },
+            new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          )
+        )
+
       );
     }
 
