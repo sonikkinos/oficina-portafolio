@@ -133,7 +133,7 @@
       { id: 2, title: 'Concurso - Vídeo 2.mp4', youtubeId: '_wBOTBJ44oE' }
     ];
 
-    // RUTAS ACTUALIZADAS CON "Proyectos Laborables" (CON B)
+    // RUTAS ACTUALIZADAS CON CODIFICACIÓN SEGURA DE CARACTERES
     const mediaFiles = {
       'Proyectos Personales/Posters': [
         { name: 'Hasbulla Poster', src: './Proyectos%20Personales/Posters/Hasbulla%20Poster.jpg' },
@@ -174,11 +174,13 @@
       ],
       'Proyectos Laborables/Concurso': [
         { name: 'WWE campaña', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' },
+        { name: 'WWE campaña (Alt)', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.GIF' },
+        { name: 'Hogares sin techo (Alt)', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.GIF' }
       ],
       'Proyectos Laborables/Concursos': [
-        { name: 'WWE campaña', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
+        { name: 'WWE campaña', src: './Proyectos%20Laborables/Concursos/WWE%20campa%C3%B1a.gif' },
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concursos/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ]
     };
 
@@ -824,7 +826,9 @@
               ) : navLaborales[0] === 'MaQasa' ? e('div', { className: 'grid grid-cols-1 sm:grid-cols-3 gap-3' },
                 videosMaQasa.map(v =>
                   e('div', { key: v.id, onClick: () => setSelectedVideo(v), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                    e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+                    e('div', { className: 'w-16 h-16 flex items-center justify-center mb-1' },
+                      e('img', { src: ICONS.video, className: 'w-12 h-12 object-contain pointer-events-none drop-shadow' })
+                    ),
                     e('span', { className: 'font-bold text-xs truncate w-full' }, v.title),
                     e('span', { className: 'text-[10px] text-blue-600 font-semibold mt-1' }, '▶ Reproducir vídeo')
                   )
@@ -834,7 +838,9 @@
                 e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3' },
                   videosConcursos.map(v =>
                     e('div', { key: v.id, onClick: () => setSelectedVideo(v), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                      e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1 pointer-events-none' }),
+                      e('div', { className: 'w-16 h-16 flex items-center justify-center mb-1' },
+                        e('img', { src: ICONS.video, className: 'w-12 h-12 object-contain pointer-events-none drop-shadow' })
+                      ),
                       e('span', { className: 'font-bold text-xs truncate w-full' }, v.title),
                       e('span', { className: 'text-[10px] text-blue-600 font-semibold mt-1' }, '▶ Reproducir vídeo')
                     )
@@ -842,17 +848,21 @@
                 ),
                 e('p', { className: 'font-bold text-slate-600 border-b pb-1' }, '🖼️ GIFs y Campañas:'),
                 e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                  (mediaFiles['Proyectos Laborales/Concursos'] || mediaFiles['Proyectos Laborales/Concurso'] || []).map((file, idx) =>
+                  (mediaFiles['Proyectos Laborables/Concurso'] || mediaFiles['Proyectos Laborables/Concursos'] || []).map((file, idx) =>
                     e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                       e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
-                        e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
+                        e('img', {
+                          src: file.src,
+                          onError: (evt) => { evt.target.style.display = 'none'; },
+                          className: 'w-full h-full object-contain pointer-events-none'
+                        })
                       ),
                       e('span', { className: 'truncate text-[10px] font-bold w-full' }, file.name)
                     )
                   )
                 )
               ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                (mediaFiles['Proyectos Laborables/V3RTICE'] || mediaFiles[currentPathKeyLaborales] || []).map((file, idx) =>
+                (mediaFiles['Proyectos Laborables/V3RTICE'] || []).map((file, idx) =>
                   e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                     e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
                       e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
@@ -873,10 +883,10 @@
               e('button', { onClick: () => setSelectedVideo(null), className: 'xp-ctrl-btn xp-btn-close' }, '✕')
             ),
             e('div', { className: 'p-2 bg-black' },
-              e('iframe', { width: '100%', height: '400', src: `https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`, allowFullScreen: true, className: 'w-full rounded' })
+              e('iframe', { width: '100%', height: '300', src: `https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`, allowFullScreen: true, className: 'w-full rounded' })
             ),
             e('div', { className: 'p-2 bg-slate-200 text-xs flex justify-between items-center' },
-              e('span', { className: 'text-slate-600 font-mono text-[11px]' }, 'YouTube Reproductor'),
+              e('span', { className: 'text-slate-600 font-mono text-[11px]' }, 'Windows Media Player - Video'),
               e('button', { onClick: () => setSelectedVideo(null), className: 'bg-blue-600 text-white font-bold px-3 py-1 rounded' }, 'Cerrar')
             )
           )
@@ -957,7 +967,7 @@
             e('div', { onClick: () => { openWindow('minesweeper'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.minesweeper, className: 'w-5 h-5' }), e('span', {}, 'Buscaminas')),
             e('div', { onClick: () => { openWindow('mediaPlayer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.mediaPlayer, className: 'w-5 h-5' }), e('span', {}, 'Windows Media Player')),
             e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Personales')),
-            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborales')),
+            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborables')),
             e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }), e('span', {}, 'Redes Sociales'))
           )
         ),
