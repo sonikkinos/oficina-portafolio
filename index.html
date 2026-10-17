@@ -133,7 +133,6 @@
       { id: 2, title: 'Concurso - Vídeo 2.mp4', youtubeId: '_wBOTBJ44oE' }
     ];
 
-    // RUTAS ACTUALIZADAS CON CODIFICACIÓN SEGURA DE CARACTERES
     const mediaFiles = {
       'Proyectos Personales/Posters': [
         { name: 'Hasbulla Poster', src: './Proyectos%20Personales/Posters/Hasbulla%20Poster.jpg' },
@@ -174,9 +173,7 @@
       ],
       'Proyectos Laborables/Concurso': [
         { name: 'WWE campaña', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' },
-        { name: 'WWE campaña (Alt)', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.GIF' },
-        { name: 'Hogares sin techo (Alt)', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.GIF' }
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ],
       'Proyectos Laborables/Concursos': [
         { name: 'WWE campaña', src: './Proyectos%20Laborables/Concursos/WWE%20campa%C3%B1a.gif' },
@@ -851,11 +848,7 @@
                   (mediaFiles['Proyectos Laborables/Concurso'] || mediaFiles['Proyectos Laborables/Concursos'] || []).map((file, idx) =>
                     e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                       e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
-                        e('img', {
-                          src: file.src,
-                          onError: (evt) => { evt.target.style.display = 'none'; },
-                          className: 'w-full h-full object-contain pointer-events-none'
-                        })
+                        e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
                       ),
                       e('span', { className: 'truncate text-[10px] font-bold w-full' }, file.name)
                     )
