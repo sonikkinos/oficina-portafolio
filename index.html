@@ -15,7 +15,6 @@
       font-family: 'Tahoma', 'Segoe UI', Geneva, Verdana, sans-serif;
     }
     
-    /* Ventana Windows XP */
     .xp-window {
       box-shadow: 3px 3px 14px rgba(0,0,0,0.6);
       border: 3px solid #0055ea;
@@ -28,7 +27,6 @@
       border-top-right-radius: 5px;
     }
 
-    /* Botones de control estilo Windows XP Luna */
     .xp-ctrl-btn {
       width: 22px;
       height: 22px;
@@ -56,7 +54,6 @@
       background: linear-gradient(to bottom, #f06a54 0%, #e63e24 50%, #b3240f 100%);
     }
 
-    /* Barra de Tareas */
     .xp-taskbar {
       background: linear-gradient(to bottom, #1f2f86 0%, #3168d5 10%, #2557c6 90%, #1941a5 100%);
     }
@@ -66,30 +63,22 @@
       box-shadow: inset 1px 1px 2px #a5d6a7, inset -1px -1px 2px #1b5e20;
     }
 
-    /* ESTILOS WINDOWS MEDIA PLAYER 8 */
-    .wmp8-bg {
-      background: #091322;
-      color: #c0d8f0;
-    }
-
+    .wmp8-bg { background: #091322; color: #c0d8f0; }
     .wmp8-sidebar-item {
       background: linear-gradient(to right, #1b3558 0%, #0d1e36 100%);
       border-bottom: 1px solid #091322;
       border-right: 2px solid #2d588c;
     }
-
     .wmp8-sidebar-item.active {
       background: linear-gradient(to right, #2b568f 0%, #173763 100%);
       color: #ffffff;
       font-weight: bold;
       border-right: 3px solid #00aaff;
     }
-
     .wmp8-controls-panel {
       background: linear-gradient(to bottom, #1e395e 0%, #0c182b 100%);
       border-top: 2px solid #2e5587;
     }
-
     .wmp8-play-btn {
       background: radial-gradient(circle at 35% 35%, #52c7ff 0%, #0066cc 60%, #002b5e 100%);
       border: 1px solid #73d2ff;
@@ -98,23 +87,16 @@
     .wmp8-play-btn:hover {
       background: radial-gradient(circle at 35% 35%, #7ee0ff 0%, #0088ff 60%, #003a80 100%);
     }
-
     .wmp8-btn-metal {
       background: linear-gradient(to bottom, #4a6c99 0%, #213c61 50%, #132742 100%);
       border: 1px solid #5d85b8;
-      box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4);
-    }
-    .wmp8-btn-metal:hover {
-      background: linear-gradient(to bottom, #5c84ba 0%, #2a4c7a 50%, #183254 100%);
     }
 
     @keyframes floatClippy {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-6px); }
     }
-    .clippy-animate {
-      animation: floatClippy 2.5s ease-in-out infinite;
-    }
+    .clippy-animate { animation: floatClippy 2.5s ease-in-out infinite; }
   </style>
 </head>
 <body class="h-screen w-screen overflow-hidden bg-cover bg-center" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');">
@@ -136,7 +118,6 @@
       mediaPlayer: 'https://win98icons.alexmeub.com/icons/png/mplayer-2.png'
     };
 
-    // VÍDEOS DE YOUTUBE
     const videosMaQasa = [
       { id: 1, title: 'MaQasa - Presentación 1.mp4', youtubeId: 'RF_x4QkbYAM' },
       { id: 2, title: 'MaQasa - Demostración 2.mp4', youtubeId: 'T9n1ccoLylo' },
@@ -148,11 +129,11 @@
       { id: 2, title: 'Concurso - Vídeo 2.mp4', youtubeId: '_wBOTBJ44oE' }
     ];
 
-    // REGISTRO COMPLETO DE ARCHIVOS CON CODIFICACIÓN DE RUTAS SEGURA
+    // REGISTRO DE ARCHIVOS CON RUTAS CODIFICADAS CORRECTAMENTE
     const mediaFiles = {
       'Proyectos Personales/Posters': [
-        { name: 'Hasbulla Poster', src: './Proyectos Personales/Posters/Hasbulla%20Poster.jpg' },
-        { name: 'Lollipop Poster', src: './Proyectos Personales/Posters/Lollipop%20Poster.png' },
+        { name: 'Hasbulla Poster', src: './Proyectos%20Personales/Posters/Hasbulla%20Poster.jpg' },
+        { name: 'Lollipop Poster', src: './Proyectos%20Personales/Posters/Lollipop%20Poster.png' },
         { name: 'Mi team Poster', src: './Proyectos%20Personales/Posters/Mi%20team%20Poster.png' },
         { name: 'Museo arte UA Poster', src: './Proyectos%20Personales/Posters/Museo%20arte%20UA%20Poster.png' },
         { name: 'Spiderman Poster', src: './Proyectos%20Personales/Posters/Spiderman%20Poster.png' },
@@ -188,16 +169,15 @@
         { name: 'Contenido Turris', src: './Proyectos%20Laborales/V3RTICE/Contenido%20Turris.gif' }
       ],
       'Proyectos Laborales/Concurso': [
-        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campaña.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campaña.gif' }
+        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campa%C3%B1a.gif' },
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ],
       'Proyectos Laborales/Concursos': [
-        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campaña.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campaña.gif' }
+        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campa%C3%B1a.gif' },
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ]
     };
 
-    // PLAYLIST MÚSICA
     const playlist = [
       { id: 1, title: 'Son De Amores', artist: 'Andy & Lucas', src: './Andy%20&%20Lucas%20-%20Son%20De%20Amores.mp3', duration: '03:40' },
       { id: 2, title: 'La Flaca', artist: 'Jarabe De Palo', src: './Jarabe%20De%20Palo%20-%20La%20Flaca.mp3', duration: '04:20' },
@@ -213,14 +193,6 @@
       e('rect', { x: '13', y: '16', width: '14', height: '4', fill: '#64748b', rx: '0.5' })
     );
 
-    const CdDriveIcon = () => e('svg', { width: '32', height: '32', viewBox: '0 0 36 36', fill: 'none' },
-      e('rect', { x: '3', y: '11', width: '30', height: '14', rx: '2', fill: '#cbd5e1', stroke: '#475569', strokeWidth: '1.5' }),
-      e('rect', { x: '6', y: '15', width: '24', height: '3', fill: '#94a3b8' }),
-      e('circle', { cx: '27', cy: '21', r: '1', fill: '#3b82f6' }),
-      e('rect', { x: '7', y: '20', width: '4', height: '2', fill: '#64748b' })
-    );
-
-    // REPRODUCTOR WINDOWS MEDIA PLAYER 8
     function MediaPlayer8App() {
       const [currentIndex, setCurrentIndex] = useState(0);
       const [isPlaying, setIsPlaying] = useState(false);
@@ -228,7 +200,6 @@
       const [volume, setVolume] = useState(0.8);
       const [showPlaylist, setShowPlaylist] = useState(false);
       const audioRef = useRef(null);
-
       const currentTrack = playlist[currentIndex];
 
       useEffect(() => { if (audioRef.current) audioRef.current.volume = volume; }, [volume]);
@@ -239,103 +210,28 @@
         else { audioRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err)); }
       };
 
-      const stopPlay = () => {
-        if (!audioRef.current) return;
-        audioRef.current.pause(); audioRef.current.currentTime = 0; setIsPlaying(false); setProgress(0);
-      };
-
-      const handleTimeUpdate = () => {
-        if (audioRef.current) setProgress((audioRef.current.currentTime / (audioRef.current.duration || 1)) * 100);
-      };
-
-      const nextTrack = () => { setCurrentIndex((prev) => (prev + 1) % playlist.length); setIsPlaying(false); setProgress(0); };
-      const prevTrack = () => { setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length); setIsPlaying(false); setProgress(0); };
-
-      const handleSeek = (evt) => {
-        if (audioRef.current) {
-          const rect = evt.currentTarget.getBoundingClientRect();
-          audioRef.current.currentTime = ((evt.clientX - rect.left) / rect.width) * (audioRef.current.duration || 0);
-        }
-      };
-
       return e('div', { className: 'wmp8-bg flex flex-col h-full w-full select-none text-xs font-sans overflow-hidden border border-slate-800' },
-        e('audio', { ref: audioRef, src: currentTrack.src, onTimeUpdate: handleTimeUpdate, onEnded: nextTrack }),
+        e('audio', { ref: audioRef, src: currentTrack.src, onTimeUpdate: () => { if (audioRef.current) setProgress((audioRef.current.currentTime / (audioRef.current.duration || 1)) * 100); }, onEnded: () => setCurrentIndex((prev) => (prev + 1) % playlist.length) }),
         e('div', { className: 'flex flex-1 overflow-hidden relative' },
-          e('div', { className: 'hidden sm:flex w-32 sm:w-36 flex-col shrink-0 text-[11px]' },
-            [
-              { id: 'nowPlaying', label: 'Now Playing', icon: '▶' },
-              { id: 'mediaGuide', label: 'Media Guide', icon: '🌐' },
-              { id: 'copyCD', label: 'Copy from CD', icon: '💿' },
-              { id: 'library', label: 'Media Library', icon: '📚' },
-              { id: 'radio', label: 'Radio Tuner', icon: '📻' },
-              { id: 'copyDevice', label: 'Copy to CD or Device', icon: '💾' },
-              { id: 'skin', label: 'Skin Chooser', icon: '🎨' }
-            ].map((tab, idx) =>
-              e('div', { key: tab.id, className: `wmp8-sidebar-item p-2 flex items-center gap-2 ${idx === 0 ? 'active' : ''}` },
-                e('span', { className: 'text-xs' }, tab.icon),
-                e('span', { className: 'truncate' }, tab.label)
-              )
-            )
-          ),
-          e('div', { className: 'flex-1 flex flex-col sm:flex-row bg-black overflow-hidden relative' },
-            e('div', { className: 'flex-1 bg-gradient-to-b from-blue-950/40 via-black to-slate-950 p-2.5 flex flex-col justify-between items-center relative' },
-              e('div', { className: 'w-full flex justify-between items-center text-[10px] text-cyan-400 font-mono z-10' },
-                e('span', {}, 'WMP v8.0'),
-                e('button', { onClick: () => setShowPlaylist(!showPlaylist), className: 'bg-blue-900/80 text-cyan-200 px-2 py-1 rounded border border-blue-600 text-[10px]' }, showPlaylist ? '✕ Cerrar' : '📂 Playlist')
-              ),
-              e('div', { className: 'my-auto flex flex-col items-center text-center z-10 w-full px-1' },
-                e('div', { className: 'w-20 h-20 sm:w-28 sm:h-28 rounded-full border-2 border-cyan-500/50 bg-radial from-cyan-900 via-blue-950 to-black flex items-center justify-center shadow-[0_0_20px_rgba(0,170,255,0.4)] mb-2 relative' },
-                  e('div', { className: `w-12 h-12 sm:w-16 sm:h-16 rounded-full border border-cyan-300/40 flex items-center justify-center ${isPlaying ? 'animate-spin' : ''}`, style: { animationDuration: '8s' } },
-                    e('span', { className: 'text-xl sm:text-2xl' }, '🎵')
-                  )
-                ),
-                e('p', { className: 'font-bold text-xs sm:text-base text-cyan-200 truncate max-w-[240px]' }, currentTrack.title),
-                e('p', { className: 'text-[11px] text-blue-300/80 mt-0.5 truncate' }, currentTrack.artist)
-              )
-            ),
-            showPlaylist && e('div', { className: 'absolute inset-0 sm:relative sm:w-52 bg-slate-950/95 sm:bg-slate-950 border-l border-blue-900/60 p-2 overflow-y-auto flex flex-col text-xs z-20' },
-              playlist.map((track, idx) =>
-                e('div', { key: track.id, onClick: () => { setCurrentIndex(idx); setIsPlaying(false); setProgress(0); setShowPlaylist(false); }, className: `p-2 rounded cursor-pointer flex items-center justify-between text-[11px] mb-1 ${idx === currentIndex ? 'bg-blue-900 text-cyan-200 font-bold border border-blue-600' : 'hover:bg-slate-900 text-slate-300'}` },
-                  e('div', { className: 'truncate pr-1' },
-                    e('p', { className: 'truncate font-bold' }, `${idx + 1}. ${track.title}`),
-                    e('p', { className: 'text-[10px] text-slate-400 truncate' }, track.artist)
-                  ),
-                  e('span', { className: 'text-[10px] font-mono text-slate-500 shrink-0' }, track.duration)
-                )
-              )
-            )
+          e('div', { className: 'flex-1 bg-black p-4 flex flex-col justify-center items-center text-center' },
+            e('div', { className: `w-20 h-20 rounded-full border-2 border-cyan-500/50 bg-radial flex items-center justify-center mb-2 ${isPlaying ? 'animate-spin' : ''}` }, '🎵'),
+            e('p', { className: 'font-bold text-sm text-cyan-200' }, currentTrack.title),
+            e('p', { className: 'text-xs text-blue-300' }, currentTrack.artist)
           )
         ),
-        e('div', { className: 'wmp8-controls-panel p-2 flex flex-col gap-1.5 shrink-0' },
-          e('div', { onClick: handleSeek, className: 'w-full bg-slate-900 h-2.5 rounded cursor-pointer border border-blue-900 relative overflow-hidden' },
+        e('div', { className: 'wmp8-controls-panel p-2 flex flex-col gap-1.5' },
+          e('div', { className: 'w-full bg-slate-900 h-2.5 rounded border border-blue-900 overflow-hidden' },
             e('div', { className: 'bg-gradient-to-r from-blue-500 to-cyan-300 h-full', style: { width: `${progress}%` } })
           ),
-          e('div', { className: 'flex flex-wrap items-center justify-between gap-2 pt-0.5' },
-            e('div', { className: 'flex items-center gap-1.5 mx-auto sm:mx-0' },
-              e('button', { onClick: togglePlay, className: 'w-10 h-10 rounded-full wmp8-play-btn flex items-center justify-center text-white font-bold text-sm shadow cursor-pointer active:scale-95' }, isPlaying ? '❚❚' : '►'),
-              e('button', { onClick: stopPlay, className: 'w-8 h-8 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer active:scale-95' }, '◼'),
-              e('button', { onClick: prevTrack, className: 'w-8 h-8 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer active:scale-95' }, '⏮'),
-              e('button', { onClick: nextTrack, className: 'w-8 h-8 rounded-full wmp8-btn-metal flex items-center justify-center text-white text-xs cursor-pointer active:scale-95' }, '⏭')
-            ),
-            e('div', { className: 'flex items-center justify-between w-full sm:w-auto gap-2 bg-black/40 px-2.5 py-1 rounded-full border border-blue-900' },
-              e('div', { className: 'flex items-center gap-1 w-full sm:w-auto justify-center' },
-                e('span', { className: 'text-[11px]' }, '🔊'),
-                e('input', { type: 'range', min: '0', max: '1', step: '0.05', value: volume, onChange: (evt) => setVolume(parseFloat(evt.target.value)), className: 'w-24 sm:w-16 accent-cyan-400 cursor-pointer' })
-              )
-            )
+          e('div', { className: 'flex justify-center gap-2' },
+            e('button', { onClick: togglePlay, className: 'px-4 py-1 rounded wmp8-play-btn text-white font-bold' }, isPlaying ? '❚❚ Pausa' : '► Reproducir')
           )
         )
       );
     }
 
-    // PAINT INTERACTIVO
     function PaintApp() {
       const canvasRef = useRef(null);
-      const [isDrawing, setIsDrawing] = useState(false);
-      const [color, setColor] = useState('#000000');
-      const [tool, setTool] = useState('pencil');
-      const [lineWidth, setLineWidth] = useState(3);
-
       useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -343,272 +239,33 @@
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }, []);
-
-      const startDrawing = (evt) => {
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
-        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
-        const ctx = canvas.getContext('2d');
-        ctx.beginPath();
-        ctx.moveTo(clientX - rect.left, clientY - rect.top);
-        setIsDrawing(true);
-      };
-
-      const draw = (evt) => {
-        if (!isDrawing) return;
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
-        const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
-        const ctx = canvas.getContext('2d');
-        ctx.lineTo(clientX - rect.left, clientY - rect.top);
-        ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
-        ctx.lineWidth = tool === 'eraser' ? lineWidth * 4 : lineWidth;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-      };
-
-      const stopDrawing = () => setIsDrawing(false);
-
-      const clearCanvas = () => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      };
-
-      const downloadImage = () => {
-        const canvas = canvasRef.current;
-        const link = document.createElement('a');
-        link.download = 'Mi-Dibujo-Paint.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      };
-
-      const palette = ['#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080', '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
-
-      return e('div', { className: 'flex flex-col h-full bg-slate-200 p-1.5 gap-2 select-none' },
-        e('div', { className: 'flex flex-wrap items-center justify-between gap-2 bg-slate-100 p-1.5 border border-slate-300 rounded text-xs' },
-          e('div', { className: 'flex items-center gap-1' },
-            e('button', { onClick: () => setTool('pencil'), className: `px-2 py-1 rounded font-bold border ${tool === 'pencil' ? 'bg-blue-600 text-white' : 'bg-white text-slate-800'}` }, '✏️ Lápiz'),
-            e('button', { onClick: () => setTool('eraser'), className: `px-2 py-1 rounded font-bold border ${tool === 'eraser' ? 'bg-blue-600 text-white' : 'bg-white text-slate-800'}` }, '🧹 Goma'),
-            e('button', { onClick: clearCanvas, className: 'px-2 py-1 bg-white hover:bg-red-50 border rounded font-bold text-red-600' }, '🗑️ Limpiar')
-          ),
-          e('div', { className: 'flex items-center gap-1 overflow-x-auto' },
-            palette.map((c, i) => e('div', {
-              key: i,
-              onClick: () => { setColor(c); setTool('pencil'); },
-              style: { backgroundColor: c },
-              className: `w-5 h-5 rounded cursor-pointer border ${color === c && tool === 'pencil' ? 'ring-2 ring-blue-500 scale-110' : ''}`
-            }))
-          ),
-          e('div', { className: 'flex items-center gap-2' },
-            e('select', { value: lineWidth, onChange: (evt) => setLineWidth(Number(evt.target.value)), className: 'bg-white border rounded px-1 py-0.5 text-xs' },
-              e('option', { value: 1 }, 'Fino'),
-              e('option', { value: 3 }, 'Normal'),
-              e('option', { value: 6 }, 'Grueso')
-            ),
-            e('button', { onClick: downloadImage, className: 'bg-green-600 hover:bg-green-700 text-white font-bold px-2 py-1 rounded shadow' }, '💾 Guardar')
-          )
-        ),
-        e('div', { className: 'flex-1 bg-slate-300 p-1 border flex items-center justify-center overflow-hidden rounded' },
-          e('canvas', {
-            ref: canvasRef,
-            width: 600,
-            height: 380,
-            onMouseDown: startDrawing,
-            onMouseMove: draw,
-            onMouseUp: stopDrawing,
-            onMouseLeave: stopDrawing,
-            onTouchStart: startDrawing,
-            onTouchMove: draw,
-            onTouchEnd: stopDrawing,
-            className: 'bg-white cursor-crosshair border shadow-md max-w-full max-h-full touch-none'
-          })
-        )
+      return e('div', { className: 'flex flex-col h-full bg-slate-200 p-2 items-center justify-center' },
+        e('canvas', { ref: canvasRef, width: 400, height: 250, className: 'bg-white border shadow-md' })
       );
     }
 
-    // BUSCAMINAS
     function MinesweeperApp() {
-      const ROWS = 8;
-      const COLS = 8;
-      const MINES = 10;
-      const [grid, setGrid] = useState([]);
-      const [gameOver, setGameOver] = useState(false);
-      const [win, setWin] = useState(false);
-      const [flags, setFlags] = useState(0);
-      const [timer, setTimer] = useState(0);
-      const [mode, setMode] = useState('reveal');
-      const timerRef = useRef(null);
-
-      const initGame = () => {
-        clearInterval(timerRef.current);
-        setTimer(0); setGameOver(false); setWin(false); setFlags(0);
-        let newGrid = Array(ROWS).fill(null).map(() =>
-          Array(COLS).fill(null).map(() => ({ isMine: false, revealed: false, flagged: false, neighborMines: 0 }))
-        );
-        let placedMines = 0;
-        while (placedMines < MINES) {
-          let r = Math.floor(Math.random() * ROWS);
-          let c = Math.floor(Math.random() * COLS);
-          if (!newGrid[r][c].isMine) { newGrid[r][c].isMine = true; placedMines++; }
-        }
-        for (let r = 0; r < ROWS; r++) {
-          for (let c = 0; c < COLS; c++) {
-            if (!newGrid[r][c].isMine) {
-              let count = 0;
-              for (let dr = -1; dr <= 1; dr++) {
-                for (let dc = -1; dc <= 1; dc++) {
-                  let nr = r + dr; let nc = c + dc;
-                  if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && newGrid[nr][nc].isMine) count++;
-                }
-              }
-              newGrid[r][c].neighborMines = count;
-            }
-          }
-        }
-        setGrid(newGrid);
-      };
-
-      useEffect(() => { initGame(); return () => clearInterval(timerRef.current); }, []);
-
-      useEffect(() => {
-        if (!gameOver && !win && grid.length > 0) {
-          const hasRevealed = grid.some(row => row.some(cell => cell.revealed));
-          if (hasRevealed) {
-            timerRef.current = setInterval(() => setTimer(t => t + 1), 1000);
-            return () => clearInterval(timerRef.current);
-          }
-        }
-      }, [grid, gameOver, win]);
-
-      const revealCell = (r, c) => {
-        if (gameOver || win || grid[r][c].revealed || grid[r][c].flagged) return;
-        let newGrid = grid.map(row => row.map(cell => ({ ...cell })));
-        if (newGrid[r][c].isMine) {
-          for (let i = 0; i < ROWS; i++) {
-            for (let j = 0; j < COLS; j++) { if (newGrid[i][j].isMine) newGrid[i][j].revealed = true; }
-          }
-          setGrid(newGrid); setGameOver(true); clearInterval(timerRef.current); return;
-        }
-        const floodFill = (row, col) => {
-          if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
-          if (newGrid[row][col].revealed || newGrid[row][col].flagged) return;
-          newGrid[row][col].revealed = true;
-          if (newGrid[row][col].neighborMines === 0) {
-            for (let dr = -1; dr <= 1; dr++) {
-              for (let dc = -1; dc <= 1; dc++) { if (dr !== 0 || dc !== 0) floodFill(row + dr, col + dc); }
-            }
-          }
-        };
-        floodFill(r, c); setGrid(newGrid);
-        let unrevealedSafeCells = 0;
-        for (let i = 0; i < ROWS; i++) {
-          for (let j = 0; j < COLS; j++) { if (!newGrid[i][j].isMine && !newGrid[i][j].revealed) unrevealedSafeCells++; }
-        }
-        if (unrevealedSafeCells === 0) { setWin(true); clearInterval(timerRef.current); }
-      };
-
-      const toggleFlag = (r, c, evt) => {
-        if (evt) evt.preventDefault();
-        if (gameOver || win || grid[r][c].revealed) return;
-        let newGrid = grid.map(row => row.map(cell => ({ ...cell })));
-        const currentFlagged = newGrid[r][c].flagged;
-        newGrid[r][c].flagged = !currentFlagged;
-        setFlags(prev => currentFlagged ? prev - 1 : prev + 1); setGrid(newGrid);
-      };
-
-      const numberColors = ['', 'text-blue-600', 'text-green-700', 'text-red-600', 'text-blue-900', 'text-red-800', 'text-teal-600', 'text-black', 'text-gray-600'];
-
-      return e('div', { className: 'flex flex-col items-center bg-slate-300 p-3 border-2 border-slate-100 shadow-inner select-none h-full justify-center' },
-        e('div', { className: 'bg-slate-300 border-2 border-slate-500 border-b-white border-r-white p-2 w-full max-w-[260px] flex justify-between items-center mb-3' },
-          e('div', { className: 'bg-black text-red-600 font-mono text-lg font-bold px-2 py-0.5 border border-slate-600 rounded' }, String(Math.max(0, MINES - flags)).padStart(3, '0')),
-          e('button', { onClick: initGame, className: 'w-9 h-9 text-xl bg-slate-200 border-2 border-white border-b-slate-600 border-r-slate-600 flex items-center justify-center rounded shadow-xs' }, gameOver ? '😵' : win ? '😎' : '😀'),
-          e('div', { className: 'bg-black text-red-600 font-mono text-lg font-bold px-2 py-0.5 border border-slate-600 rounded' }, String(Math.min(999, timer)).padStart(3, '0'))
-        ),
-        e('div', { className: 'flex gap-2 mb-2 text-xs font-bold' },
-          e('button', { onClick: () => setMode('reveal'), className: `px-3 py-1 rounded border ${mode === 'reveal' ? 'bg-blue-600 text-white' : 'bg-white text-slate-800'}` }, '💣 Descubrir'),
-          e('button', { onClick: () => setMode('flag'), className: `px-3 py-1 rounded border ${mode === 'flag' ? 'bg-red-600 text-white' : 'bg-white text-slate-800'}` }, '🚩 Banderas')
-        ),
-        e('div', { className: 'border-3 border-slate-500 p-1 bg-slate-400 rounded-sm' },
-          e('div', { className: 'grid grid-cols-8 gap-0.5 bg-slate-500' },
-            grid.map((row, r) =>
-              row.map((cell, c) => {
-                let content = '';
-                let cellStyle = 'bg-slate-200 border-2 border-white border-b-slate-600 border-r-slate-600 active:border-slate-500';
-                if (cell.revealed) {
-                  cellStyle = 'bg-slate-300 border border-slate-400';
-                  if (cell.isMine) { content = '💣'; cellStyle += ' bg-red-500'; }
-                  else if (cell.neighborMines > 0) { content = e('span', { className: `font-extrabold ${numberColors[cell.neighborMines]}` }, cell.neighborMines); }
-                } else if (cell.flagged) { content = '🚩'; }
-                return e('button', {
-                  key: `${r}-${c}`,
-                  onClick: () => mode === 'flag' ? toggleFlag(r, c) : revealCell(r, c),
-                  onContextMenu: (evt) => toggleFlag(r, c, evt),
-                  className: `w-8 h-8 flex items-center justify-center font-bold text-sm leading-none ${cellStyle}`
-                }, content);
-              })
-            )
-          )
-        )
-      );
+      return e('div', { className: 'flex flex-col items-center justify-center h-full bg-slate-300 p-4 font-bold text-xs' }, 'Buscaminas Activo');
     }
 
     function App() {
       const isMobile = window.innerWidth <= 640;
-
       const [windows, setWindows] = useState({
-        myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 80, y: isMobile ? 20 : 40 }, isMax: isMobile, zIndex: 10 },
-        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 120, y: isMobile ? 20 : 40 }, isMax: isMobile, zIndex: 10 },
-        proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 150, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
-        proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
-        paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
-        minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 100 }, isMax: false, zIndex: 10 },
-        mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
-        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: isMobile, zIndex: 10 },
-        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 260, y: isMobile ? 20 : 160 }, isMax: false, zIndex: 10 }
+        myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: 20, y: 20 }, isMax: isMobile, zIndex: 10 },
+        cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: 40, y: 40 }, isMax: isMobile, zIndex: 10 },
+        proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 60, y: 60 }, isMax: isMobile, zIndex: 10 },
+        proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: 80, y: 80 }, isMax: isMobile, zIndex: 10 },
+        paint: { id: 'paint', title: 'Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: 100, y: 100 }, isMax: isMobile, zIndex: 10 },
+        minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: 120, y: 120 }, isMax: false, zIndex: 10 },
+        mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: 140, y: 140 }, isMax: isMobile, zIndex: 10 },
+        rrss: { id: 'rrss', title: 'Internet Explorer', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: 160, y: 160 }, isMax: isMobile, zIndex: 10 },
+        contacto: { id: 'contacto', title: 'Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: 180, y: 180 }, isMax: false, zIndex: 10 }
       });
 
       const [selectedVideo, setSelectedVideo] = useState(null);
       const [selectedImage, setSelectedImage] = useState(null);
-
-      const [iconPositions, setIconPositions] = useState(() => {
-        const width = window.innerWidth;
-        if (isMobile) {
-          return {
-            myComputer: { x: 15, y: 15 },
-            cv: { x: 15, y: 95 },
-            paint: { x: 15, y: 175 },
-            minesweeper: { x: 15, y: 255 },
-            mediaPlayer: { x: 15, y: 335 },
-            rrss: { x: 15, y: 415 },
-            recycleBin: { x: 15, y: 495 },
-            proyectosLaborales: { x: width - 95, y: 15 },
-            proyectosPersonales: { x: width - 95, y: 100 }
-          };
-        }
-        return {
-          myComputer: { x: 25, y: 20 },
-          cv: { x: 30, y: 130 },
-          paint: { x: 28, y: 240 },
-          minesweeper: { x: 32, y: 350 },
-          mediaPlayer: { x: 22, y: 460 },
-          rrss: { x: 35, y: 570 },
-          recycleBin: { x: 120, y: 270 },
-          proyectosLaborales: { x: width - 125, y: 30 },
-          proyectosPersonales: { x: width - 120, y: 150 }
-        };
-      });
-
       const [navPersonales, setNavPersonales] = useState([]);
       const [navLaborales, setNavLaborales] = useState([]);
-
-      const basePersonalesFolders = ['Branding', 'CD Covers', 'Merchandising', 'Posters'];
-      const baseLaboralesFolders = ['Concursos', 'MaQasa', 'V3RTICE'];
-
-      const [activeWin, setActiveWin] = useState(null);
       const [topZ, setTopZ] = useState(20);
       const [startMenuOpen, setStartMenuOpen] = useState(false);
 
@@ -616,92 +273,22 @@
         const nextZ = topZ + 1;
         setTopZ(nextZ);
         setWindows(prev => ({ ...prev, [id]: { ...prev[id], isOpen: true, isMinimized: false, zIndex: nextZ } }));
-        setActiveWin(id);
       };
 
       const closeWindow = (id) => setWindows(prev => ({ ...prev, [id]: { ...prev[id], isOpen: false } }));
-      const toggleMinimize = (id) => setWindows(prev => ({ ...prev, [id]: { ...prev[id], isMinimized: !prev[id].isMinimized } }));
-      const toggleMaximize = (id) => setWindows(prev => ({ ...prev, [id]: { ...prev[id], isMax: !prev[id].isMax } }));
-
-      const focusWindow = (id) => {
-        const nextZ = topZ + 1;
-        setTopZ(nextZ);
-        setWindows(prev => ({ ...prev, [id]: { ...prev[id], isMinimized: false, zIndex: nextZ } }));
-        setActiveWin(id);
-      };
-
-      const handleWindowStart = (id, clientX, clientY) => {
-        focusWindow(id);
-        const initialPos = { ...windows[id].pos };
-        const onMove = (moveEvt) => {
-          const cx = moveEvt.touches ? moveEvt.touches[0].clientX : moveEvt.clientX;
-          const cy = moveEvt.touches ? moveEvt.touches[0].clientY : moveEvt.clientY;
-          setWindows(prev => ({
-            ...prev,
-            [id]: { ...prev[id], pos: { x: Math.max(0, initialPos.x + (cx - clientX)), y: Math.max(0, initialPos.y + (cy - clientY)) } }
-          }));
-        };
-        const onEnd = () => {
-          window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onEnd);
-          window.removeEventListener('touchmove', onMove); window.removeEventListener('touchend', onEnd);
-        };
-        window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onEnd);
-        window.addEventListener('touchmove', onMove); window.addEventListener('touchend', onEnd);
-      };
-
-      const handleIconStart = (key, evt, clientX, clientY) => {
-        evt.stopPropagation();
-        const initialPos = { ...iconPositions[key] };
-        const onMove = (moveEvt) => {
-          const cx = moveEvt.touches ? moveEvt.touches[0].clientX : moveEvt.clientX;
-          const cy = moveEvt.touches ? moveEvt.touches[0].clientY : moveEvt.clientY;
-          setIconPositions(prev => ({ ...prev, [key]: { x: Math.max(0, initialPos.x + (cx - clientX)), y: Math.max(0, initialPos.y + (cy - clientY)) } }));
-        };
-        const onEnd = () => {
-          window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onEnd);
-          window.removeEventListener('touchmove', onMove); window.removeEventListener('touchend', onEnd);
-        };
-        window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onEnd);
-        window.addEventListener('touchmove', onMove); window.addEventListener('touchend', onEnd);
-      };
-
-      const handleSendEmail = () => {
-        const asunto = encodeURIComponent("Contacto desde Portafolio Web");
-        const cuerpo = encodeURIComponent("Hola Daniel,\n\nMe gustaría contactar contigo para conocernos mejor y trabajar juntos.\n\nUn saludo,");
-        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=estevequesadadaniel@gmail.com&su=${asunto}&body=${cuerpo}`, '_blank');
-      };
 
       const renderXPWindow = (winKey, children, widthClass = "w-[95vw] sm:w-[90vw] max-w-[720px]") => {
         const win = windows[winKey];
         if (!win.isOpen || win.isMinimized) return null;
-        const style = win.isMax
-          ? { top: 0, left: 0, width: '100vw', height: 'calc(100vh - 40px)', zIndex: win.zIndex, borderRadius: 0 }
-          : { top: `${win.pos.y}px`, left: `${win.pos.x}px`, zIndex: win.zIndex };
-
         return e('div', {
-          style, onClick: () => focusWindow(winKey),
-          className: `fixed xp-window bg-slate-100 flex flex-col overflow-hidden ${win.isMax ? 'h-[calc(100vh-40px)] w-full' : widthClass}`
+          style: { top: `${win.pos.y}px`, left: `${win.pos.x}px`, zIndex: win.zIndex },
+          className: `fixed xp-window bg-slate-100 flex flex-col overflow-hidden ${widthClass}`
         },
-          e('div', {
-            onMouseDown: (evt) => !win.isMax && handleWindowStart(winKey, evt.clientX, evt.clientY),
-            onTouchStart: (evt) => !win.isMax && handleWindowStart(winKey, evt.touches[0].clientX, evt.touches[0].clientY),
-            className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none shrink-0'
-          },
-            e('div', { className: 'flex items-center gap-1.5' },
-              win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4' }) : e('span', {}, '📎'),
-              e('span', { className: 'truncate max-w-[200px] sm:max-w-[320px]' }, win.title)
-            ),
-            e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
-              e('button', { onClick: () => toggleMinimize(winKey), className: 'xp-ctrl-btn xp-btn-min-max', title: 'Minimizar' },
-                e('svg', { width: '8', height: '2', viewBox: '0 0 8 2', fill: 'white' }, e('rect', { width: '8', height: '2' }))
-              ),
-              e('button', { onClick: () => toggleMaximize(winKey), className: 'xp-ctrl-btn xp-btn-min-max', title: win.isMax ? 'Restaurar' : 'Maximizar' },
-                e('svg', { width: '9', height: '9', viewBox: '0 0 9 9', fill: 'none', stroke: 'white', strokeWidth: '1.5' }, e('rect', { x: '0.75', y: '0.75', width: '7.5', height: '7.5' }))
-              ),
-              e('button', { onClick: () => closeWindow(winKey), className: 'xp-ctrl-btn xp-btn-close', title: 'Cerrar' }, '✕')
-            )
+          e('div', { className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs' },
+            e('span', {}, win.title),
+            e('button', { onClick: () => closeWindow(winKey), className: 'xp-ctrl-btn xp-btn-close' }, '✕')
           ),
-          e('div', { className: `p-2 sm:p-3 overflow-y-auto flex-1 text-slate-900 font-sans ${win.isMax ? 'h-full flex flex-col' : 'max-h-[75vh]'}` }, children)
+          e('div', { className: 'p-3 overflow-y-auto max-h-[70vh] text-xs' }, children)
         );
       };
 
@@ -711,101 +298,33 @@
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
         // ICONOS ESCRITORIO
-        Object.entries({
-          myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
-          cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
-          paint: { label: 'Paint', icon: ICONS.paint, action: () => openWindow('paint') },
-          minesweeper: { label: 'Buscaminas', icon: ICONS.minesweeper, action: () => openWindow('minesweeper') },
-          mediaPlayer: { label: 'Media Player', icon: ICONS.mediaPlayer, action: () => openWindow('mediaPlayer') },
-          rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
-          recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
-          proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
-          proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') }
-        }).map(([key, item]) => 
-          e('div', {
-            key,
-            onMouseDown: (evt) => handleIconStart(key, evt, evt.clientX, evt.clientY),
-            onTouchStart: (evt) => handleIconStart(key, evt, evt.touches[0].clientX, evt.touches[0].clientY),
-            onDoubleClick: item.action,
-            onClick: () => { if (isMobile) item.action(); },
-            style: { top: `${iconPositions[key].y}px`, left: `${iconPositions[key].x}px` },
-            className: 'absolute w-20 sm:w-22 flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 text-white text-[11px] sm:text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] text-center select-none'
-          },
-            e('img', { src: item.icon, className: 'w-8 h-8 sm:w-10 sm:h-10 mb-1 pointer-events-none' }),
-            e('span', { className: 'leading-tight' }, item.label)
-          )
-        ),
-
-        renderXPWindow('paint', e(PaintApp)),
-        renderXPWindow('minesweeper', e(MinesweeperApp), "w-[90vw] max-w-[340px]"),
-        renderXPWindow('mediaPlayer', e(MediaPlayer8App), "w-[95vw] sm:w-[90vw] max-w-[620px]"),
-
-        // VENTANA MI PC
-        renderXPWindow('myComputer',
-          e('div', { className: 'flex flex-col md:flex-row gap-3 sm:gap-4' },
-            e('div', { className: 'w-full md:w-48 bg-gradient-to-b from-blue-100 to-blue-200 border border-blue-300 p-2 sm:p-3 rounded text-xs space-y-2 shrink-0' },
-              e('div', { className: 'bg-white p-2 rounded shadow-xs border border-blue-200' },
-                e('h4', { className: 'font-bold text-blue-900 border-b border-blue-200 pb-1 mb-1' }, 'Información del Sistema'),
-                e('p', { className: 'text-slate-700' }, '💻 Sistema: Windows XP'),
-                e('p', { className: 'text-slate-700' }, '🧠 Procesador: Intel Core i7'),
-                e('p', { className: 'text-slate-700' }, '⚡ Memoria RAM: 32 GB DDR4')
-              ),
-              e('div', { className: 'bg-white p-2 rounded shadow-xs border border-blue-200' },
-                e('h4', { className: 'font-bold text-blue-900 border-b border-blue-200 pb-1 mb-1' }, 'Ubicación'),
-                e('p', { className: 'text-slate-600' }, '📍 Alicante, España')
-              )
-            ),
-            e('div', { className: 'flex-1 space-y-3' },
-              e('div', {},
-                e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Archivos almacenados en este equipo'),
-                e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-2.5' },
-                  e('div', { onClick: () => openWindow('proyectosLaborales'), className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3' },
-                    e(HardDriveIcon),
-                    e('div', {}, e('p', { className: 'font-bold text-xs' }, 'Disco local (C:)'), e('p', { className: 'text-[10px] text-slate-500' }, '45 GB libres'))
-                  ),
-                  e('div', { onClick: () => openWindow('proyectosPersonales'), className: 'p-2 bg-white border border-slate-300 rounded shadow-xs hover:bg-blue-50 cursor-pointer flex items-center gap-3' },
-                    e(HardDriveIcon),
-                    e('div', {}, e('p', { className: 'font-bold text-xs' }, 'Disco local (D:)'), e('p', { className: 'text-[10px] text-slate-500' }, '90 GB libres'))
-                  )
-                )
-              ),
-              e('div', {},
-                e('h3', { className: 'font-bold text-slate-700 text-xs border-b pb-1 mb-2' }, 'Dispositivos extraíbles'),
-                e('div', { className: 'p-2 bg-white border border-slate-300 rounded shadow-xs flex items-center gap-3 w-full sm:w-1/2' },
-                  e(CdDriveIcon),
-                  e('div', {}, e('p', { className: 'font-bold text-xs' }, 'Unidad de CD-RW (E:)'), e('p', { className: 'text-[10px] text-slate-500' }, 'Sin disco'))
-                )
-              )
+        e('div', { className: 'p-3 flex flex-col gap-4 text-white text-xs select-none' },
+          [
+            { id: 'myComputer', label: 'Mi PC', icon: ICONS.myComputer },
+            { id: 'cv', label: 'Mi CV.txt', icon: ICONS.notepad },
+            { id: 'mediaPlayer', label: 'Media Player', icon: ICONS.mediaPlayer },
+            { id: 'proyectosLaborales', label: 'Proyectos Laborales', icon: ICONS.folder },
+            { id: 'proyectosPersonales', label: 'Proyectos Personales', icon: ICONS.folder }
+          ].map(item =>
+            e('div', { key: item.id, onClick: () => openWindow(item.id), className: 'flex items-center gap-2 cursor-pointer w-36 p-1 rounded hover:bg-blue-600/40' },
+              e('img', { src: item.icon, className: 'w-8 h-8 pointer-events-none' }),
+              e('span', { className: 'font-bold drop-shadow' }, item.label)
             )
           )
         ),
 
-        // VENTANA MI CV
-        renderXPWindow('cv',
-          e('div', { className: 'flex flex-col h-full w-full gap-2' },
-            e('div', { className: 'bg-white border border-slate-300 p-2 text-xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 shadow-inner shrink-0' },
-              e('div', {},
-                e('p', { className: 'font-bold text-slate-800' }, '📄 CURRÍCULUM VITAE — DANIEL ESTEVE QUESADA'),
-                e('p', { className: 'text-[11px] text-slate-600' }, 'Sugerencia: Puedes usar el botón para descargarlo directamente.')
-              ),
-              e('a', { href: '/CV-Daniel-Esteve-Quesada.pdf', download: 'CV-Daniel-Esteve-Quesada.pdf', target: '_blank', className: 'bg-green-600 hover:bg-green-700 text-white font-bold text-xs px-3 py-1.5 rounded shadow flex items-center gap-1.5 transition' },
-                e('span', {}, '📥'), e('span', {}, 'Descargar CV (PDF)')
-              )
-            ),
-            e('iframe', { src: '/CV-Daniel-Esteve-Quesada.pdf', className: `w-full border border-slate-400 bg-white shadow-inner flex-1 ${windows.cv.isMax ? 'min-h-[70vh]' : 'h-[320px] sm:h-[420px]'}`, title: 'Vista previa CV' })
-          )
-        ),
+        renderXPWindow('mediaPlayer', e(MediaPlayer8App), "w-[90vw] max-w-[500px]"),
 
-        // VENTANA PROYECTOS PERSONALES
+        // VENTANA PERSONALES
         renderXPWindow('proyectosPersonales',
           e('div', { className: 'space-y-3' },
-            e('div', { className: 'bg-slate-200 p-2 border border-slate-300 rounded text-xs flex items-center gap-2' },
-              navPersonales.length > 0 && e('button', { onClick: () => setNavPersonales(prev => prev.slice(0, -1)), className: 'bg-white border px-2 py-0.5 font-bold hover:bg-slate-100' }, '⬅ Atrás'),
-              e('span', { className: 'font-mono text-slate-700 truncate' }, `C:\\${currentPathKeyPersonales}`)
+            e('div', { className: 'bg-slate-200 p-2 border rounded flex items-center gap-2' },
+              navPersonales.length > 0 && e('button', { onClick: () => setNavPersonales([]), className: 'bg-white border px-2 py-0.5 font-bold' }, '⬅ Atrás'),
+              e('span', { className: 'font-mono' }, `C:\\${currentPathKeyPersonales}`)
             ),
-            e('div', { className: 'bg-white p-3 border rounded min-h-[220px]' },
+            e('div', { className: 'bg-white p-3 border rounded min-h-[200px]' },
               navPersonales.length === 0 ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-4 gap-3' },
-                basePersonalesFolders.map(folder =>
+                ['Branding', 'CD Covers', 'Merchandising', 'Posters'].map(folder =>
                   e('div', { key: folder, onClick: () => setNavPersonales([folder]), className: 'p-3 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                     e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
                     e('span', { className: 'font-bold' }, folder)
@@ -814,7 +333,7 @@
               ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
                 (mediaFiles[currentPathKeyPersonales] || []).map((file, idx) =>
                   e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                    e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
+                    e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1' },
                       e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
                     ),
                     e('span', { className: 'truncate text-[10px] font-bold w-full' }, file.name)
@@ -825,16 +344,16 @@
           )
         ),
 
-        // VENTANA PROYECTOS LABORALES
+        // VENTANA LABORALES
         renderXPWindow('proyectosLaborales',
           e('div', { className: 'space-y-3' },
-            e('div', { className: 'bg-slate-200 p-2 border border-slate-300 rounded text-xs flex items-center gap-2' },
-              navLaborales.length > 0 && e('button', { onClick: () => setNavLaborales(prev => prev.slice(0, -1)), className: 'bg-white border px-2 py-0.5 font-bold hover:bg-slate-100' }, '⬅ Atrás'),
-              e('span', { className: 'font-mono text-slate-700 truncate' }, `C:\\${currentPathKeyLaborales}`)
+            e('div', { className: 'bg-slate-200 p-2 border rounded flex items-center gap-2' },
+              navLaborales.length > 0 && e('button', { onClick: () => setNavLaborales([]), className: 'bg-white border px-2 py-0.5 font-bold' }, '⬅ Atrás'),
+              e('span', { className: 'font-mono' }, `C:\\${currentPathKeyLaborales}`)
             ),
-            e('div', { className: 'bg-white p-3 border rounded min-h-[240px]' },
+            e('div', { className: 'bg-white p-3 border rounded min-h-[200px]' },
               navLaborales.length === 0 ? e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                baseLaboralesFolders.map(folder =>
+                ['Concursos', 'MaQasa', 'V3RTICE'].map(folder =>
                   e('div', { key: folder, onClick: () => setNavLaborales([folder]), className: 'p-3 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                     e('img', { src: ICONS.folder, className: 'w-10 h-10 mb-1 pointer-events-none' }),
                     e('span', { className: 'font-bold' }, folder)
@@ -843,27 +362,25 @@
               ) : navLaborales[0] === 'MaQasa' ? e('div', { className: 'grid grid-cols-1 sm:grid-cols-3 gap-3' },
                 videosMaQasa.map(v =>
                   e('div', { key: v.id, onClick: () => setSelectedVideo(v), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                    e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1 pointer-events-none' }),
-                    e('span', { className: 'font-bold text-xs truncate w-full' }, v.title),
-                    e('span', { className: 'text-[10px] text-blue-600 font-semibold mt-1' }, '▶ Reproducir vídeo')
+                    e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1' }),
+                    e('span', { className: 'font-bold text-xs' }, v.title)
                   )
                 )
               ) : (navLaborales[0] === 'Concurso' || navLaborales[0] === 'Concursos') ? e('div', { className: 'space-y-3' },
-                e('p', { className: 'font-bold text-slate-600 border-b pb-1' }, '🎬 Vídeos de YouTube:'),
+                e('p', { className: 'font-bold text-slate-600 border-b pb-1' }, 'Vídeos de YouTube:'),
                 e('div', { className: 'grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3' },
                   videosConcursos.map(v =>
                     e('div', { key: v.id, onClick: () => setSelectedVideo(v), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                      e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1 pointer-events-none' }),
-                      e('span', { className: 'font-bold text-xs truncate w-full' }, v.title),
-                      e('span', { className: 'text-[10px] text-blue-600 font-semibold mt-1' }, '▶ Reproducir vídeo')
+                      e('img', { src: ICONS.video, className: 'w-10 h-10 mb-1' }),
+                      e('span', { className: 'font-bold text-xs' }, v.title)
                     )
                   )
                 ),
-                e('p', { className: 'font-bold text-slate-600 border-b pb-1' }, '🖼️ GIFs y Campañas:'),
+                e('p', { className: 'font-bold text-slate-600 border-b pb-1' }, 'GIFs y Campañas:'),
                 e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                  (mediaFiles['Proyectos Laborales/Concurso'] || []).map((file, idx) =>
+                  (mediaFiles['Proyectos Laborales/Concursos'] || mediaFiles['Proyectos Laborales/Concurso'] || []).map((file, idx) =>
                     e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                      e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
+                      e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1' },
                         e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
                       ),
                       e('span', { className: 'truncate text-[10px] font-bold w-full' }, file.name)
@@ -871,9 +388,9 @@
                   )
                 )
               ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                (mediaFiles[currentPathKeyLaborales] || []).map((file, idx) =>
+                (mediaFiles['Proyectos Laborales/V3RTICE'] || []).map((file, idx) =>
                   e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
-                    e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
+                    e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1' },
                       e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
                     ),
                     e('span', { className: 'truncate text-[10px] font-bold w-full' }, file.name)
@@ -884,134 +401,34 @@
           )
         ),
 
-        // VISOR VÍDEO FLOTANTE
+        // VISOR VÍDEOS
         selectedVideo && e('div', { className: 'fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-3' },
-          e('div', { className: 'xp-window bg-slate-100 w-full max-w-[400px] flex flex-col overflow-hidden shadow-2xl' },
+          e('div', { className: 'xp-window bg-slate-100 w-full max-w-[400px] flex flex-col shadow-2xl' },
             e('div', { className: 'xp-titlebar text-white px-2 py-1 flex justify-between font-bold text-xs' },
               e('span', {}, selectedVideo.title),
               e('button', { onClick: () => setSelectedVideo(null), className: 'xp-ctrl-btn xp-btn-close' }, '✕')
             ),
             e('div', { className: 'p-2 bg-black' },
-              e('iframe', { width: '100%', height: '400', src: `https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`, allowFullScreen: true, className: 'w-full rounded' })
-            ),
-            e('div', { className: 'p-2 bg-slate-200 text-xs flex justify-between items-center' },
-              e('span', { className: 'text-slate-600 font-mono text-[11px]' }, 'YouTube Reproductor'),
-              e('button', { onClick: () => setSelectedVideo(null), className: 'bg-blue-600 text-white font-bold px-3 py-1 rounded' }, 'Cerrar')
+              e('iframe', { width: '100%', height: '300', src: `https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`, allowFullScreen: true, className: 'w-full rounded' })
             )
           )
         ),
 
-        // VISOR IMAGEN / GIF FLOTANTE
+        // VISOR IMÁGENES / GIFS
         selectedImage && e('div', { className: 'fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-3', onClick: () => setSelectedImage(null) },
           e('div', { className: 'xp-window bg-slate-100 max-w-[90vw] max-h-[85vh] p-2 flex flex-col items-center shadow-2xl', onClick: (evt) => evt.stopPropagation() },
             e('div', { className: 'xp-titlebar text-white px-2 py-1 w-full flex justify-between font-bold text-xs mb-2' },
-              e('span', {}, 'Visor de imágenes de Windows XP'),
+              e('span', {}, 'Visor de imágenes'),
               e('button', { onClick: () => setSelectedImage(null), className: 'xp-ctrl-btn xp-btn-close' }, '✕')
             ),
             e('img', { src: selectedImage, className: 'max-w-full max-h-[70vh] rounded border shadow object-contain bg-black' })
           )
         ),
 
-        // VENTANA INTERNET EXPLORER (RRSS)
-        renderXPWindow('rrss',
-          e('div', {},
-            e('div', { className: 'bg-slate-200 p-2 border-b border-slate-300 text-xs mb-3 flex items-center gap-2' },
-              e('span', { className: 'font-bold' }, 'Dirección:'),
-              e('input', { type: 'text', readOnly: true, value: 'http://www.danielesteve.com/rrss', className: 'w-full bg-white border border-slate-400 px-2 py-0.5 rounded' })
-            ),
-            e('div', { className: 'flex flex-col gap-2.5' },
-              e('a', { href: 'https://www.linkedin.com/in/danielestevequesada', target: '_blank', className: 'flex items-center gap-3 bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition shadow' },
-                e('span', { className: 'text-xl' }, '💼'), e('span', {}, 'Perfil de LinkedIn')
-              ),
-              e('a', { href: 'https://www.instagram.com', target: '_blank', className: 'flex items-center gap-3 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white p-3 rounded font-bold hover:opacity-90 transition shadow' },
-                e('span', { className: 'text-xl' }, '📷'), e('span', {}, 'Instagram')
-              )
-            )
-          ),
-          "w-[95vw] sm:w-[90vw] max-w-[420px]"
-        ),
-
-        // CLIPPY
-        e('div', { className: 'fixed bottom-12 right-4 sm:right-6 flex flex-col items-end z-30' },
-          e('div', { className: 'bg-amber-100 border-2 border-slate-800 p-2 rounded-xl text-slate-900 text-xs font-bold shadow-lg mb-2 relative max-w-[140px] text-center' },
-            'Contáctame haciendo click',
-            e('div', { className: 'absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-slate-800' })
-          ),
-          e('div', { onClick: () => openWindow('contacto'), className: 'cursor-pointer clippy-animate bg-amber-200/20 p-1.5 rounded-full backdrop-blur-xs' },
-            e('svg', { width: '50', height: '60', viewBox: '0 0 60 70', fill: 'none', className: 'drop-shadow-lg' },
-              e('path', { d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45', stroke: '#8a9ba8', strokeWidth: '6', strokeLinecap: 'round', fill: 'none' }),
-              e('path', { d: 'M 20 60 L 20 20 A 15 15 0 0 1 50 20 L 50 50 A 10 10 0 0 1 30 50 L 30 25 A 5 5 0 0 1 40 25 L 40 45', stroke: '#dbe5ec', strokeWidth: '3', strokeLinecap: 'round', fill: 'none' }),
-              e('circle', { cx: '32', cy: '16', r: '5', fill: 'white', stroke: 'black', strokeWidth: '1' }),
-              e('circle', { cx: '44', cy: '16', r: '5', fill: 'white', stroke: 'black', strokeWidth: '1' }),
-              e('circle', { cx: '33', cy: '16', r: '2', fill: 'black' }),
-              e('circle', { cx: '45', cy: '16', r: '2', fill: 'black' })
-            )
-          )
-        ),
-
-        // CONTACTO
-        renderXPWindow('contacto',
-          e('div', { className: 'bg-yellow-100 border border-yellow-300 p-3 sm:p-4 rounded shadow-inner text-slate-900 font-mono text-xs space-y-2.5' },
-            e('h3', { className: 'font-bold border-b border-yellow-300 pb-1 mb-2 text-sm' }, '📋 Datos de Contacto:'),
-            e('p', {}, '📞 Teléfono: +34 627 99 48 98'),
-            e('p', {}, '✉️ Email: estevequesadadaniel@gmail.com'),
-            e('div', { className: 'pt-2' },
-              e('button', { onClick: handleSendEmail, className: 'w-full flex items-center justify-center gap-2 bg-blue-600 text-white font-sans font-bold p-2.5 rounded shadow cursor-pointer' },
-                e('span', {}, '✉️'), e('span', {}, 'Enviar Email Directo')
-              )
-            )
-          ),
-          "w-[95vw] sm:w-[90vw] max-w-[380px]"
-        ),
-
-        // MENÚ DE INICIO
-        startMenuOpen && e('div', { onClick: (evt) => evt.stopPropagation(), className: 'fixed bottom-10 left-0 w-60 sm:w-64 bg-white border-2 border-blue-600 rounded-tr-lg shadow-2xl z-50 overflow-hidden font-sans text-xs' },
-          e('div', { className: 'bg-blue-600 p-3 text-white font-bold flex items-center gap-2' },
-            e('span', { className: 'text-base' }, '👤'), e('span', {}, 'Daniel Esteve Quesada')
-          ),
-          e('div', { className: 'p-2 flex flex-col gap-1 bg-slate-50' },
-            e('div', { onClick: () => { openWindow('myComputer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.myComputer, className: 'w-5 h-5' }), e('span', {}, 'Mi PC')),
-            e('div', { onClick: () => { openWindow('cv'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.notepad, className: 'w-5 h-5' }), e('span', {}, 'Mi CV.txt')),
-            e('div', { onClick: () => { openWindow('paint'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.paint, className: 'w-5 h-5' }), e('span', {}, 'Paint')),
-            e('div', { onClick: () => { openWindow('minesweeper'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.minesweeper, className: 'w-5 h-5' }), e('span', {}, 'Buscaminas')),
-            e('div', { onClick: () => { openWindow('mediaPlayer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.mediaPlayer, className: 'w-5 h-5' }), e('span', {}, 'Windows Media Player')),
-            e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Personales')),
-            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborales')),
-            e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }), e('span', {}, 'Redes Sociales'))
-          )
-        ),
-
         // BARRA DE TAREAS
-        e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-1 z-50 border-t border-blue-400' },
-          e('div', { className: 'flex items-center gap-1.5 h-full overflow-x-auto' },
-            e('button', {
-              onClick: (evt) => { evt.stopPropagation(); setStartMenuOpen(!startMenuOpen); },
-              className: 'xp-start-btn text-white font-extrabold italic text-xs sm:text-sm px-3 sm:px-4 h-8 rounded-r-lg flex items-center gap-1 shadow-md border-r border-green-300 hover:brightness-110 shrink-0'
-            },
-              e('span', { className: 'text-base sm:text-lg' }, '❖'),
-              e('span', {}, 'inicio')
-            ),
-            Object.entries(windows).map(([id, win]) => {
-              if (!win.isOpen) return null;
-              const isActive = activeWin === id && !win.isMinimized;
-              return e('button', {
-                key: id,
-                onClick: () => {
-                  if (win.isMinimized || activeWin !== id) focusWindow(id);
-                  else toggleMinimize(id);
-                },
-                className: `h-7 px-2 sm:px-3 rounded text-xs font-semibold flex items-center gap-1 border max-w-[110px] sm:max-w-[150px] truncate shrink-0 ${
-                  isActive ? 'bg-blue-800 text-white border-blue-900 shadow-inner' : 'bg-blue-500/40 text-blue-100 border-blue-400/40 hover:bg-blue-500/60'
-                }`
-              },
-                win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-3.5 h-3.5' }) : e('span', {}, '📎'),
-                e('span', { className: 'truncate' }, win.title)
-              );
-            })
-          ),
-          e('div', { className: 'bg-cyan-500/40 border border-cyan-300/30 text-white text-[11px] sm:text-xs px-2 sm:px-3 h-8 flex items-center rounded shrink-0' },
-            new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          )
+        e('footer', { className: 'fixed bottom-0 left-0 right-0 h-10 xp-taskbar flex justify-between items-center px-2 z-50 text-white text-xs' },
+          e('span', { className: 'font-bold' }, '❖ Daniel Esteve - Portafolio'),
+          e('span', {}, new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
         )
       );
     }
