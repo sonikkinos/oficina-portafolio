@@ -647,7 +647,7 @@
 
       const handleSendEmail = () => {
         const asunto = encodeURIComponent("Contacto desde Portafolio Web");
-        const cuerpo = encodeURIComponent("Hola Daniel,\n\nMe gustaría contactar contigo para conocernos mejor y trabajar juntos.\n\nUn saludo,");
+        const cuerpo = encodeURIComponent("Hola Daniel,\n\nMec gustaría contactar contigo para conocernos mejor y trabajar juntos.\n\nUn saludo,");
         window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=estevequesadadaniel@gmail.com&su=${asunto}&body=${cuerpo}`, '_blank');
       };
 
@@ -960,7 +960,7 @@
             e('div', { onClick: () => { openWindow('minesweeper'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.minesweeper, className: 'w-5 h-5' }), e('span', {}, 'Buscaminas')),
             e('div', { onClick: () => { openWindow('mediaPlayer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.mediaPlayer, className: 'w-5 h-5' }), e('span', {}, 'Windows Media Player')),
             e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Personales')),
-            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborables')),
+            e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborales')),
             e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }), e('span', {}, 'Redes Sociales'))
           )
         ),
