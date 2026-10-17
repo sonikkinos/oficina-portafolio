@@ -133,6 +133,7 @@
       { id: 2, title: 'Concurso - Vídeo 2.mp4', youtubeId: '_wBOTBJ44oE' }
     ];
 
+    // RUTAS ACTUALIZADAS CON "Proyectos Laborables" (CON B)
     const mediaFiles = {
       'Proyectos Personales/Posters': [
         { name: 'Hasbulla Poster', src: './Proyectos%20Personales/Posters/Hasbulla%20Poster.jpg' },
@@ -167,17 +168,17 @@
         { name: 'Servilletas Hivense', src: './Proyectos%20Personales/Branding/Servilletas%20Hivense.png' },
         { name: 'Totebag Hivense', src: './Proyectos%20Personales/Branding/Totebag%20Hivense.png' }
       ],
-      'Proyectos Laborales/V3RTICE': [
-        { name: 'Contenido AGE', src: './Proyectos%20Laborales/V3RTICE/Contenido%20AGE.gif' },
-        { name: 'Contenido Turris', src: './Proyectos%20Laborales/V3RTICE/Contenido%20Turris.gif' }
+      'Proyectos Laborables/V3RTICE': [
+        { name: 'Contenido AGE', src: './Proyectos%20Laborables/V3RTICE/Contenido%20AGE.gif' },
+        { name: 'Contenido Turris', src: './Proyectos%20Laborables/V3RTICE/Contenido%20Turris.gif' }
       ],
-      'Proyectos Laborales/Concurso': [
-        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campa%C3%B1a.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
+      'Proyectos Laborables/Concurso': [
+        { name: 'WWE campaña', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.gif' },
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ],
-      'Proyectos Laborales/Concursos': [
-        { name: 'WWE campaña', src: './Proyectos%20Laborales/Concurso/WWE%20campa%C3%B1a.gif' },
-        { name: 'Hogares sin techo', src: './Proyectos%20Laborales/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
+      'Proyectos Laborables/Concursos': [
+        { name: 'WWE campaña', src: './Proyectos%20Laborables/Concurso/WWE%20campa%C3%B1a.gif' },
+        { name: 'Hogares sin techo', src: './Proyectos%20Laborables/Concurso/Hogares%20sin%20techo%20Campa%C3%B1a.gif' }
       ]
     };
 
@@ -543,7 +544,7 @@
         myComputer: { id: 'myComputer', title: 'Mi PC', iconSrc: ICONS.myComputer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 80, y: isMobile ? 20 : 40 }, isMax: isMobile, zIndex: 10 },
         cv: { id: 'cv', title: 'Mi CV.txt - Bloc de notas', iconSrc: ICONS.notepad, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 120, y: isMobile ? 20 : 40 }, isMax: isMobile, zIndex: 10 },
         proyectosPersonales: { id: 'proyectosPersonales', title: 'Explorador - C:\\Proyectos Personales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 150, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
-        proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborales', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
+        proyectosLaborales: { id: 'proyectosLaborales', title: 'Explorador - C:\\Proyectos Laborables', iconSrc: ICONS.folder, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
         paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
         minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 100 }, isMax: false, zIndex: 10 },
         mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
@@ -686,7 +687,7 @@
       };
 
       const currentPathKeyPersonales = `Proyectos Personales${navPersonales.length ? '/' + navPersonales.join('/') : ''}`;
-      const currentPathKeyLaborales = `Proyectos Laborales${navLaborales.length ? '/' + navLaborales.join('/') : ''}`;
+      const currentPathKeyLaborales = `Proyectos Laborables${navLaborales.length ? '/' + navLaborales.join('/') : ''}`;
 
       return e('div', { className: 'h-full w-full relative overflow-hidden', onClick: () => setStartMenuOpen(false) },
         
@@ -699,7 +700,7 @@
           mediaPlayer: { label: 'Media Player', icon: ICONS.mediaPlayer, action: () => openWindow('mediaPlayer') },
           rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
           recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
-          proyectosLaborales: { label: 'Proyectos Laborales', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
+          proyectosLaborales: { label: 'Proyectos Laborables', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
           proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') }
         }).map(([key, item]) => 
           e('div', {
@@ -805,7 +806,7 @@
           )
         ),
 
-        // VENTANA PROYECTOS LABORALES
+        // VENTANA PROYECTOS LABORABLES
         renderXPWindow('proyectosLaborales',
           e('div', { className: 'space-y-3' },
             e('div', { className: 'bg-slate-200 p-2 border border-slate-300 rounded text-xs flex items-center gap-2' },
@@ -851,7 +852,7 @@
                   )
                 )
               ) : e('div', { className: 'grid grid-cols-2 sm:grid-cols-3 gap-3' },
-                (mediaFiles['Proyectos Laborales/V3RTICE'] || mediaFiles[currentPathKeyLaborales] || []).map((file, idx) =>
+                (mediaFiles['Proyectos Laborables/V3RTICE'] || mediaFiles[currentPathKeyLaborales] || []).map((file, idx) =>
                   e('div', { key: idx, onClick: () => setSelectedImage(file.src), className: 'p-2 border rounded hover:bg-blue-50 cursor-pointer flex flex-col items-center text-center' },
                     e('div', { className: 'w-20 h-20 bg-slate-100 border rounded flex items-center justify-center overflow-hidden mb-1 shadow-inner' },
                       e('img', { src: file.src, className: 'w-full h-full object-contain pointer-events-none' })
