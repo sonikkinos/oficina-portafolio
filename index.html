@@ -117,7 +117,6 @@
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
       paint: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
       minesweeper: 'https://win98icons.alexmeub.com/icons/png/game_mine_1-0.png',
-      // ICONOS DESDE TU CARPETA LOCAL
       mediaPlayer: './Iconos/Media%20Player.png',
       rrss: './Iconos/RRSS.png',
       video: './Iconos/Video.png',
@@ -554,8 +553,6 @@
         mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
         rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.rrss, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: isMobile, zIndex: 10 },
         contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 260, y: isMobile ? 20 : 160 }, isMax: false, zIndex: 10 },
-        
-        // NUEVAS VENTANAS
         expLaboral: { id: 'expLaboral', title: 'Experiencia Laboral', iconSrc: ICONS.expLaboral, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 140, y: isMobile ? 20 : 50 }, isMax: isMobile, zIndex: 10 },
         formacion: { id: 'formacion', title: 'Formación Académica', iconSrc: ICONS.formacion, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 170, y: isMobile ? 20 : 70 }, isMax: isMobile, zIndex: 10 },
         habilidades: { id: 'habilidades', title: 'Habilidades Profesional', iconSrc: ICONS.habilidades, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
@@ -755,11 +752,11 @@
             ),
             e('div', { className: 'space-y-2.5' },
               [
-                { puesto: 'Promotor y Asesor Comercial de Xiaomi', empresa: 'MediaMarkt (Alicante)', periodo: 'Actualidad', desc: 'Asesoramiento técnico especializado, ventas en punto de venta, gestión de promociones e impulso de KPIs de marca.' },
-                { puesto: 'Especialista en Marketing y Publicidad', empresa: 'MaQasa Inmobiliaria', periodo: 'Experiencia Previa', desc: 'Desarrollo de estrategias de captación, creación de contenidos visuales y campañas publicitarias inmobiliarias.' },
-                { puesto: 'Promotor de Producto / Brand Advocate', empresa: 'TCL', periodo: 'Experiencia Previa', desc: 'Demostración de tecnología audiovisual, representación de marca y atención al cliente en gran superficie.' },
-                { puesto: 'Estratega Publicitario / Creativo', empresa: 'GrupoIDEX', periodo: 'Experiencia Previa', desc: 'Elaboración de estrategias creativas 360, planificación de campañas y desarrollo conceptual para marcas.' },
-                { puesto: 'Ejecutivo de Cuentas / Creativo', empresa: 'V3RTICE', periodo: 'Experiencia Previa', desc: 'Gestión de cuentas de clientes, creación de contenido digital y coordinación de campañas de comunicación.' }
+                { puesto: 'Gestor Marketing 360 + Foto & Vídeo', empresa: 'MaQasa Inmobiliaria (Valencia)', periodo: '2026', desc: 'Gestión plena de RRSS, creación de contenido, fotografía/vídeo de inmuebles, IA aplicada y estrategias de captación.' },
+                { puesto: 'Vendedor TCL', empresa: 'TCL en ECI (Alicante)', periodo: '2025', desc: 'Captación y asesoramiento de clientes, cumplimiento de KPIs mensuales, seguimiento postventa y fidelización.' },
+                { puesto: 'Promotor y Asesor Comercial de Xiaomi', empresa: 'MediaMarkt (Alicante)', periodo: '2026', desc: 'Asesoramiento técnico especializado en informática y smartphones Xiaomi, ventas directas y atención al cliente.' },
+                { puesto: 'Técnico Marketing y CM', empresa: 'V3RTICE (Barcelona)', periodo: '2024', desc: 'Gestión de redes sociales (Facebook, Instagram, LinkedIn, TikTok), campañas digitales y creación de contenidos.' },
+                { puesto: 'Auxiliar de Eventos', empresa: 'GrupoIDEX (Alicante)', periodo: '2018 – 2025', desc: 'Montaje, logística y organización de eventos institucionales y corporativos (Ayuntamiento de Alicante/Elche, EUIPO, etc.).' }
               ].map((exp, idx) =>
                 e('div', { key: idx, className: 'bg-white p-3 border border-slate-300 rounded shadow-xs hover:border-blue-500 transition' },
                   e('div', { className: 'flex justify-between items-start mb-1' },
@@ -780,24 +777,43 @@
             e('div', { className: 'bg-green-100 border border-green-300 p-2.5 rounded flex items-center gap-2' },
               e('span', { className: 'text-xl' }, '🎓'),
               e('div', {},
-                e('h3', { className: 'font-bold text-green-900 text-sm' }, 'Formación Académica'),
-                e('p', { className: 'text-slate-600 text-[11px]' }, 'Estudios superiores en Publicidad, Creatividad y Estrategia')
+                e('h3', { className: 'font-bold text-green-900 text-sm' }, 'Formación Académica y Certificados'),
+                e('p', { className: 'text-slate-600 text-[11px]' }, 'Estudios superiores, titulaciones oficiales e idiomas')
               )
             ),
             e('div', { className: 'space-y-2.5' },
               [
-                { titulo: 'Máster en Estrategia y Creatividad en la Publicidad', centro: 'UOC (Universitat Oberta de Catalunya)', desc: 'Especialización en planificación estratégica, campañas 360, innovación creativa y analítica publicitaria digital.' },
-                { titulo: 'Grado en Publicidad y Relaciones Públicas', centro: 'Universidad de Alicante (UA)', desc: 'Formación integral en comunicación corporativa, diseño publicitario, marketing estratégico y producción audiovisual.' }
+                { titulo: 'Máster en Estrategia y Creatividad en la Publicidad', centro: 'Universitat Oberta de Catalunya (UOC)', periodo: '2023 – 2024', desc: 'Especialización en planificación estratégica, campañas 360, innovación creativa y analítica publicitaria digital.' },
+                { titulo: 'Grado en Publicidad y Relaciones Públicas', centro: 'Universidad de Alicante (UA)', periodo: '2020 – 2023', desc: 'Formación integral en comunicación corporativa, diseño publicitario, marketing estratégico y producción audiovisual.' },
+                { titulo: 'Grado en Recursos Humanos y Relaciones Laborales', centro: 'Universidad de Alicante (UA)', periodo: '2017 – 2020', desc: 'Formación universitaria enfocada en gestión de personal y relaciones laborales (Pausada).' }
               ].map((edu, idx) =>
                 e('div', { key: idx, className: 'bg-white p-3 border border-slate-300 rounded shadow-xs' },
-                  e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm mb-1' }, edu.titulo),
-                  e('p', { className: 'text-green-700 font-semibold text-[11px] mb-1' }, `🏛️ ${edu.centro}`),
+                  e('div', { className: 'flex justify-between items-start mb-1' },
+                    e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm' }, edu.titulo),
+                    e('span', { className: 'bg-green-700 text-white text-[10px] px-2 py-0.5 rounded font-mono shrink-0' }, edu.periodo)
+                  ),
+                  e('p', { className: 'text-green-800 font-semibold text-[11px] mb-1' }, `🏛️ ${edu.centro}`),
                   e('p', { className: 'text-slate-600 leading-relaxed text-[11px]' }, edu.desc)
+                )
+              ),
+              // Sección de Certificados de Google
+              e('div', { className: 'bg-white p-3 border border-slate-300 rounded shadow-xs' },
+                e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm mb-1 flex items-center gap-1.5' }, e('span', {}, '📜'), e('span', {}, 'Cursos y Certificaciones Oficiales')),
+                e('p', { className: 'text-blue-700 font-semibold text-[11px] mb-1' }, 'Google | 2023, 2024 y 2025'),
+                e('p', { className: 'text-slate-600 text-[11px]' }, 'Certificados oficiales de capacitación en Google Ads, Google Business y marketing digital.')
+              ),
+              // Sección de Idiomas
+              e('div', { className: 'bg-white p-3 border border-slate-300 rounded shadow-xs' },
+                e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm mb-2 flex items-center gap-1.5' }, e('span', {}, '🗣️'), e('span', {}, 'Idiomas')),
+                e('div', { className: 'flex flex-wrap gap-2 text-[11px]' },
+                  e('span', { className: 'bg-slate-100 text-slate-800 border px-2.5 py-1 rounded font-semibold' }, '🇪🇸 Castellano: Nativo'),
+                  e('span', { className: 'bg-slate-100 text-slate-800 border px-2.5 py-1 rounded font-semibold' }, '📐 Valenciano: Nativo'),
+                  e('span', { className: 'bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-1 rounded font-semibold' }, '🇬🇧 Inglés: B1 (Estudiando C1)')
                 )
               )
             )
           ),
-          "w-[95vw] sm:w-[90vw] max-w-[560px]"
+          "w-[95vw] sm:w-[90vw] max-w-[580px]"
         ),
 
         // VENTANA HABILIDADES
