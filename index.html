@@ -115,12 +115,16 @@
       recycleBin: 'https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png',
       notepad: 'https://win98icons.alexmeub.com/icons/png/notepad-5.png',
       folder: 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-      internetExplorer: 'https://win98icons.alexmeub.com/icons/png/msie1-4.png',
       paint: 'https://win98icons.alexmeub.com/icons/png/paint_file-2.png',
       minesweeper: 'https://win98icons.alexmeub.com/icons/png/game_mine_1-0.png',
-      video: 'https://win98icons.alexmeub.com/icons/png/mmsys_114-0.png',
-      // ICONO REAL Y CLÁSICO DE WINDOWS MEDIA PLAYER
-      mediaPlayer: 'https://images.iconarchive.com/icons/ncrow/mega-pack-2/128/Windows-Media-Player-9-icon.png'
+      // ICONOS DESDE TU CARPETA LOCAL
+      mediaPlayer: './Iconos/Media%20Player.png',
+      rrss: './Iconos/RRSS.png',
+      video: './Iconos/Video.png',
+      expLaboral: './Iconos/Experiencia%20Laboral.png',
+      formacion: './Iconos/Formacion%20Academica.png',
+      habilidades: './Iconos/Habilidades.png',
+      manualUso: './Iconos/Manual%20de%20uso.png'
     };
 
     const videosMaQasa = [
@@ -480,7 +484,7 @@
           newGrid[row][col].revealed = true;
           if (newGrid[row][col].neighborMines === 0) {
             for (let dr = -1; dr <= 1; dr++) {
-              for (let dc = -1; dc <= 1; dc++) { if (dr !== 0 || dr !== 0) floodFill(row + dr, col + dc); }
+              for (let dc = -1; dc <= 1; dc++) { if (dr !== 0 || dc !== 0) floodFill(row + dr, col + dc); }
             }
           }
         };
@@ -548,8 +552,14 @@
         paint: { id: 'paint', title: 'sin título - Paint', iconSrc: ICONS.paint, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 160, y: isMobile ? 20 : 80 }, isMax: isMobile, zIndex: 10 },
         minesweeper: { id: 'minesweeper', title: 'Buscaminas', iconSrc: ICONS.minesweeper, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 100 }, isMax: false, zIndex: 10 },
         mediaPlayer: { id: 'mediaPlayer', title: 'Windows Media Player 8', iconSrc: ICONS.mediaPlayer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 60 }, isMax: isMobile, zIndex: 10 },
-        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.internetExplorer, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: isMobile, zIndex: 10 },
-        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 260, y: isMobile ? 20 : 160 }, isMax: false, zIndex: 10 }
+        rrss: { id: 'rrss', title: 'Internet Explorer - Redes Sociales', iconSrc: ICONS.rrss, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 240, y: isMobile ? 20 : 140 }, isMax: isMobile, zIndex: 10 },
+        contacto: { id: 'contacto', title: 'Asistente - Datos de Contacto', iconSrc: null, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 260, y: isMobile ? 20 : 160 }, isMax: false, zIndex: 10 },
+        
+        // NUEVAS VENTANAS
+        expLaboral: { id: 'expLaboral', title: 'Experiencia Laboral', iconSrc: ICONS.expLaboral, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 140, y: isMobile ? 20 : 50 }, isMax: isMobile, zIndex: 10 },
+        formacion: { id: 'formacion', title: 'Formación Académica', iconSrc: ICONS.formacion, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 170, y: isMobile ? 20 : 70 }, isMax: isMobile, zIndex: 10 },
+        habilidades: { id: 'habilidades', title: 'Habilidades Profesional', iconSrc: ICONS.habilidades, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
+        manualUso: { id: 'manualUso', title: 'Manual de Uso', iconSrc: ICONS.manualUso, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 220, y: isMobile ? 20 : 110 }, isMax: false, zIndex: 10 }
       });
 
       const [selectedVideo, setSelectedVideo] = useState(null);
@@ -561,25 +571,33 @@
           return {
             myComputer: { x: 15, y: 15 },
             cv: { x: 15, y: 95 },
-            paint: { x: 15, y: 175 },
-            minesweeper: { x: 15, y: 255 },
-            mediaPlayer: { x: 15, y: 335 },
-            rrss: { x: 15, y: 415 },
-            recycleBin: { x: 15, y: 495 },
-            proyectosLaborales: { x: width - 95, y: 15 },
-            proyectosPersonales: { x: width - 95, y: 100 }
+            expLaboral: { x: 15, y: 175 },
+            formacion: { x: 15, y: 255 },
+            habilidades: { x: 15, y: 335 },
+            manualUso: { x: 15, y: 415 },
+            paint: { x: width - 95, y: 15 },
+            minesweeper: { x: width - 95, y: 95 },
+            mediaPlayer: { x: width - 95, y: 175 },
+            rrss: { x: width - 95, y: 255 },
+            proyectosLaborales: { x: width - 95, y: 335 },
+            proyectosPersonales: { x: width - 95, y: 415 },
+            recycleBin: { x: 15, y: 495 }
           };
         }
         return {
           myComputer: { x: 25, y: 20 },
-          cv: { x: 30, y: 130 },
-          paint: { x: 28, y: 240 },
-          minesweeper: { x: 32, y: 350 },
-          mediaPlayer: { x: 22, y: 460 },
-          rrss: { x: 35, y: 570 },
-          recycleBin: { x: 120, y: 270 },
-          proyectosLaborales: { x: width - 125, y: 30 },
-          proyectosPersonales: { x: width - 120, y: 150 }
+          cv: { x: 25, y: 120 },
+          expLaboral: { x: 25, y: 220 },
+          formacion: { x: 25, y: 320 },
+          habilidades: { x: 25, y: 420 },
+          manualUso: { x: 25, y: 520 },
+          paint: { x: 125, y: 20 },
+          minesweeper: { x: 125, y: 120 },
+          mediaPlayer: { x: 125, y: 220 },
+          rrss: { x: 125, y: 320 },
+          recycleBin: { x: 125, y: 420 },
+          proyectosLaborales: { x: width - 125, y: 20 },
+          proyectosPersonales: { x: width - 125, y: 120 }
         };
       });
 
@@ -695,10 +713,14 @@
         Object.entries({
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
+          expLaboral: { label: 'Experiencia Laboral', icon: ICONS.expLaboral, action: () => openWindow('expLaboral') },
+          formacion: { label: 'Formación Académica', icon: ICONS.formacion, action: () => openWindow('formacion') },
+          habilidades: { label: 'Habilidades', icon: ICONS.habilidades, action: () => openWindow('habilidades') },
+          manualUso: { label: 'Manual de Uso', icon: ICONS.manualUso, action: () => openWindow('manualUso') },
           paint: { label: 'Paint', icon: ICONS.paint, action: () => openWindow('paint') },
           minesweeper: { label: 'Buscaminas', icon: ICONS.minesweeper, action: () => openWindow('minesweeper') },
           mediaPlayer: { label: 'Media Player', icon: ICONS.mediaPlayer, action: () => openWindow('mediaPlayer') },
-          rrss: { label: 'RRSS', icon: ICONS.internetExplorer, action: () => openWindow('rrss') },
+          rrss: { label: 'RRSS', icon: ICONS.rrss, action: () => openWindow('rrss') },
           recycleBin: { label: 'Papelera', icon: ICONS.recycleBin, action: () => {} },
           proyectosLaborales: { label: 'Proyectos Laborables', icon: ICONS.folder, action: () => openWindow('proyectosLaborales') },
           proyectosPersonales: { label: 'Proyectos Personales', icon: ICONS.folder, action: () => openWindow('proyectosPersonales') }
@@ -712,7 +734,7 @@
             style: { top: `${iconPositions[key].y}px`, left: `${iconPositions[key].x}px` },
             className: 'absolute w-20 sm:w-22 flex flex-col items-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 text-white text-[11px] sm:text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] text-center select-none'
           },
-            e('img', { src: item.icon, className: 'w-8 h-8 sm:w-10 sm:h-10 mb-1 pointer-events-none' }),
+            e('img', { src: item.icon, className: 'w-8 h-8 sm:w-10 sm:h-10 mb-1 pointer-events-none object-contain' }),
             e('span', { className: 'leading-tight' }, item.label)
           )
         ),
@@ -720,6 +742,118 @@
         renderXPWindow('paint', e(PaintApp)),
         renderXPWindow('minesweeper', e(MinesweeperApp), "w-[90vw] max-w-[340px]"),
         renderXPWindow('mediaPlayer', e(MediaPlayer8App), "w-[95vw] sm:w-[90vw] max-w-[620px]"),
+
+        // VENTANA EXPERIENCIA LABORAL
+        renderXPWindow('expLaboral',
+          e('div', { className: 'space-y-3 font-sans text-xs' },
+            e('div', { className: 'bg-blue-100 border border-blue-300 p-2.5 rounded flex items-center gap-2' },
+              e('span', { className: 'text-xl' }, '💼'),
+              e('div', {},
+                e('h3', { className: 'font-bold text-blue-900 text-sm' }, 'Trayectoria Profesional'),
+                e('p', { className: 'text-slate-600 text-[11px]' }, 'Especialista en Publicidad, Marketing y Estrategia Comercial')
+              )
+            ),
+            e('div', { className: 'space-y-2.5' },
+              [
+                { puesto: 'Promotor y Asesor Comercial de Xiaomi', empresa: 'MediaMarkt (Alicante)', periodo: 'Actualidad', desc: 'Asesoramiento técnico especializado, ventas en punto de venta, gestión de promociones e impulso de KPIs de marca.' },
+                { puesto: 'Especialista en Marketing y Publicidad', empresa: 'MaQasa Inmobiliaria', periodo: 'Experiencia Previa', desc: 'Desarrollo de estrategias de captación, creación de contenidos visuales y campañas publicitarias inmobiliarias.' },
+                { puesto: 'Promotor de Producto / Brand Advocate', empresa: 'TCL', periodo: 'Experiencia Previa', desc: 'Demostración de tecnología audiovisual, representación de marca y atención al cliente en gran superficie.' },
+                { puesto: 'Estratega Publicitario / Creativo', empresa: 'GrupoIDEX', periodo: 'Experiencia Previa', desc: 'Elaboración de estrategias creativas 360, planificación de campañas y desarrollo conceptual para marcas.' },
+                { puesto: 'Ejecutivo de Cuentas / Creativo', empresa: 'V3RTICE', periodo: 'Experiencia Previa', desc: 'Gestión de cuentas de clientes, creación de contenido digital y coordinación de campañas de comunicación.' }
+              ].map((exp, idx) =>
+                e('div', { key: idx, className: 'bg-white p-3 border border-slate-300 rounded shadow-xs hover:border-blue-500 transition' },
+                  e('div', { className: 'flex justify-between items-start mb-1' },
+                    e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm' }, exp.puesto),
+                    e('span', { className: 'bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded font-mono shrink-0' }, exp.periodo)
+                  ),
+                  e('p', { className: 'text-blue-700 font-semibold text-[11px] mb-1' }, `🏢 ${exp.empresa}`),
+                  e('p', { className: 'text-slate-600 leading-relaxed text-[11px]' }, exp.desc)
+                )
+              )
+            )
+          )
+        ),
+
+        // VENTANA FORMACIÓN ACADÉMICA
+        renderXPWindow('formacion',
+          e('div', { className: 'space-y-3 font-sans text-xs' },
+            e('div', { className: 'bg-green-100 border border-green-300 p-2.5 rounded flex items-center gap-2' },
+              e('span', { className: 'text-xl' }, '🎓'),
+              e('div', {},
+                e('h3', { className: 'font-bold text-green-900 text-sm' }, 'Formación Académica'),
+                e('p', { className: 'text-slate-600 text-[11px]' }, 'Estudios superiores en Publicidad, Creatividad y Estrategia')
+              )
+            ),
+            e('div', { className: 'space-y-2.5' },
+              [
+                { titulo: 'Máster en Estrategia y Creatividad en la Publicidad', centro: 'UOC (Universitat Oberta de Catalunya)', desc: 'Especialización en planificación estratégica, campañas 360, innovación creativa y analítica publicitaria digital.' },
+                { titulo: 'Grado en Publicidad y Relaciones Públicas', centro: 'Universidad de Alicante (UA)', desc: 'Formación integral en comunicación corporativa, diseño publicitario, marketing estratégico y producción audiovisual.' }
+              ].map((edu, idx) =>
+                e('div', { key: idx, className: 'bg-white p-3 border border-slate-300 rounded shadow-xs' },
+                  e('h4', { className: 'font-bold text-slate-800 text-xs sm:text-sm mb-1' }, edu.titulo),
+                  e('p', { className: 'text-green-700 font-semibold text-[11px] mb-1' }, `🏛️ ${edu.centro}`),
+                  e('p', { className: 'text-slate-600 leading-relaxed text-[11px]' }, edu.desc)
+                )
+              )
+            )
+          ),
+          "w-[95vw] sm:w-[90vw] max-w-[560px]"
+        ),
+
+        // VENTANA HABILIDADES
+        renderXPWindow('habilidades',
+          e('div', { className: 'space-y-3 font-sans text-xs' },
+            e('p', { className: 'bg-yellow-50 border border-yellow-300 p-2.5 rounded text-slate-800 font-semibold leading-relaxed shadow-xs' },
+              '💡 "Aquellos programas que manejo tanto en mi día a día como de forma profesional"'
+            ),
+            e('div', { className: 'space-y-3' },
+              // Categoría Diseño
+              e('div', { className: 'bg-white border border-slate-300 rounded p-3 shadow-xs' },
+                e('div', { className: 'border-b pb-1.5 mb-2' },
+                  e('h4', { className: 'font-bold text-purple-900 text-sm flex items-center gap-1.5' }, e('span', {}, '🎨'), e('span', {}, 'Diseño')),
+                  e('p', { className: 'text-slate-500 italic text-[11px]' }, '"Fotografía, Vídeo, Ilustración, Montaje..."')
+                ),
+                e('div', { className: 'flex flex-wrap gap-1.5' },
+                  ['Photoshop', 'Illustrator', 'Indesign', 'After Effects', 'Lightroom', 'Premiere', 'DaVinci', 'Canva', 'Capcut'].map((tool, i) =>
+                    e('span', { key: i, className: 'bg-purple-100 text-purple-800 border border-purple-300 px-2.5 py-1 rounded-full font-bold text-[11px]' }, tool)
+                  )
+                )
+              ),
+              // Categoría Office
+              e('div', { className: 'bg-white border border-slate-300 rounded p-3 shadow-xs' },
+                e('div', { className: 'border-b pb-1.5 mb-2' },
+                  e('h4', { className: 'font-bold text-blue-900 text-sm flex items-center gap-1.5' }, e('span', {}, '📊'), e('span', {}, 'Office & Gestión')),
+                  e('p', { className: 'text-slate-500 italic text-[11px]' }, '"Paquete Office, Planificación, Análisis de datos, Gestión de productos, Gestión Inmobiliaria"')
+                ),
+                e('div', { className: 'flex flex-wrap gap-1.5' },
+                  ['Word', 'Excel', 'PowerPoint', 'Trello', 'Metricool', 'Google Ads', 'Google Analytics', 'Inmovilla'].map((tool, i) =>
+                    e('span', { key: i, className: 'bg-blue-100 text-blue-800 border border-blue-300 px-2.5 py-1 rounded-full font-bold text-[11px]' }, tool)
+                  )
+                )
+              ),
+              // Categoría Marketing
+              e('div', { className: 'bg-white border border-slate-300 rounded p-3 shadow-xs' },
+                e('div', { className: 'border-b pb-1.5 mb-2' },
+                  e('h4', { className: 'font-bold text-green-900 text-sm flex items-center gap-1.5' }, e('span', {}, '🚀'), e('span', {}, 'Marketing & Ventas'))
+                ),
+                e('p', { className: 'text-slate-700 leading-relaxed bg-green-50/50 p-2 rounded border border-green-200 text-[11px]' },
+                  'Redes Sociales, IAs, Análisis de datos, Elaboración de métricas, Conocimiento de venta (Puerta fría y Punto de venta), Gestión de personal de eventos y elaboración eficaz de este, Trato con clientes, Trabajo bajo KPIs...'
+                )
+              )
+            )
+          ),
+          "w-[95vw] sm:w-[90vw] max-w-[620px]"
+        ),
+
+        // VENTANA MANUAL DE USO
+        renderXPWindow('manualUso',
+          e('div', { className: 'bg-white border border-slate-300 p-4 rounded text-xs space-y-2' },
+            e('h3', { className: 'font-bold text-slate-800 border-b pb-1 text-sm' }, '📖 Manual de Uso'),
+            e('p', { className: 'text-slate-600' }, 'Bienvenido al escritorio interactivo de Windows XP de Daniel Esteve.'),
+            e('p', { className: 'text-slate-500 text-[11px]' }, 'Haz doble clic en los accesos directos para explorar sus apartados.')
+          ),
+          "w-[90vw] max-w-[360px]"
+        ),
 
         // VENTANA MI PC
         renderXPWindow('myComputer',
@@ -957,12 +1091,15 @@
           e('div', { className: 'p-2 flex flex-col gap-1 bg-slate-50' },
             e('div', { onClick: () => { openWindow('myComputer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.myComputer, className: 'w-5 h-5' }), e('span', {}, 'Mi PC')),
             e('div', { onClick: () => { openWindow('cv'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.notepad, className: 'w-5 h-5' }), e('span', {}, 'Mi CV.txt')),
+            e('div', { onClick: () => { openWindow('expLaboral'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.expLaboral, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Experiencia Laboral')),
+            e('div', { onClick: () => { openWindow('formacion'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.formacion, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Formación Académica')),
+            e('div', { onClick: () => { openWindow('habilidades'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.habilidades, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Habilidades')),
             e('div', { onClick: () => { openWindow('paint'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.paint, className: 'w-5 h-5' }), e('span', {}, 'Paint')),
             e('div', { onClick: () => { openWindow('minesweeper'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.minesweeper, className: 'w-5 h-5' }), e('span', {}, 'Buscaminas')),
-            e('div', { onClick: () => { openWindow('mediaPlayer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.mediaPlayer, className: 'w-5 h-5' }), e('span', {}, 'Windows Media Player')),
+            e('div', { onClick: () => { openWindow('mediaPlayer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.mediaPlayer, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Windows Media Player')),
             e('div', { onClick: () => { openWindow('proyectosPersonales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Personales')),
             e('div', { onClick: () => { openWindow('proyectosLaborales'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.folder, className: 'w-5 h-5' }), e('span', {}, 'Proyectos Laborables')),
-            e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.internetExplorer, className: 'w-5 h-5' }), e('span', {}, 'Redes Sociales'))
+            e('div', { onClick: () => { openWindow('rrss'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.rrss, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Redes Sociales'))
           )
         ),
 
@@ -989,7 +1126,7 @@
                   isActive ? 'bg-blue-800 text-white border-blue-900 shadow-inner' : 'bg-blue-500/40 text-blue-100 border-blue-400/40 hover:bg-blue-500/60'
                 }`
               },
-                win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-3.5 h-3.5' }) : e('span', {}, '📎'),
+                win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-3.5 h-3.5 object-contain' }) : e('span', {}, '📎'),
                 e('span', { className: 'truncate' }, win.title)
               );
             })
