@@ -124,7 +124,7 @@
       formacion: './Iconos/Formacion%20Academica.png',
       habilidades: './Iconos/Habilidades.png',
       manualUso: './Iconos/Manual%20de%20uso.png',
-      postit: 'https://win98icons.alexmeub.com/icons/png/sticky_note-0.png'
+      conoceme: './Iconos/Con%C3%B3ceme.png'
     };
 
     const videosMaQasa = [
@@ -558,7 +558,7 @@
         formacion: { id: 'formacion', title: 'Formación Académica', iconSrc: ICONS.formacion, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 170, y: isMobile ? 20 : 70 }, isMax: isMobile, zIndex: 10 },
         habilidades: { id: 'habilidades', title: 'Habilidades Profesional', iconSrc: ICONS.habilidades, isOpen: false, isMinimized: false, pos: { x: isMobile ? 10 : 200, y: isMobile ? 20 : 90 }, isMax: isMobile, zIndex: 10 },
         manualUso: { id: 'manualUso', title: 'Manual de Uso', iconSrc: ICONS.manualUso, isOpen: true, isMinimized: false, pos: { x: isMobile ? 10 : 180, y: isMobile ? 20 : 40 }, isMax: false, zIndex: 22 },
-        conoceme: { id: 'conoceme', title: 'Conóceme - Nota adhesiva', iconSrc: ICONS.postit, isOpen: true, isMinimized: false, pos: { x: isMobile ? 10 : 220, y: isMobile ? 60 : 80 }, isMax: false, zIndex: 21 }
+        conoceme: { id: 'conoceme', title: 'Conóceme - Nota adhesiva', iconSrc: ICONS.conoceme, isOpen: true, isMinimized: false, pos: { x: isMobile ? 10 : 220, y: isMobile ? 60 : 80 }, isMax: false, zIndex: 21 }
       });
 
       const [selectedVideo, setSelectedVideo] = useState(null);
@@ -688,7 +688,7 @@
             className: 'xp-titlebar text-white px-2 py-1 flex justify-between items-center font-bold text-xs cursor-move select-none shrink-0'
           },
             e('div', { className: 'flex items-center gap-1.5' },
-              win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4' }) : e('span', {}, '📎'),
+              win.iconSrc ? e('img', { src: win.iconSrc, className: 'w-4 h-4 object-contain' }) : e('span', {}, '📎'),
               e('span', { className: 'truncate max-w-[200px] sm:max-w-[320px]' }, win.title)
             ),
             e('div', { className: 'flex items-center gap-1', onClick: (evt) => evt.stopPropagation() },
@@ -712,7 +712,7 @@
         
         // ICONOS ESCRITORIO
         Object.entries({
-          conoceme: { label: 'Conóceme', icon: ICONS.postit, action: () => openWindow('conoceme') },
+          conoceme: { label: 'Conóceme', icon: ICONS.conoceme, action: () => openWindow('conoceme') },
           myComputer: { label: 'Mi PC', icon: ICONS.myComputer, action: () => openWindow('myComputer') },
           cv: { label: 'Mi CV.txt', icon: ICONS.notepad, action: () => openWindow('cv') },
           expLaboral: { label: 'Experiencia Laboral', icon: ICONS.expLaboral, action: () => openWindow('expLaboral') },
@@ -1135,7 +1135,7 @@
             e('span', { className: 'text-base' }, '👤'), e('span', {}, 'Daniel Esteve Quesada')
           ),
           e('div', { className: 'p-2 flex flex-col gap-1 bg-slate-50' },
-            e('div', { onClick: () => { openWindow('conoceme'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.postit, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Conóceme')),
+            e('div', { onClick: () => { openWindow('conoceme'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.conoceme, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Conóceme')),
             e('div', { onClick: () => { openWindow('myComputer'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.myComputer, className: 'w-5 h-5' }), e('span', {}, 'Mi PC')),
             e('div', { onClick: () => { openWindow('cv'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.notepad, className: 'w-5 h-5' }), e('span', {}, 'Mi CV.txt')),
             e('div', { onClick: () => { openWindow('expLaboral'); setStartMenuOpen(false); }, className: 'p-2 hover:bg-blue-100 rounded cursor-pointer flex items-center gap-2' }, e('img', { src: ICONS.expLaboral, className: 'w-5 h-5 object-contain' }), e('span', {}, 'Experiencia Laboral')),
