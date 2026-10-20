@@ -122,11 +122,6 @@
     const playXPSound = (type) => {
       if (!soundEnabled) return;
       try {
-        let audioSrc = '';
-        if (type === 'startup') audioSrc = 'https://actions.google.com/sounds/v1/ambiences/computer_quirky_mouse.ogg'; // fallback limpio o sonido start
-        if (type === 'click') audioSrc = 'https://actions.google.com/sounds/v1/foley/paper_slide.ogg';
-        
-        // Usamos efectos sintetizados cortos y limpios para evitar bloqueos
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -140,7 +135,6 @@
           osc.start();
           osc.stop(ctx.currentTime + 0.05);
         } else if (type === 'startup') {
-          // Acorde clásico de inicio XP (arpegio simulado suave)
           [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
             let o = ctx.createOscillator();
             let g = ctx.createGain();
@@ -152,9 +146,7 @@
             o.stop(ctx.currentTime + (i * 0.12) + 0.4);
           });
         }
-      } catch (err) {
-        // Silencioso si el navegador bloquea audio antes de la primera interacción
-      }
+      } catch (err) {}
     };
 
     const ICONS = {
@@ -1155,8 +1147,8 @@
               e('a', { href: 'https://www.linkedin.com/in/danielestevequesada', target: '_blank', onClick: () => playXPSound('click'), className: 'flex items-center gap-3 bg-blue-600 text-white p-3 rounded font-bold hover:bg-blue-700 transition shadow cursor-pointer' },
                 e('span', { className: 'text-xl' }, '💼'), e('span', {}, 'Perfil de LinkedIn')
               ),
-              e('a', { href: 'https://www.instagram.com', target: '_blank', onClick: () => playXPSound('click'), className: 'flex items-center gap-3 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white p-3 rounded font-bold hover:opacity-90 transition shadow cursor-pointer' },
-                e('span', { className: 'text-xl' }, '📷'), e('span', {}, 'Instagram')
+              e('a', { href: 'https://www.instagram.com/daniesteveq/', target: '_blank', onClick: () => playXPSound('click'), className: 'flex items-center gap-3 bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 text-white p-3 rounded font-bold hover:opacity-90 transition shadow cursor-pointer' },
+                e('span', { className: 'text-xl' }, '📷'), e('span', {}, 'Instagram (@daniesteveq)')
               )
             )
           ),
